@@ -656,6 +656,42 @@
             <option value="crew">Nach Besatzung</option>
             <option value="category">Nach Kategorie</option>
           </select>
+
+          <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; text-transform: uppercase; letter-spacing: 0.08em;">Zeitperiode</label>
+          <select id="eraFilter" class="filter-box">
+            <option value="">Alle Zeiten</option>
+            <option value="Clone Wars Era">Clone Wars Ära</option>
+            <option value="Imperiale Ära">Imperiale Ära</option>
+            <option value="Rebel Ära">Rebellion Ära</option>
+            <option value="First Order Era">First Order Ära</option>
+            <option value="Multi-Era">Multi-Ära</option>
+          </select>
+
+          <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; text-transform: uppercase; letter-spacing: 0.08em;">Hersteller</label>
+          <select id="manufacturerFilter" class="filter-box">
+            <option value="">Alle Hersteller</option>
+            <option value="Kuat Drive Yards">Kuat Drive Yards</option>
+            <option value="Sienar Fleet Systems">Sienar Fleet Systems</option>
+            <option value="Mon Calamari Shipyards">Mon Calamari</option>
+            <option value="Corellian Engineering Corporation">Corellian Engineering</option>
+            <option value="Imperial Department of Military Research">Imperial Research</option>
+            <option value="Hoersch-Kessel Drive, Inc.">Hoersch-Kessel</option>
+            <option value="Techno Union">Techno Union</option>
+            <option value="First Order">First Order</option>
+            <option value="Incom Corporation">Incom</option>
+            <option value="Unknown">Unbekannt</option>
+          </select>
+
+          <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; text-transform: uppercase; letter-spacing: 0.08em;">Zugehörigkeit</label>
+          <select id="affiliationFilter" class="filter-box">
+            <option value="">Alle Faktionen</option>
+            <option value="Galactic Empire">Galactic Empire</option>
+            <option value="Rebel Alliance">Rebel Alliance</option>
+            <option value="Separatist Alliance">Separatist Alliance</option>
+            <option value="Galactic Republic">Galactic Republic</option>
+            <option value="First Order">First Order</option>
+            <option value="Neutral">Neutral</option>
+          </select>
         </div>
       </div>
 
@@ -826,8 +862,9 @@
     `;
     document.head.appendChild(style);
 
-    // Schiff-Datenbank
+    // Erweiterte Schiff-Datenbank mit umfassenden Star Wars Schiffen
     const shipDatabase = [
+      // IMPERIALE SCHIFFE
       {
         id: 'death-star',
         name: 'Death Star',
@@ -842,6 +879,8 @@
         deployment: 'Planetare Zerstörung und Abschreckung',
         firstAppearance: 'Kanonischer Todesstern',
         status: 'Canon',
+        era: 'Imperiale Ära',
+        affiliation: 'Galactic Empire',
         description: 'Eine stationäre Kampfplattform, gebaut um ganze Planeten zu vernichten.',
         technicalOverview: 'Riesige Schildmatrix und ein gewaltiger Superlaser.',
         tacticalRole: 'Abschreckung und planetare Vernichtung',
@@ -866,6 +905,8 @@
         deployment: 'Flottenkommando, planetare Belagerung',
         firstAppearance: 'Legends-Supersternzerstörer',
         status: 'Legends',
+        era: 'Imperiale Ära',
+        affiliation: 'Galactic Empire',
         description: 'Ein monumentales Flaggschiff als bewegliche Festung.',
         technicalOverview: 'Extremprototyp mit riesigen Schildgeneratoren.',
         tacticalRole: 'Zentraler Kommando- und Kontrollpunkt',
@@ -875,6 +916,32 @@
         troopCapacity: '380.000',
         fighterCapacity: '144',
         power: 1000,
+      },
+      {
+        id: 'imperial-i',
+        name: 'Imperial I-class Star Destroyer',
+        category: 'Star Destroyers',
+        shipClass: 'Imperial I-class Star Destroyer',
+        manufacturer: 'Kuat Drive Yards',
+        length: '1.600 m',
+        crew: '37.053',
+        hyperdrive: 'Ja, Klasse 1',
+        shields: 'Schildgeneratoren',
+        primaryWeapons: '60 x Schwerlaserbatterien',
+        deployment: 'Blockaden und Invasionen',
+        firstAppearance: 'Kanonischer Sternenzerstörer',
+        status: 'Canon',
+        era: 'Imperiale Ära',
+        affiliation: 'Galactic Empire',
+        description: 'Der Klassiker des imperialen Militärs.',
+        technicalOverview: 'Bewährtes Design mit klassischen Systemen.',
+        tacticalRole: 'Flaggschiff und Linienschiff',
+        strengths: 'Gut ausgewogen, zuverlässig, viel Feuerkraft.',
+        weaknesses: 'Vulnerabel im hinteren Bereich.',
+        lengthValue: 1600,
+        troopCapacity: '9.700',
+        fighterCapacity: '72',
+        power: 450,
       },
       {
         id: 'imperial-ii',
@@ -890,6 +957,8 @@
         deployment: 'Verstärkte Operativeinsätze',
         firstAppearance: 'Kanonischer Nachfolger',
         status: 'Canon',
+        era: 'Imperiale Ära',
+        affiliation: 'Galactic Empire',
         description: 'Eine verbesserte Variante mit stärkerer Feuerkraft.',
         technicalOverview: 'Modernisierte Systeme mit automatischen Verteidigungsdrohnen.',
         tacticalRole: 'Verstärkte Linienformation',
@@ -914,6 +983,8 @@
         deployment: 'Raumblockaden, Hyperraum-Fallen',
         firstAppearance: 'Legends Blockadeschiff',
         status: 'Legends',
+        era: 'Imperiale Ära',
+        affiliation: 'Galactic Empire',
         description: 'Ein Spezial-Kreuzer mit Gravitationssendern gegen Hyperraum.',
         technicalOverview: 'Ausgerüstet mit Gravitations-Pulsoren gegen Hyperraum.',
         tacticalRole: 'Raumblockade und Schiffsfalle',
@@ -924,6 +995,59 @@
         fighterCapacity: '40',
         power: 320,
       },
+      {
+        id: 'victory-destroyer',
+        name: 'Victory I-class Star Destroyer',
+        category: 'Star Destroyers',
+        shipClass: 'Victory I-class Star Destroyer',
+        manufacturer: 'Kuat Drive Yards',
+        length: '900 m',
+        crew: '5.200',
+        hyperdrive: 'Ja, Klasse 2',
+        shields: 'Schildgeneratoren',
+        primaryWeapons: '8 x Schwerlaserbatterien',
+        deployment: 'Patrouille und Blockade',
+        firstAppearance: 'Legends-Kriegsschiff',
+        status: 'Legends',
+        era: 'Clone Wars Era',
+        affiliation: 'Galactic Empire',
+        description: 'Ein früher Sternenzerstörer-Typ.',
+        technicalOverview: 'Klassisches Sternenzerstörer Design.',
+        tacticalRole: 'Unabhängige Operationen',
+        strengths: 'Schneller, manövrierfähiger als Imperial.',
+        weaknesses: 'Weniger Feuerkraft.',
+        lengthValue: 900,
+        troopCapacity: '5.000',
+        fighterCapacity: '36',
+        power: 280,
+      },
+      {
+        id: 'tector-class',
+        name: 'Tector-class Star Destroyer',
+        category: 'Star Destroyers',
+        shipClass: 'Tector-class Star Destroyer',
+        manufacturer: 'Kuat Drive Yards',
+        length: '1.250 m',
+        crew: '20.000',
+        hyperdrive: 'Ja, Klasse 1',
+        shields: 'Verstärkte Schildgeneratoren',
+        primaryWeapons: '40 x Schwerlaserbatterien',
+        deployment: 'Spezialoperationen',
+        firstAppearance: 'Legends-Spezialjäger',
+        status: 'Legends',
+        era: 'Imperiale Ära',
+        affiliation: 'Galactic Empire',
+        description: 'Ein Sternenzerstörer mit stärkeren Schilden.',
+        technicalOverview: 'Verstärkte Schilde für erhöhte Überlebensfähigkeit.',
+        tacticalRole: 'Verteidigung und Patrol',
+        strengths: 'Hervorragende Schildstärke.',
+        weaknesses: 'Verlangsamte Manövrierbarkeit.',
+        lengthValue: 1250,
+        troopCapacity: '8.000',
+        fighterCapacity: '60',
+        power: 420,
+      },
+      // TIE-KÄMPFER
       {
         id: 'tie-fighter',
         name: 'TIE Fighter',
@@ -938,7 +1062,9 @@
         deployment: 'Jagdstaffeln für schnelle Patrouillen',
         firstAppearance: 'Kanonische imperialer Jagdstaffel',
         status: 'Canon',
-        description: 'Der TIE Fighter ist ein puristischer Jagdjäger des Imperiums, entworfen für maximale Agilität und hohen Produktionsrhythmus.',
+        era: 'Imperiale Ära',
+        affiliation: 'Galactic Empire',
+        description: 'Der TIE Fighter ist ein puristischer Jagdjäger des Imperiums.',
         technicalOverview: 'Geringe Panzerung, kein Hyperantrieb und doppelter Ionenantrieb.',
         tacticalRole: 'Ausnutzen von Überzahl und Tempo in Schwarmtaktiken.',
         strengths: 'Sehr wendig, hohe Verfügbarkeit, schnelle Startbereitschaft.',
@@ -962,7 +1088,9 @@
         deployment: 'Schwere Angriffe und Belagerungseinsätze',
         firstAppearance: 'Kanonischer Bomber',
         status: 'Canon',
-        description: 'Ein spezialisierter Bomber, konstruiert für präzise Bombardements gegen Raumstationen und Schlachtschiffe.',
+        era: 'Imperiale Ära',
+        affiliation: 'Galactic Empire',
+        description: 'Ein spezialisierter Bomber für präzise Bombardements.',
         technicalOverview: 'Dualrumpf-Design mit voluminösen Bombenschächten.',
         tacticalRole: 'Bombardement strategischer Ziele',
         strengths: 'Hohe Bombenladung, starke Trefferwirkung.',
@@ -973,28 +1101,30 @@
         power: 65,
       },
       {
-        id: 'scimitar-bomber',
-        name: 'Scimitar Assault Bomber',
-        category: 'Bombers',
-        shipClass: 'Scimitar Assault Bomber',
+        id: 'tie-interceptor',
+        name: 'TIE Interceptor',
+        category: 'Starfighters',
+        shipClass: 'TIE Interceptor',
         manufacturer: 'Sienar Fleet Systems',
-        length: '14,2 m',
-        crew: '2',
+        length: '7,4 m',
+        crew: '1',
         hyperdrive: 'Nein',
-        shields: 'Begrenzte Schilde',
-        primaryWeapons: '6 x Sprengbehälter',
-        deployment: 'Präzisionsangriffe',
-        firstAppearance: 'Legends-Spezialbomber',
-        status: 'Legends',
-        description: 'Ein schneller Angriffsbomber mit verbesserter Wendigkeit.',
-        technicalOverview: 'Verstärkte Antriebe mit Schildfeld und optimierten Bombenschächten.',
-        tacticalRole: 'Schnelle Bombereinsätze',
-        strengths: 'Schnell, wendiger, hohe Bombenlast.',
-        weaknesses: 'Begrenzte Schilde, hohe Sensoranfälligkeit.',
-        lengthValue: 14.2,
+        shields: 'Keine',
+        primaryWeapons: '4 x S-FS I Laserkanonen',
+        deployment: 'Elite-Jagdstaffeln',
+        firstAppearance: 'Kanonischer Abfangjäger',
+        status: 'Canon',
+        era: 'Imperiale Ära',
+        affiliation: 'Galactic Empire',
+        description: 'Ein verbesserter Jagdjäger mit vier Laserkanonen.',
+        technicalOverview: 'Verbesserte Antriebsanlage und vier Laserkanonen.',
+        tacticalRole: 'Abfangen und Luftüberlegenheit',
+        strengths: 'Höhere Feuerkraft, bessere Wendigkeit.',
+        weaknesses: 'Immer noch keine Schilde.',
+        lengthValue: 7.4,
         troopCapacity: '0',
-        fighterCapacity: '0',
-        power: 70,
+        fighterCapacity: '1',
+        power: 50,
       },
       {
         id: 'tie-advanced-x1',
@@ -1010,8 +1140,10 @@
         deployment: 'Eliteaufträge mit hoher Priorität',
         firstAppearance: 'Kanonische Jagdplatte',
         status: 'Canon',
-        description: 'Ein experimentelles Einzeljäger mit schwerer Bewaffnung und aktivem Schildsystem.',
-        technicalOverview: 'Verstärkte Rumpfstruktur mit modernen Sensoreinheiten und begrenztem Schildfeld.',
+        era: 'Imperiale Ära',
+        affiliation: 'Galactic Empire',
+        description: 'Ein experimentelles Einzeljäger mit schwerer Bewaffnung.',
+        technicalOverview: 'Verstärkte Rumpfstruktur mit modernen Sensoreinheiten.',
         tacticalRole: 'Abfangen feindlicher Führungseinheiten',
         strengths: 'Schildschutz, Torpedobewaffnung, sehr hohe Wendigkeit.',
         weaknesses: 'Einzelstück, hohe Wartungsanforderungen.',
@@ -1034,8 +1166,10 @@
         deployment: 'Elitejäger für besondere Missionen',
         firstAppearance: 'Legends-Elite-Jäger',
         status: 'Legends',
-        description: 'Ein hochentwickelter Jagdkampfflugzeug mit Hyperantrieb und Schilden.',
-        technicalOverview: 'Mit drei Doppel-Laserkanonen und vollständigem Schildsystem.',
+        era: 'Imperiale Ära',
+        affiliation: 'Galactic Empire',
+        description: 'Ein hochentwickelter Jagdkampfflugzeug mit Hyperantrieb.',
+        technicalOverview: 'Drei Doppel-Laserkanonen und vollständigem Schildsystem.',
         tacticalRole: 'Langstreckeneinsätze und Infiltration',
         strengths: 'Hyperraumfähig, schildgeschützt, hohe Feuerkraft.',
         weaknesses: 'Hohe Produktionskosten, komplexe Wartung.',
@@ -1043,6 +1177,427 @@
         troopCapacity: '0',
         fighterCapacity: '1',
         power: 75,
+      },
+      {
+        id: 'scimitar-bomber',
+        name: 'Scimitar Assault Bomber',
+        category: 'Bombers',
+        shipClass: 'Scimitar Assault Bomber',
+        manufacturer: 'Sienar Fleet Systems',
+        length: '14,2 m',
+        crew: '2',
+        hyperdrive: 'Nein',
+        shields: 'Begrenzte Schilde',
+        primaryWeapons: '6 x Sprengbehälter',
+        deployment: 'Präzisionsangriffe',
+        firstAppearance: 'Legends-Spezialbomber',
+        status: 'Legends',
+        era: 'Imperiale Ära',
+        affiliation: 'Galactic Empire',
+        description: 'Ein schneller Angriffsbomber mit verbesserter Wendigkeit.',
+        technicalOverview: 'Verstärkte Antriebe mit Schildfeld.',
+        tacticalRole: 'Schnelle Bombereinsätze',
+        strengths: 'Schnell, wendiger, hohe Bombenlast.',
+        weaknesses: 'Begrenzte Schilde, hohe Sensoranfälligkeit.',
+        lengthValue: 14.2,
+        troopCapacity: '0',
+        fighterCapacity: '0',
+        power: 70,
+      },
+      // REBELLION / NEW REPUBLIC SCHIFFE
+      {
+        id: 'mon-calamari-cruiser',
+        name: 'Mon Calamari Cruiser',
+        category: 'Cruisers',
+        shipClass: 'Mon Calamari Cruiser',
+        manufacturer: 'Mon Calamari Shipyards',
+        length: '1.300 m',
+        crew: '30.000',
+        hyperdrive: 'Ja, Klasse 1',
+        shields: 'Schildgeneratoren',
+        primaryWeapons: '36 x Turbolaserbatterien',
+        deployment: 'Flaggschiff der Allianz',
+        firstAppearance: 'Kanonisches Rebellenschiff',
+        status: 'Canon',
+        era: 'Rebel Ära',
+        affiliation: 'Rebel Alliance',
+        description: 'Ein organisches, fischförmiges Kreuzerdesign.',
+        technicalOverview: 'Organische Architektur mit ballistischen Schildsystemen.',
+        tacticalRole: 'Flaggschiff der Rebellenallianz',
+        strengths: 'Hervorragende Schilde, hohe Feuerkraft.',
+        weaknesses: 'Langsamer, schwerer zu manövrieren.',
+        lengthValue: 1300,
+        troopCapacity: '5.000',
+        fighterCapacity: '24',
+        power: 680,
+      },
+      {
+        id: 'cr90-corvette',
+        name: 'CR90 Corvette',
+        category: 'Frigates',
+        shipClass: 'CR90 Corvette',
+        manufacturer: 'Corellian Engineering Corporation',
+        length: '150 m',
+        crew: '30-165',
+        hyperdrive: 'Ja, Klasse 1',
+        shields: 'Schildgeneratoren',
+        primaryWeapons: '4 x Turbolaserbatterien',
+        deployment: 'Schnelle Einsätze und Aufklärung',
+        firstAppearance: 'Kanonisches Rebellenschiff',
+        status: 'Canon',
+        era: 'Rebel Ära',
+        affiliation: 'Rebel Alliance',
+        description: 'Eine schnelle und wendige Fregatte.',
+        technicalOverview: 'Elegantes Tatooine-Segelschiff-artiges Design.',
+        tacticalRole: 'Aufklärung und schnelle Angriffe',
+        strengths: 'Sehr schnell, manövrierfähig, Hyperraumfähig.',
+        weaknesses: 'Leichte Bewaffnung, limitierte Schildstärke.',
+        lengthValue: 150,
+        troopCapacity: '600',
+        fighterCapacity: '12',
+        power: 120,
+      },
+      {
+        id: 'nebulon-b',
+        name: 'Nebulon-B Frigate',
+        category: 'Frigates',
+        shipClass: 'Nebulon-B Frigate',
+        manufacturer: 'Kuat Drive Yards',
+        length: '300 m',
+        crew: '854',
+        hyperdrive: 'Ja, Klasse 1',
+        shields: 'Schildgeneratoren',
+        primaryWeapons: '12 x Turbolaserbatterien',
+        deployment: 'Flottenschutz und Blockaden',
+        firstAppearance: 'Kanonisches Rebellenschiff',
+        status: 'Canon',
+        era: 'Rebel Ära',
+        affiliation: 'Rebel Alliance',
+        description: 'Ein umgebautes Medizin- und Transportschiff.',
+        technicalOverview: 'Charakteristisches langes Schiff mit hinten angesetzten Reaktoren.',
+        tacticalRole: 'Unterstützung und Flottenschutz',
+        strengths: 'Stabile Plattform, gute Bewaffnung, Trägerkapazität.',
+        weaknesses: 'Langsam, schwer zu manövrieren.',
+        lengthValue: 300,
+        troopCapacity: '1.200',
+        fighterCapacity: '12',
+        power: 280,
+      },
+      {
+        id: 'millennium-falcon',
+        name: 'Millennium Falcon',
+        category: 'Smuggling Vessels',
+        shipClass: 'YT-1300 Light Freighter',
+        manufacturer: 'Corellian Engineering Corporation',
+        length: '34,8 m',
+        crew: '6',
+        hyperdrive: 'Ja, Klasse 0,5',
+        shields: 'Schildgeneratoren',
+        primaryWeapons: '2 x Schwerlaser, 2 x Ionenkanonen',
+        deployment: 'Spezialaufträge und schnelle Flucht',
+        firstAppearance: 'Kanonisches legendäres Schiff',
+        status: 'Canon',
+        era: 'Multi-Era',
+        affiliation: 'Rebel Alliance',
+        description: 'Das legendärste Schiff der Galaxis.',
+        technicalOverview: 'Hochgradig modifiziert mit versteckten Blasterkanonen.',
+        tacticalRole: 'Schnelle Infiltration und Aufklärung',
+        strengths: 'Schnellster Hyperantrieb der bekannten Schiffe, wendbar.',
+        weaknesses: 'Kleine Bewaffnung, begrenzte Panzerung.',
+        lengthValue: 34.8,
+        troopCapacity: '6',
+        fighterCapacity: '0',
+        power: 200,
+      },
+      // SEPERATISTEN / DROID ARMEE
+      {
+        id: 'lucrehulk-dreadnought',
+        name: 'Lucrehulk-class Battleship',
+        category: 'Dreadnoughts',
+        shipClass: 'Lucrehulk-class Battleship',
+        manufacturer: 'Hoersch-Kessel Drive, Inc.',
+        length: '3.170 m',
+        crew: 'Droidenkontrollsystem',
+        hyperdrive: 'Ja, Klasse 2',
+        shields: 'Deflector Schilde',
+        primaryWeapons: '34 x Schwerlaserbatterien',
+        deployment: 'Flaggschiff der Separatisten-Droidenflotte',
+        firstAppearance: 'Kanonisches Kriegsschiff der Clone Wars',
+        status: 'Canon',
+        era: 'Clone Wars Era',
+        affiliation: 'Separatist Alliance',
+        description: 'Ein kugelförmiges Frachtschiff, umgerüstet zu Kriegszwecken.',
+        technicalOverview: 'Charakteristischer Ring-förmiger Rumpf um eine Zentralsphäre.',
+        tacticalRole: 'Flaggschiff und Droidenfertigung',
+        strengths: 'Massiv, kann Droiden vor Ort hergestellt.',
+        weaknesses: 'Langsam, Kontrollung durch zentrale KI.',
+        lengthValue: 3170,
+        troopCapacity: '400.000 Droiden',
+        fighterCapacity: '36',
+        power: 850,
+      },
+      {
+        id: 'providence-class',
+        name: 'Providence-class Carrier/Dreadnought',
+        category: 'Dreadnoughts',
+        shipClass: 'Providence-class Carrier/Dreadnought',
+        manufacturer: 'Techno Union',
+        length: '1.088 m',
+        crew: 'Droidenkontrollsystem',
+        hyperdrive: 'Ja, Klasse 1',
+        shields: 'Deflector Schilde',
+        primaryWeapons: '12 x Schwerlaserbatterien',
+        deployment: 'Flaggschiff und Träger',
+        firstAppearance: 'Kanonisches Separatisten-Flaggschiff',
+        status: 'Canon',
+        era: 'Clone Wars Era',
+        affiliation: 'Separatist Alliance',
+        description: 'Hochmodernes Separatisten-Kampfschiff.',
+        technicalOverview: 'Elegantes langgestrecktes Schiff mit ausgeprägtem Rumpf.',
+        tacticalRole: 'Flaggschiff und Träger',
+        strengths: 'Schnell, wendig, hohe Trägerkapazität.',
+        weaknesses: 'Schwächer als Imperial Destroyer.',
+        lengthValue: 1088,
+        troopCapacity: '20.000',
+        fighterCapacity: '144',
+        power: 580,
+      },
+      {
+        id: 'invisible-hand',
+        name: 'Invisible Hand',
+        category: 'Super Star Destroyers',
+        shipClass: 'Providence-class Carrier/Dreadnought',
+        manufacturer: 'Techno Union',
+        length: '1.088 m',
+        crew: '600+',
+        hyperdrive: 'Ja, Klasse 1',
+        shields: 'Deflector Schilde',
+        primaryWeapons: '12 x Schwerlaserbatterien',
+        deployment: 'Persönliches Flaggschiff',
+        firstAppearance: 'Kanonisches Oberkommando-Schiff',
+        status: 'Canon',
+        era: 'Clone Wars Era',
+        affiliation: 'Separatist Alliance',
+        description: 'Das persönliche Flaggschiff von General Grievous.',
+        technicalOverview: 'Eine Providence-Klasse mit besonderem Kommandoausstattung.',
+        tacticalRole: 'Kommando und Kontrolle',
+        strengths: 'Hochgradig modifiziert, schwer befestigt.',
+        weaknesses: 'Spezialschiff, einzigartig.',
+        lengthValue: 1088,
+        troopCapacity: '15.000',
+        fighterCapacity: '100',
+        power: 650,
+      },
+      // ERSTE ORDNUNG
+      {
+        id: 'finalizer',
+        name: 'Finalizer',
+        category: 'Star Destroyers',
+        shipClass: 'First Order Star Destroyer',
+        manufacturer: 'First Order',
+        length: '2.915 m',
+        crew: '38.000',
+        hyperdrive: 'Ja, Klasse 1',
+        shields: 'Schildgeneratoren',
+        primaryWeapons: '92 x Schwerlaserbatterien',
+        deployment: 'Flaggschiff der Ersten Ordnung',
+        firstAppearance: 'Kanonisches modernes Kriegsschiff',
+        status: 'Canon',
+        era: 'First Order Era',
+        affiliation: 'First Order',
+        description: 'Ein moderner Star Destroyer, größer und besser.',
+        technicalOverview: 'Kantige moderne Architektur mit Hyperspeed-Verteidigungssystem.',
+        tacticalRole: 'Flaggschiff der First Order',
+        strengths: 'Modern, größer, bessere Waffen.',
+        weaknesses: 'Neu und ungetestet in größerem Umfang.',
+        lengthValue: 2915,
+        troopCapacity: '20.000',
+        fighterCapacity: '120',
+        power: 900,
+      },
+      {
+        id: 'silencer',
+        name: 'TIE Silencer',
+        category: 'Starfighters',
+        shipClass: 'TIE Silencer',
+        manufacturer: 'First Order',
+        length: '9,7 m',
+        crew: '1',
+        hyperdrive: 'Ja, Klasse 1',
+        shields: 'Schildgenerator',
+        primaryWeapons: '3 x Laserkanonen',
+        deployment: 'Elite-Jagdstaffeln',
+        firstAppearance: 'Kanonischer Jagdjäger der First Order',
+        status: 'Canon',
+        era: 'First Order Era',
+        affiliation: 'First Order',
+        description: 'Ein moderner TIE-Jäger mit Hyperantrieb.',
+        technicalOverview: 'Futuristisches Design mit verbesserten Systemen.',
+        tacticalRole: 'Jagd und Luftüberlegenheit',
+        strengths: 'Hyperraumfähig, modern, Schildschutz.',
+        weaknesses: 'Noch experimentell.',
+        lengthValue: 9.7,
+        troopCapacity: '0',
+        fighterCapacity: '1',
+        power: 80,
+      },
+      // REPUBLIKANISCHE SCHIFFE (Clone Wars)
+      {
+        id: 'acclamator',
+        name: 'Acclamator-class Assault Ship',
+        category: 'Cruisers',
+        shipClass: 'Acclamator-class Assault Ship',
+        manufacturer: 'Kuat Drive Yards',
+        length: '645 m',
+        crew: '16.000',
+        hyperdrive: 'Ja, Klasse 1',
+        shields: 'Schildgeneratoren',
+        primaryWeapons: '24 x Turbolaserbatterien',
+        deployment: 'Truppenlandung und Unterstützung',
+        firstAppearance: 'Kanonisches Republik-Truppentransporter',
+        status: 'Canon',
+        era: 'Clone Wars Era',
+        affiliation: 'Galactic Republic',
+        description: 'Ein Truppentransporter mit Kriegsfähigkeit.',
+        technicalOverview: 'Spezialisiert auf Landungsoperationen mit Orbitalbeschuss.',
+        tacticalRole: 'Invasion und Landungsunterstützung',
+        strengths: 'Hohe Truppenkapazität, gute Bewaffnung.',
+        weaknesses: 'Langsam für schnelle Flucht.',
+        lengthValue: 645,
+        troopCapacity: '16.000 Klone',
+        fighterCapacity: '24',
+        power: 350,
+      },
+      {
+        id: 'venator',
+        name: 'Venator-class Star Destroyer',
+        category: 'Star Destroyers',
+        shipClass: 'Venator-class Star Destroyer',
+        manufacturer: 'Kuat Drive Yards',
+        length: '1.137 m',
+        crew: '7.400',
+        hyperdrive: 'Ja, Klasse 1',
+        shields: 'Schildgeneratoren',
+        primaryWeapons: '52 x Turbolaserbatterien',
+        deployment: 'Flaggschiff der Republic Navy',
+        firstAppearance: 'Kanonisches Schlachtschiff der Republic',
+        status: 'Canon',
+        era: 'Clone Wars Era',
+        affiliation: 'Galactic Republic',
+        description: 'Der Vorläufer des Imperial Star Destroyers.',
+        technicalOverview: 'Charakteristischer Pfeilvogel-Bug mit ausgeprägtem Flugdeck.',
+        tacticalRole: 'Flaggschiff und Flugzeugträger',
+        strengths: 'Gute Trägerkapazität, schnell.',
+        weaknesses: 'Weniger Feuerkraft als Imperial Destroyer.',
+        lengthValue: 1137,
+        troopCapacity: '10.000',
+        fighterCapacity: '132',
+        power: 480,
+      },
+      // ZUSÄTZLICHE KAMPFSCHIFFE
+      {
+        id: 'executor-super-star-destroyer',
+        name: 'Executor Super Star Destroyer',
+        category: 'Super Star Destroyers',
+        shipClass: 'Executor-class Dreadnought',
+        manufacturer: 'Kuat Drive Yards',
+        length: '19.000 m',
+        crew: '279.144',
+        hyperdrive: 'Ja, Klasse 1',
+        shields: 'Maximale Schildmatrix',
+        primaryWeapons: '100 x Schwerlaserbatterien',
+        deployment: 'Oberkommando und Kontrolle',
+        firstAppearance: 'Legends-Supersternzerstörer',
+        status: 'Legends',
+        era: 'Imperiale Ära',
+        affiliation: 'Galactic Empire',
+        description: 'Ein Riesenschiff mit extremer Feuerkraft.',
+        technicalOverview: 'Gigantischer Dreadnought mit massiven Energiesystemen.',
+        tacticalRole: 'Oberkommando',
+        strengths: 'Unvorstellbare Feuerkraft und Verteidigung.',
+        weaknesses: 'Sehr langsam und wendig.',
+        lengthValue: 19000,
+        troopCapacity: '380.000',
+        fighterCapacity: '144',
+        power: 1000,
+      },
+      {
+        id: 'bellator',
+        name: 'Bellator-class Star Dreadnought',
+        category: 'Dreadnoughts',
+        shipClass: 'Bellator-class Star Dreadnought',
+        manufacturer: 'Kuat Drive Yards',
+        length: '7.200 m',
+        crew: '279.000',
+        hyperdrive: 'Ja, Klasse 1',
+        shields: 'Maximale Schildmatrix',
+        primaryWeapons: '250 x Schwerlaserbatterien',
+        deployment: 'Flagship-Träger',
+        firstAppearance: 'Legends-Dreadnought',
+        status: 'Legends',
+        era: 'Imperiale Ära',
+        affiliation: 'Galactic Empire',
+        description: 'Ein Super-Dreadnought mit unglaublicher Feuerkraft.',
+        technicalOverview: 'Ein mobiler Planet mit Waffensystemen.',
+        tacticalRole: 'Zentrales Oberkommando',
+        strengths: 'Massive Feuerkraft, Trägerkapazität.',
+        weaknesses: 'Extrem langsam, riesige Zielscheibe.',
+        lengthValue: 7200,
+        troopCapacity: '300.000',
+        fighterCapacity: '200',
+        power: 1500,
+      },
+      {
+        id: 'razor-crest',
+        name: 'Razor Crest',
+        category: 'Smuggling Vessels',
+        shipClass: 'Custom-Built',
+        manufacturer: 'Unknown',
+        length: '14 m',
+        crew: '1-2',
+        hyperdrive: 'Ja, Klasse 1',
+        shields: 'Begrenzte Schilde',
+        primaryWeapons: '2 x Schwerlaser',
+        deployment: 'Kopfgeldjäger und Spezialaufträge',
+        firstAppearance: 'Kanonisches Schiff aus The Mandalorian',
+        status: 'Canon',
+        era: 'First Order Era',
+        affiliation: 'Neutral',
+        description: 'Ein unscheinbares Schiff für Spezialaufträge.',
+        technicalOverview: 'Robustes und zuverlässiges Design.',
+        tacticalRole: 'Infiltration und schnelle Flucht',
+        strengths: 'Unauffällig, zuverlässig, schnell.',
+        weaknesses: 'Schwache Bewaffnung, begrenzte Schilde.',
+        lengthValue: 14,
+        troopCapacity: '2',
+        fighterCapacity: '0',
+        power: 60,
+      },
+      {
+        id: 'x-wing',
+        name: 'X-Wing Fighter',
+        category: 'Starfighters',
+        shipClass: 'T-65B X-Wing Fighter',
+        manufacturer: 'Incom Corporation',
+        length: '12,5 m',
+        crew: '1',
+        hyperdrive: 'Ja, Klasse 1',
+        shields: 'Schildgeneratoren',
+        primaryWeapons: '4 x Blasterkanonen, 2 x Proton-Torpedos',
+        deployment: 'Elite-Jagdstaffeln',
+        firstAppearance: 'Kanonischer Rebellion-Jagdjäger',
+        status: 'Canon',
+        era: 'Rebel Ära',
+        affiliation: 'Rebel Alliance',
+        description: 'Der ikonische Jagdjäger der Rebellion.',
+        technicalOverview: '4 S-Foils-Design mit hoher Wendigkeit.',
+        tacticalRole: 'Jagd und Angriff auf Großziele',
+        strengths: 'Wendbar, Torpedobewaffnung, Hyperraumfähig.',
+        weaknesses: 'Einsitzerjäger, vulnerable gegen Massenangriffe.',
+        lengthValue: 12.5,
+        troopCapacity: '0',
+        fighterCapacity: '1',
+        power: 85,
       },
     ];
 
@@ -1052,6 +1607,9 @@ const state = {
       search: '',
       category: '',
       status: '',
+      era: '',
+      manufacturer: '',
+      affiliation: '',
       sort: 'name',
       activeShipId: null
     };
@@ -1060,6 +1618,9 @@ const state = {
       searchInput: document.getElementById('searchInput'),
       categoryFilter: document.getElementById('categoryFilter'),
       statusFilter: document.getElementById('statusFilter'),
+      eraFilter: document.getElementById('eraFilter'),
+      manufacturerFilter: document.getElementById('manufacturerFilter'),
+      affiliationFilter: document.getElementById('affiliationFilter'),
       sortSelect: document.getElementById('sortSelect'),
       categoryList: document.getElementById('categoryList'),
       detailPanel: document.getElementById('detailPanel'),
@@ -1097,7 +1658,10 @@ const state = {
         const matchesSearch = !state.search || normalizeText(ship.name).includes(state.search) || normalizeText(ship.shipClass).includes(state.search);
         const matchesCategory = !state.category || ship.category === state.category;
         const matchesStatus = !state.status || ship.status === state.status;
-        return matchesSearch && matchesCategory && matchesStatus;
+        const matchesEra = !state.era || ship.era === state.era;
+        const matchesManufacturer = !state.manufacturer || ship.manufacturer === state.manufacturer;
+        const matchesAffiliation = !state.affiliation || ship.affiliation === state.affiliation;
+        return matchesSearch && matchesCategory && matchesStatus && matchesEra && matchesManufacturer && matchesAffiliation;
       });
 
       filtered.sort((a, b) => {
@@ -1111,11 +1675,12 @@ const state = {
     }
 
     function renderCategoryAccordion() {
-      const categories = [...new Set(shipDatabase.map(s => s.category))].sort();
+      const filteredShips = getFilteredShips();
+      const categories = [...new Set(filteredShips.map(s => s.category))].sort();
       elements.categoryList.innerHTML = '';
 
       categories.forEach(cat => {
-        const ships = shipDatabase.filter(s => s.category === cat);
+        const ships = filteredShips.filter(s => s.category === cat);
         const details = document.createElement('details');
         
         const summary = document.createElement('summary');
@@ -1137,9 +1702,10 @@ const state = {
     }
 
     function updateDashboard() {
-      elements.totalShipsCount.textContent = shipDatabase.length;
-      elements.canonShipsCount.textContent = shipDatabase.filter(s => s.status === 'Canon').length;
-      elements.legendsShipsCount.textContent = shipDatabase.filter(s => s.status === 'Legends').length;
+      const filteredShips = getFilteredShips();
+      elements.totalShipsCount.textContent = filteredShips.length;
+      elements.canonShipsCount.textContent = filteredShips.filter(s => s.status === 'Canon').length;
+      elements.legendsShipsCount.textContent = filteredShips.filter(s => s.status === 'Legends').length;
     }
 
     function showDetail(shipId) {
@@ -1215,16 +1781,37 @@ const state = {
       elements.searchInput.addEventListener('input', e => {
         state.search = normalizeText(e.target.value);
         renderCategoryAccordion();
+        updateDashboard();
       });
 
       elements.categoryFilter.addEventListener('change', e => {
         state.category = e.target.value;
         renderCategoryAccordion();
+        updateDashboard();
       });
 
       elements.statusFilter.addEventListener('change', e => {
         state.status = e.target.value;
         renderCategoryAccordion();
+        updateDashboard();
+      });
+
+      elements.eraFilter.addEventListener('change', e => {
+        state.era = e.target.value;
+        renderCategoryAccordion();
+        updateDashboard();
+      });
+
+      elements.manufacturerFilter.addEventListener('change', e => {
+        state.manufacturer = e.target.value;
+        renderCategoryAccordion();
+        updateDashboard();
+      });
+
+      elements.affiliationFilter.addEventListener('change', e => {
+        state.affiliation = e.target.value;
+        renderCategoryAccordion();
+        updateDashboard();
       });
 
       elements.sortSelect.addEventListener('change', e => {
