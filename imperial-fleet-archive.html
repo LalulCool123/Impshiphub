@@ -3,59 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Imperiales Flottenarchiv | Galactic Empire Fan Reference</title>
+  <title>Imperiales Flottenarchiv | Galactic Empire Fleet Database</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
+
     :root {
-      --bg: #050505;
-      --panel: #0f1218;
-      --panel-alt: #161b23;
-      --border: rgba(110, 145, 235, 0.14);
-      --accent: #7ab6ff;
-      --accent-strong: #b2e4ff;
-      --text: #e7edf8;
-      --muted: #8a98b3;
-      --shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
-      --radius: 24px;
-      --radius-sm: 14px;
-      --font-sans: 'Orbitron', sans-serif;
-      --font-mono: 'Courier New', monospace;
+      --bg: #0a0e27;
+      --bg-secondary: #0f1420;
+      --panel: #1a1f3a;
+      --panel-hover: #232d52;
+      --border: rgba(122, 182, 255, 0.25);
+      --accent: #4db8ff;
+      --accent-strong: #7ab6ff;
+      --accent-bright: #b2e4ff;
+      --text-primary: #e7edf8;
+      --text-secondary: #a8b8d8;
+      --text-muted: #7a8aae;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+      --glow: 0 0 20px rgba(74, 184, 255, 0.3);
+      --radius: 20px;
+      --radius-sm: 12px;
+      --font-sans: 'Orbitron', monospace;
+      --font-mono: 'JetBrains Mono', monospace;
     }
 
     * {
       box-sizing: border-box;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(122, 182, 255, 0.42) transparent;
     }
 
     *::-webkit-scrollbar {
-      width: 10px;
-      height: 10px;
+      width: 12px;
     }
 
     *::-webkit-scrollbar-track {
-      background: transparent;
+      background: rgba(74, 184, 255, 0.05);
+      border-radius: 999px;
     }
 
     *::-webkit-scrollbar-thumb {
-      background: rgba(122, 182, 255, 0.34);
+      background: linear-gradient(180deg, var(--accent), var(--accent-strong));
       border-radius: 999px;
+      border: 2px solid var(--bg);
     }
 
     html, body {
       margin: 0;
       min-height: 100%;
-      background: radial-gradient(circle at top, rgba(55, 82, 120, 0.09), transparent 25%),
-                  radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.05), transparent 18%),
-                  var(--bg);
-      color: var(--text);
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(74, 184, 255, 0.08), transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.04), transparent 25%),
+        var(--bg);
+      color: var(--text-primary);
       font-family: var(--font-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
     body {
       position: relative;
-      overflow-x: hidden;
       padding: 0;
-      min-height: 100vh;
     }
 
     .starfield {
@@ -66,147 +73,204 @@
       overflow: hidden;
     }
 
-    .starfield span {
+    .starfield-star {
       position: absolute;
-      display: block;
       width: 2px;
       height: 2px;
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 50%;
       opacity: 0.8;
-      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
-      animation: sparkle 8s infinite ease-in-out;
-    }
-
-    .starfield span:nth-child(3n) {
-      animation-duration: 10s;
-      opacity: 0.55;
-    }
-
-    @keyframes sparkle {
-      0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
-      50% { transform: translateY(-6px) scale(1.2); opacity: 1; }
+      filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
     }
 
     .overlay {
-      content: '';
       position: fixed;
       inset: 0;
-      background: linear-gradient(0deg, rgba(5,5,5,0.94), rgba(5,5,5,0.2));
+      background: linear-gradient(180deg, rgba(10, 14, 39, 0.5), rgba(10, 14, 39, 0.95));
       z-index: 1;
       pointer-events: none;
+    }
+
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: linear-gradient(180deg, rgba(10, 14, 39, 0.95), rgba(10, 14, 39, 0.85));
+      border-bottom: 2px solid var(--border);
+      backdrop-filter: blur(12px);
+      padding: 12px 20px;
+    }
+
+    .top-nav-content {
+      max-width: 1900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .nav-logo {
+      font-size: 1.3rem;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav-quick-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      padding: 8px 14px;
+      background: rgba(74, 184, 255, 0.1);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-btn:hover {
+      background: rgba(74, 184, 255, 0.2);
+      color: var(--accent-bright);
+      border-color: var(--accent);
+      transform: translateY(-1px);
     }
 
     .app-shell {
       position: relative;
       z-index: 2;
-      width: min(1700px, 100%);
-      margin: 24px auto 36px;
+      margin-top: 70px;
+      width: 100%;
+      max-width: 1900px;
+      margin-left: auto;
+      margin-right: auto;
       display: grid;
-      grid-template-columns: 360px minmax(0, 1fr);
-      gap: 18px;
-      padding: 0 18px;
+      grid-template-columns: 340px 1fr;
+      gap: 20px;
+      padding: 20px;
+      min-height: calc(100vh - 70px);
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
     .panel {
-      background: rgba(12, 14, 18, 0.95);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(26, 31, 58, 0.7);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
       backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
       overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .panel:hover {
+      border-color: var(--accent);
+      box-shadow: var(--glow), var(--shadow);
     }
 
     .panel-header {
-      padding: 24px 24px 18px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(74, 184, 255, 0.15);
+      background: rgba(0, 0, 0, 0.3);
     }
 
-    .title-block {
-      display: grid;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .title-block h1 {
+    .panel-header h2 {
       margin: 0;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      letter-spacing: 0.32em;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: #d9e5ff;
-      line-height: 1.05;
-      text-shadow: 0 0 25px rgba(122, 183, 255, 0.21);
-    }
-
-    .title-block p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.96rem;
-      line-height: 1.7;
-      max-width: 38rem;
-    }
-
-    .control-grid {
-      display: grid;
-      gap: 12px;
-      padding-top: 8px;
+      color: var(--accent-bright);
     }
 
     .search-box,
     .filter-box,
     .sort-box {
       width: 100%;
-      padding: 14px 16px;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(18, 20, 26, 0.96);
-      color: var(--text);
-      font: 1rem var(--font-sans);
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(15, 20, 40, 0.6);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
       outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: all 0.2s ease;
     }
 
     .search-box:focus,
     .filter-box:focus,
     .sort-box:focus {
-      border-color: rgba(122, 183, 255, 0.45);
-      box-shadow: 0 0 0 3px rgba(122, 183, 255, 0.08);
+      border-color: var(--accent);
+      background: rgba(15, 20, 40, 0.9);
+      box-shadow: 0 0 15px rgba(74, 184, 255, 0.2);
     }
 
     .search-box::placeholder {
-      color: rgba(255, 255, 255, 0.44);
+      color: var(--text-muted);
     }
 
     .accordion-list {
-      padding: 0 16px 18px;
+      padding: 12px;
+      max-height: calc(100vh - 450px);
+      overflow-y: auto;
     }
 
     details {
-      margin: 0;
-      border-radius: 18px;
+      margin-bottom: 8px;
+      background: rgba(20, 25, 50, 0.5);
+      border: 1px solid rgba(74, 184, 255, 0.1);
+      border-radius: 12px;
       overflow: hidden;
-      margin-bottom: 12px;
-      background: rgba(17, 20, 27, 0.96);
-      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.2s ease;
+    }
+
+    details:hover {
+      border-color: var(--border);
+      background: rgba(20, 25, 50, 0.8);
+    }
+
+    details[open] {
+      background: rgba(20, 25, 50, 0.9);
     }
 
     summary {
       list-style: none;
-      padding: 18px 20px;
+      padding: 12px 14px;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 1rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: #c6d2eb;
-      position: relative;
-      transition: background 0.18s ease;
+      color: var(--text-secondary);
+      user-select: none;
+      transition: all 0.2s ease;
     }
 
     summary:hover {
-      background: rgba(122, 183, 255, 0.05);
+      color: var(--accent-bright);
+      background: rgba(74, 184, 255, 0.08);
     }
 
     summary::marker {
@@ -214,10 +278,11 @@
     }
 
     summary::after {
-      content: '\25be';
-      font-size: 0.85rem;
-      opacity: 0.75;
+      content: '▼';
+      font-size: 0.7rem;
+      opacity: 0.6;
       transition: transform 0.2s ease;
+      margin-left: auto;
     }
 
     details[open] summary::after {
@@ -225,629 +290,308 @@
     }
 
     .category-count {
-      font-size: 0.88rem;
-      color: var(--muted);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-left: auto;
     }
 
     .ship-list {
-      padding: 0 16px 16px;
-      display: grid;
-      gap: 12px;
-    }
-
-    .ship-card {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 14px;
-      align-items: center;
-      padding: 18px;
-      border-radius: 16px;
-      background: rgba(14, 16, 21, 0.98);
-      border: 1px solid rgba(255,255,255,0.05);
-      cursor: pointer;
-      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
-    }
-
-    .ship-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(122, 183, 255, 0.24);
-      background: rgba(22, 26, 34, 0.98);
-    }
-
-    .ship-card .meta {
+      padding: 8px;
       display: grid;
       gap: 6px;
     }
 
+    .ship-card {
+      padding: 12px;
+      background: rgba(15, 20, 40, 0.4);
+      border: 1px solid rgba(74, 184, 255, 0.1);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.85rem;
+    }
+
+    .ship-card:hover {
+      background: rgba(74, 184, 255, 0.12);
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
     .ship-name {
-      margin: 0;
-      font-size: 1.05rem;
-      color: #edf4ff;
-      letter-spacing: 0.02em;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 3px;
     }
 
     .ship-class {
-      margin: 0;
-      font-size: 0.94rem;
-      color: #d3d9ea;
+      font-size: 0.75rem;
+      color: var(--text-muted);
     }
 
-    .ship-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .ship-tag {
-      font-size: 0.8rem;
-      color: #b9c6e3;
-      background: rgba(255,255,255,0.05);
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .ship-quickline {
+    .main-content {
       display: grid;
-      gap: 4px;
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-
-    .ship-statline {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: 0.83rem;
-      color: rgba(255,255,255,0.74);
-    }
-
-    .ship-statline span {
-      background: rgba(255,255,255,0.04);
-      padding: 6px 10px;
-      border-radius: 999px;
-    }
-
-    .detail-panel {
-      display: grid;
-      gap: 16px;
-      padding: 22px 24px 22px;
+      gap: 20px;
+      grid-template-rows: auto 1fr;
     }
 
     .detail-panel.hidden {
-      display: none;
+      display: none !important;
+    }
+
+    .welcome-panel {
+      background: linear-gradient(135deg, rgba(74, 184, 255, 0.1), rgba(122, 182, 255, 0.08));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 30px;
+      text-align: center;
+    }
+
+    .welcome-panel h1 {
+      font-size: 2.5rem;
+      margin: 0 0 10px;
+      letter-spacing: 0.2em;
+      background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .welcome-panel p {
+      color: var(--text-secondary);
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.6;
     }
 
     .detail-header {
       display: grid;
-      gap: 10px;
-      padding: 22px;
-      border-radius: 24px;
-      background: rgba(12, 15, 19, 0.97);
-      border: 1px solid rgba(255,255,255,0.06);
+      gap: 12px;
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(74, 184, 255, 0.08), rgba(122, 182, 255, 0.06));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
     }
 
     .detail-header h2 {
       margin: 0;
-      font-size: clamp(1.9rem, 3vw, 2.6rem);
+      font-size: 2rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: #f7faff;
+      color: var(--accent-bright);
     }
 
     .detail-header p {
       margin: 0;
       color: var(--accent);
-      font-size: 0.94rem;
-      letter-spacing: 0.18em;
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
+    }
+
+    .status-pill.canon {
+      background: rgba(76, 175, 80, 0.2);
+      color: #4caf50;
+      border: 1px solid rgba(76, 175, 80, 0.4);
+    }
+
+    .status-pill.legends {
+      background: rgba(255, 152, 0, 0.2);
+      color: #ffa500;
+      border: 1px solid rgba(255, 152, 0, 0.4);
     }
 
     .detail-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 360px;
+      grid-template-columns: 1fr 320px;
       gap: 20px;
     }
 
     .detail-main,
     .detail-side {
       display: grid;
-      gap: 18px;
+      gap: 16px;
     }
 
     .section-card {
-      background: rgba(16, 18, 23, 0.98);
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 22px;
-      padding: 22px;
-      box-shadow: inset 0 0 0 1px rgba(122, 183, 255, 0.04);
+      background: rgba(20, 25, 50, 0.5);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
     }
 
     .section-card h3 {
-      margin: 0 0 14px;
-      font-size: 1rem;
-      letter-spacing: 0.16em;
+      margin: 0 0 12px;
+      font-size: 0.95rem;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: #cacef4;
+      color: var(--accent-bright);
     }
 
     .data-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      font-size: 0.85rem;
     }
 
     .data-item {
       display: grid;
-      gap: 4px;
-      font-size: 0.92rem;
-      color: #dbe3f7;
+      gap: 3px;
     }
 
     .label {
-      color: var(--muted);
-      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.1em;
+      font-weight: 600;
     }
 
     .value {
-      color: #f1f7ff;
+      color: var(--text-primary);
       font-weight: 600;
     }
 
     .detail-body {
-      display: grid;
-      gap: 14px;
-      color: #d7e0f8;
-      line-height: 1.7;
-      font-size: 0.96rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-size: 0.9rem;
     }
 
     .detail-body p {
-      margin: 0;
+      margin: 0 0 12px;
     }
 
     .weapon-list {
       display: grid;
-      gap: 10px;
+      gap: 8px;
     }
 
     .weapon-item {
-      display: grid;
-      gap: 4px;
-      padding: 14px;
-      background: rgba(255,255,255,0.03);
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.06);
+      padding: 10px;
+      background: rgba(74, 184, 255, 0.08);
+      border: 1px solid rgba(74, 184, 255, 0.15);
+      border-radius: 10px;
     }
 
     .weapon-item strong {
       display: block;
-      color: #eef4ff;
+      color: var(--accent-bright);
+      margin-bottom: 3px;
     }
 
     .weapon-item span {
-      color: #b7c4e1;
-      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
     }
 
     .chart-card {
       display: grid;
-      gap: 14px;
-      padding: 20px;
-      border-radius: 22px;
-      background: rgba(18, 21, 29, 0.98);
-      border: 1px solid rgba(255,255,255,0.05);
+      gap: 12px;
+      padding: 18px;
+      background: rgba(20, 25, 50, 0.5);
+      border: 1px solid var(--border);
+      border-radius: 16px;
     }
 
     .chart-title {
       margin: 0;
-      color: #d4e6ff;
-      letter-spacing: 0.14em;
+      color: var(--accent-bright);
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
     .chart-row {
       display: flex;
-      gap: 14px;
+      gap: 8px;
       align-items: flex-end;
-      min-height: 180px;
+      height: 150px;
     }
 
     .chart-bar {
       flex: 1;
-      min-width: 50px;
-      border-radius: 24px 24px 0 0;
-      background: linear-gradient(180deg, rgba(122,183,255,0.95), rgba(35,53,92,0.96));
+      min-width: 30px;
+      border-radius: 10px 10px 0 0;
+      background: linear-gradient(180deg, var(--accent), rgba(74, 184, 255, 0.3));
       position: relative;
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      padding-bottom: 10px;
-      transition: background 0.2s ease;
+      padding-bottom: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .chart-bar:hover {
+      background: linear-gradient(180deg, var(--accent-bright), var(--accent));
+      filter: drop-shadow(0 0 10px rgba(74, 184, 255, 0.4));
     }
 
     .chart-bar span {
       position: absolute;
-      top: 10px;
-      width: 100%;
-      color: #e4efff;
-      text-align: center;
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-    }
-
-    .chart-bar::after {
-      content: attr(data-label);
-      position: absolute;
-      bottom: -24px;
-      width: 100%;
-      text-align: center;
-      color: #bfc9e5;
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-    }
-
-    .comparison-pane {
-      display: grid;
-      gap: 14px;
-    }
-
-    .comparison-preview {
-      display: grid;
-      gap: 12px;
-    }
-
-    .scale-row {
-      display: flex;
-      align-items: flex-end;
-      gap: 12px;
-      min-height: 160px;
-    }
-
-    .scale-item {
-      display: grid;
-      place-items: center;
-      gap: 6px;
-      padding: 14px 12px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-      color: #d3dce8;
-      min-width: 88px;
-      text-align: center;
-    }
-
-    .scale-item strong {
-      color: #f1f7ff;
-      font-size: 1rem;
-      line-height: 1.2;
-    }
-
-    .svg-panel {
-      display: grid;
-      gap: 16px;
-      border-radius: 22px;
-      padding: 18px;
-      background: rgba(14,16,21,0.98);
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .svg-panel svg {
-      width: 100%;
-      height: auto;
-      min-height: 160px;
-      background: linear-gradient(180deg, rgba(11,13,18,0.99), rgba(24,28,36,0.96));
-      border-radius: 18px;
-      overflow: visible;
-    }
-
-    .svg-labels {
-      display: grid;
-      gap: 10px;
-    }
-
-    .svg-labels span {
-      display: inline-flex;
-      gap: 0.5rem;
-      align-items: center;
-      color: #c4d2ed;
-      font-size: 0.89rem;
-    }
-
-    .svg-labels span::before {
-      content: '';
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    .button-row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      padding-top: 6px;
-    }
-
-    .action-button {
-      border: none;
-      color: #f5faff;
-      background: linear-gradient(135deg, rgba(122,183,255,0.98), rgba(73,118,180,0.98));
-      padding: 14px 18px;
-      border-radius: 999px;
-      cursor: pointer;
-      font: 0.94rem var(--font-sans);
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      transition: transform 0.18s ease, box-shadow 0.2s ease;
-    }
-
-    .action-button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 18px 34px rgba(93, 145, 246, 0.22);
-    }
-
-    .secondary-button {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: #dce7ff;
-    }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.08);
-      text-transform: uppercase;
-      font-size: 0.78rem;
-      letter-spacing: 0.16em;
-      font-weight: 700;
-    }
-
-    .status-pill.canon {
-      background: rgba(75, 155, 255, 0.1);
-      border-color: rgba(75, 155, 255, 0.22);
-      color: #c8ebff;
-    }
-
-    .status-pill.legends {
-      background: rgba(255, 170, 80, 0.12);
-      border-color: rgba(255, 170, 80, 0.22);
-      color: #ffebba;
-    }
-
-    .panel-legend {
-      display: grid;
-      gap: 16px;
-      padding: 20px 24px 22px;
-      color: #b8c3dd;
-      font-size: 0.94rem;
-      line-height: 1.7;
-    }
-
-    .dashboard-grid,
-    .status-grid,
-    .legend-grid {
-      display: grid;
-      gap: 14px;
-    }
-
-    .dashboard-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .dashboard-tile {
-      background: rgba(18, 21, 28, 0.96);
-      padding: 20px;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,0.06);
-      display: grid;
-      gap: 10px;
-    }
-
-    .dashboard-tile h4 {
-      margin: 0;
-      font-size: 0.92rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: #d0dbf1;
-    }
-
-    .dashboard-value {
-      margin: 0;
-      font-size: 2.4rem;
-      color: #f4fbff;
-      line-height: 1;
-    }
-
-    .dashboard-subtle {
-      margin: 0;
-      color: #90a1c2;
-      font-size: 0.9rem;
-    }
-
-    .status-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .status-tile {
-      background: rgba(255,255,255,0.03);
-      padding: 18px;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.06);
-      display: grid;
-      gap: 10px;
-    }
-
-    .status-tile span {
-      color: #b0bfdb;
-      font-size: 0.82rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .status-tile strong {
-      color: #f0f7ff;
-      font-size: 1.9rem;
-      line-height: 1;
-    }
-
-    .note-box {
-      padding: 20px;
-      border-radius: 20px;
-      background: rgba(22, 26, 33, 0.98);
-      border-left: 4px solid rgba(122, 183, 255, 0.7);
-      color: #d1dbf4;
-      line-height: 1.65;
-    }
-
-    .note-box strong {
-      color: #eff5ff;
-    }
-
-    .legend-chip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-      color: #cfd9ec;
-      font-size: 0.82rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .interactive-ship {
-      display: grid;
-      gap: 16px;
-      border-radius: 22px;
-      background: rgba(14, 16, 21, 0.96);
-      border: 1px solid rgba(255,255,255,0.05);
-      padding: 20px;
-    }
-
-    .ship-scene {
-      position: relative;
-      width: 100%;
-      min-height: 280px;
-      border-radius: 20px;
-      overflow: hidden;
-      background: radial-gradient(circle at 50% 40%, rgba(125, 183, 255, 0.12), transparent 36%),
-                  linear-gradient(180deg, rgba(14, 18, 25, 1), rgba(6, 8, 12, 1));
-    }
-
-    .ship-sprite {
-      position: absolute;
-      left: 50%;
       top: 50%;
-      width: 180px;
-      height: 180px;
-      transform: translate(-50%, -50%);
-      transition: transform 0.25s ease;
-      opacity: 0.96;
-    }
-
-    .ship-sprite:hover {
-      transform: translate(-50%, -50%) scale(1.03) rotate(8deg);
-    }
-
-    .ship-stage-controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .ship-stage-controls button {
-      flex: 1;
-      min-width: 110px;
-      padding: 12px 14px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 999px;
-      color: #dce6f5;
-      cursor: pointer;
-      font: 0.9rem var(--font-sans);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      transition: background 0.2s ease;
-    }
-
-    .ship-stage-controls button.active,
-    .ship-stage-controls button:hover {
-      background: rgba(122, 183, 255, 0.14);
-    }
-
-    .report-card {
-      padding: 20px;
-      border-radius: 22px;
-      background: rgba(15, 17, 21, 0.98);
-      border: 1px solid rgba(255,255,255,0.05);
-      min-height: 200px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .report-card pre {
-      margin: 0;
-      color: #dbe8ff;
-      font-size: 0.88rem;
-      line-height: 1.6;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    .footer-note {
-      margin-top: 30px;
-      color: #7d8ca2;
-      font-size: 0.9rem;
+      transform: translateY(-50%);
+      color: var(--text-primary);
+      font-size: 0.7rem;
+      font-weight: 600;
       text-align: center;
-      padding: 10px 0;
     }
 
-    @media (max-width: 1180px) {
+    .back-button {
+      padding: 10px 16px;
+      background: rgba(74, 184, 255, 0.15);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--accent-bright);
+      cursor: pointer;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+    }
+
+    .back-button:hover {
+      background: rgba(74, 184, 255, 0.25);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 1200px) {
       .app-shell {
         grid-template-columns: 1fr;
       }
+
       .detail-grid {
         grid-template-columns: 1fr;
       }
-      .dashboard-grid,
-      .status-grid {
+
+      .data-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 760px) {
-      .app-shell {
-        margin: 0;
-        padding: 0 12px 18px;
+    @media (max-width: 768px) {
+      .top-nav-content {
+        flex-direction: column;
+        gap: 12px;
       }
-      .panel {
-        border-radius: 0;
-      }
-      .ship-card {
-        grid-template-columns: 1fr;
-      }
-      .data-grid {
-        grid-template-columns: 1fr;
-      }
-      .chart-row {
-        min-height: 140px;
-      }
-      .status-grid,
-      .legend-grid {
-        grid-template-columns: 1fr;
-      }
-      .ship-stage-controls button {
+
+      .nav-quick-links {
         width: 100%;
+      }
+
+      .app-shell {
+        margin-top: 120px;
       }
     }
   </style>
@@ -855,1980 +599,443 @@
 <body>
   <div class="starfield" id="starfield"></div>
   <div class="overlay"></div>
+
+  <nav class="top-nav">
+    <div class="top-nav-content">
+      <div class="nav-logo">⚔ Imperial Fleet Archive</div>
+      <div class="nav-quick-links">
+        <button class="nav-btn" onclick="scrollToCategory('Starfighters')">Jäger</button>
+        <button class="nav-btn" onclick="scrollToCategory('Bombers')">Bomber</button>
+        <button class="nav-btn" onclick="scrollToCategory('Cruisers')">Kreuzer</button>
+        <button class="nav-btn" onclick="scrollToCategory('Star Destroyers')">Zerstörer</button>
+        <button class="nav-btn" onclick="scrollToCategory('Dreadnoughts')">Dreadnoughts</button>
+        <button class="nav-btn" onclick="document.getElementById('searchInput').focus()">🔍 Suche</button>
+      </div>
+    </div>
+  </nav>
+
   <main class="app-shell">
-    <section class="panel">
-      <div class="panel-header">
-        <div class="title-block">
-          <h1>Imperiales Flottenarchiv</h1>
-          <p>Ein fanerstelltes Referenzarchiv für imperiale Schiffsklassen, aufgebaut als lokale, offline lauffähige Webanwendung mit strategischem Archivdesign.</p>
+    <aside class="sidebar">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>⚡ Filter & Suche</h2>
         </div>
-        <div class="control-grid">
-          <input id="searchInput" class="search-box" type="search" placeholder="Suche nach Schiff, Klasse, Hersteller…" aria-label="Suche" />
-          <select id="categoryFilter" class="filter-box" aria-label="Kategorie filtern"></select>
-          <select id="statusFilter" class="filter-box" aria-label="Status filtern">
-            <option value="all">Canon & Legends</option>
+        <div style="padding: 14px;">
+          <input id="searchInput" class="search-box" type="search" placeholder="Schiffname suchen…" aria-label="Suche" />
+          
+          <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; text-transform: uppercase; letter-spacing: 0.08em;">Kategorie</label>
+          <select id="categoryFilter" class="filter-box">
+            <option value="">Alle anzeigen</option>
+            <option value="Starfighters">Jagdflugzeuge</option>
+            <option value="Bombers">Bomber</option>
+            <option value="Shuttles">Raumfähren</option>
+            <option value="Interceptors">Abfangjäger</option>
+            <option value="Frigates">Fregatten</option>
+            <option value="Cruisers">Kreuzer</option>
+            <option value="Carriers">Träger</option>
+            <option value="Star Destroyers">Sternenzerstörer</option>
+            <option value="Dreadnoughts">Dreadnoughts</option>
+            <option value="Super Star Destroyers">Super-Sternenzerstörer</option>
+            <option value="Experimental Ships">Experimentell</option>
+            <option value="Support Ships">Unterstützung</option>
+          </select>
+
+          <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; text-transform: uppercase; letter-spacing: 0.08em;">Status</label>
+          <select id="statusFilter" class="filter-box">
+            <option value="">Alle</option>
             <option value="Canon">Canon</option>
             <option value="Legends">Legends</option>
           </select>
-          <select id="sizeFilter" class="filter-box" aria-label="Größe filtern">
-            <option value="all">Alle Größen</option>
-            <option value="small">Klein &lt; 15 m</option>
-            <option value="medium">Mittel 15 - 120 m</option>
-            <option value="large">Groß &gt; 120 m</option>
-          </select>
-          <select id="manufacturerFilter" class="filter-box" aria-label="Hersteller filtern"></select>
-          <select id="sortSelect" class="sort-box" aria-label="Sortierung auswählen">
-            <option value="alpha">Alphabetisch</option>
-            <option value="length">Länge</option>
-            <option value="crew">Besatzung</option>
-            <option value="power">Waffenstärke</option>
+
+          <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; text-transform: uppercase; letter-spacing: 0.08em;">Sortierung</label>
+          <select id="sortSelect" class="sort-box">
+            <option value="name">Nach Name</option>
+            <option value="length">Nach Größe</option>
+            <option value="crew">Nach Besatzung</option>
+            <option value="category">Nach Kategorie</option>
           </select>
         </div>
       </div>
-      <div class="accordion-list" id="accordionContainer"></div>
-    </section>
 
-    <section class="panel detail-panel hidden" id="detailPanel" aria-live="polite">
-      <div class="detail-header">
-        <span class="status-pill" id="detailStatusLabel">Status</span>
-        <h2 id="detailName">Imperialer Archivdatensatz</h2>
-        <p id="detailSubtitle">Wähle ein Schiff, um umfassende Daten anzuzeigen.</p>
-      </div>
-      <div class="detail-grid">
-        <div class="detail-main">
-          <div class="section-card">
-            <h3>Technische Daten</h3>
-            <div class="data-grid" id="techDataGrid"></div>
-          </div>
-
-          <div class="section-card detail-body" id="descriptionCard"></div>
-
-          <div class="section-card">
-            <h3>Strategische Rolle</h3>
-            <p id="tacticalRole"></p>
-            <h3>Stärken</h3>
-            <p id="strengths"></p>
-            <h3>Schwächen</h3>
-            <p id="weaknesses"></p>
-          </div>
-
-          <div class="section-card">
-            <h3>Waffenübersicht</h3>
-            <div class="weapon-list" id="weaponOverview"></div>
-          </div>
-
-          <div class="section-card interactive-ship">
-            <h3>Interaktive Schiffsdarstellung</h3>
-            <div class="ship-scene" id="shipScene">
-              <div class="ship-sprite" id="shipSprite"></div>
-            </div>
-            <div class="ship-stage-controls" id="shipViewButtons"></div>
-          </div>
+      <div class="panel">
+        <div class="panel-header">
+          <h2>📊 Übersicht</h2>
         </div>
-
-        <aside class="detail-side">
-          <div class="section-card">
-            <h3>Diagramme</h3>
-            <p class="chart-title">Längenvergleich</p>
-            <div class="chart-card" id="lengthChart"></div>
-          </div>
-
-          <div class="section-card comparison-pane">
-            <h3>Größenvergleich</h3>
-            <div class="comparison-preview" id="comparisonPreview"></div>
-          </div>
-
-          <div class="section-card">
-            <h3>Zusammenfassung</h3>
-            <div class="legend-grid">
-              <span class="legend-chip">Kategorie: <strong id="detailCategory"></strong></span>
-              <span class="legend-chip">Hersteller: <strong id="detailManufacturer"></strong></span>
-              <span class="legend-chip">Klassifizierung: <strong id="detailClass"></strong></span>
+        <div style="padding: 14px;">
+          <div style="display: grid; gap: 8px;">
+            <div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;">Gesamt Schiffe</div>
+              <div style="font-size: 1.8rem; font-weight: 700; color: var(--accent-bright);" id="totalShipsCount">0</div>
             </div>
-            <div class="status-grid" id="statusTiles"></div>
-          </div>
-
-          <div class="section-card report-card">
-            <h3>Datensatzbericht</h3>
-            <pre id="reportText">Wähle ein Schiff, um den vorläufigen Einsatzbericht anzuzeigen.</pre>
-          </div>
-        </aside>
-      </div>
-      <div class="button-row">
-        <button class="action-button secondary-button" id="backButton">Zurück zur Archivliste</button>
-      </div>
-    </section>
-
-    <section class="panel">
-      <div class="panel-header">
-        <h3>Statistiken-Dashboard</h3>
-      </div>
-      <div class="panel-legend">
-        <div class="dashboard-grid">
-          <div class="dashboard-tile">
-            <h4>Gesamtdatensätze</h4>
-            <p class="dashboard-value" id="totalShips">0</p>
-            <p class="dashboard-subtle">Anzahl aller erfassten imperialen Schiffe.</p>
-          </div>
-          <div class="dashboard-tile">
-            <h4>Canon-Schiffe</h4>
-            <p class="dashboard-value" id="totalCanon">0</p>
-            <p class="dashboard-subtle">Schiffe mit offiziell bestätigtem Hintergrund.</p>
-          </div>
-          <div class="dashboard-tile">
-            <h4>Legends-Datensätze</h4>
-            <p class="dashboard-value" id="totalLegends">0</p>
-            <p class="dashboard-subtle">Ausgedehnte Flottenvarianten aus erweiterten Quellen.</p>
-          </div>
-          <div class="dashboard-tile">
-            <h4>Kategorien</h4>
-            <p class="dashboard-value" id="totalCategories">0</p>
-            <p class="dashboard-subtle">Geordnet nach taktischer Funktion der Einheiten.</p>
+            <div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;">Canon Schiffe</div>
+              <div style="font-size: 1.5rem; font-weight: 700; color: #4caf50;" id="canonShipsCount">0</div>
+            </div>
+            <div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;">Legends Schiffe</div>
+              <div style="font-size: 1.5rem; font-weight: 700; color: #ffa500;" id="legendsShipsCount">0</div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
 
-    <section class="panel">
-      <div class="panel-header">
-        <h3>Hinweis</h3>
+      <div class="panel">
+        <div class="panel-header">
+          <h2>🚀 Kategorien</h2>
+        </div>
+        <div class="accordion-list" id="categoryList"></div>
       </div>
-      <div class="panel-legend">
-        <p>Dies ist eine lokal laufende, fan-erstellte Anwendung. Sämtliche Beschreibungen und Analysen sind originell formuliert und dienen als kreatives Referenzblatt des Imperiums.</p>
+    </aside>
+
+    <section class="main-content">
+      <div class="detail-panel hidden" id="detailPanel">
+        <button class="back-button" onclick="hideDetail()">← Zurück zur Liste</button>
+        
+        <div class="detail-header">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span class="status-pill canon" id="detailStatusLabel">Status</span>
+            <h2 id="detailName" style="margin: 0;">Schiff auswählen</h2>
+          </div>
+          <p id="detailSubtitle">Wähle ein Schiff für Details</p>
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-main">
+            <div class="section-card">
+              <h3>📋 Basis Informationen</h3>
+              <div class="data-grid">
+                <div class="data-item">
+                  <div class="label">Kategorie</div>
+                  <div class="value" id="detailCategory">—</div>
+                </div>
+                <div class="data-item">
+                  <div class="label">Hersteller</div>
+                  <div class="value" id="detailManufacturer">—</div>
+                </div>
+                <div class="data-item">
+                  <div class="label">Klasse</div>
+                  <div class="value" id="detailClass">—</div>
+                </div>
+                <div class="data-item">
+                  <div class="label">Status</div>
+                  <div class="value" id="detailStatusText">—</div>
+                </div>
+                <div class="data-item">
+                  <div class="label">Länge</div>
+                  <div class="value" id="detailLength">—</div>
+                </div>
+                <div class="data-item">
+                  <div class="label">Besatzung</div>
+                  <div class="value" id="detailCrew">—</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-card">
+              <h3>📝 Beschreibung</h3>
+              <div class="detail-body" id="descriptionCard"></div>
+            </div>
+
+            <div class="section-card">
+              <h3>⚔️ Bewaffnung</h3>
+              <div class="weapon-list" id="weaponsList"></div>
+            </div>
+
+            <div class="section-card">
+              <h3>📊 Größenvergleich</h3>
+              <div class="chart-row" id="lengthChart"></div>
+            </div>
+          </div>
+
+          <div class="detail-side">
+            <div class="section-card">
+              <h3>🎯 Rolle & Einsatz</h3>
+              <div class="detail-body">
+                <strong style="color: var(--accent);">Taktische Rolle:</strong>
+                <div id="tacticalRole" style="margin-top: 6px; color: var(--text-secondary);">—</div>
+              </div>
+            </div>
+
+            <div class="section-card">
+              <h3>✅ Stärken</h3>
+              <div class="detail-body" id="strengths" style="color: #4caf50;">—</div>
+            </div>
+
+            <div class="section-card">
+              <h3>⚠️ Schwächen</h3>
+              <div class="detail-body" id="weaknesses" style="color: #ff9800;">—</div>
+            </div>
+
+            <div class="section-card">
+              <h3>🔧 Spezifikationen</h3>
+              <div class="data-grid">
+                <div class="data-item">
+                  <div class="label">Hyperantrieb</div>
+                  <div class="value" id="detailHyperdrive">—</div>
+                </div>
+                <div class="data-item">
+                  <div class="label">Schilde</div>
+                  <div class="value" id="detailShields">—</div>
+                </div>
+                <div class="data-item">
+                  <div class="label">Truppen</div>
+                  <div class="value" id="detailTroops">—</div>
+                </div>
+                <div class="data-item">
+                  <div class="label">Jäger</div>
+                  <div class="value" id="detailFighters">—</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="welcome-panel" id="welcomePanel">
+        <h1>⚡ IMPERIALES FLOTTENARCHIV</h1>
+        <p>Galaktisches Imperium Schiffsdatenbank<br>Wähle ein Schiff aus der Kategorie-Liste, um vollständige Informationen anzuzeigen</p>
       </div>
     </section>
   </main>
 
   <script>
-    /*
-      Imperial Fleet Archive
-      Diese JavaScript-Sektion steuert die Datenanzeige, Filterlogik und die Detailsicht.
-      Alle Inhalte sind intern, offline und ohne externe API-Anbindung vorhanden.
-    */
+    // Starfield Generator
+    function createStarfield() {
+      const container = document.getElementById('starfield');
+      const starCount = 200;
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'starfield-star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animation = `twinkle ${2 + Math.random() * 3}s infinite ease-in-out`;
+        star.style.animationDelay = Math.random() * 2 + 's';
+        container.appendChild(star);
+      }
+    }
 
+    // Starfield Animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes twinkle {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Schiff-Datenbank
     const shipDatabase = [
-      {
-        id: 'tie-fighter',
-        name: 'TIE Fighter',
-        category: 'Starfighters',
-        shipClass: 'Twin Ion Engine Fighter',
-        manufacturer: 'Sienar Fleet Systems',
-        length: '6,4 m',
-        width: '6,4 m',
-        height: '7,5 m',
-        crew: '1',
-        troopCapacity: '0',
-        fighterCapacity: '1',
-        hyperdrive: 'Nein',
-        shields: 'Keine',
-        primaryWeapons: '2 x S-FS I Laserkanonen',
-        secondaryWeapons: 'Keine',
-        deployment: 'Jagdstaffeln für schnelle Patrouillen und Unterstützungslinien.',
-        firstAppearance: 'Kanonische imperialer Jagdstaffel',
-        status: 'Canon',
-        knownShips: 'TIE Interceptor, TIE Advanced x1, TIE Bomber',
-        description: 'Der TIE Fighter ist ein puristischer Jagdjäger des Imperiums, entworfen für maximale Agilität und hohen Produktionsrhythmus. Seine schlanke Silhouette ist auf blitzschnelle Raumkämpfe zugeschnitten.',
-        technicalOverview: 'Geringe Panzerung, kein Hyperantrieb und ein doppelter Ionenantrieb erlauben schnelle Beschleunigung bei minimalem Materialaufwand und einfacher Wartung in imperialen Hangars.',
-        tacticalRole: 'Ausnutzen von Überzahl und Tempo in Schwarmtaktiken zur Bekämpfung feindlicher Fregatten und leichten Bombern.',
-        strengths: 'Sehr wendig, hohe Verfügbarkeit, schnelle Startbereitschaft.',
-        weaknesses: 'Keine Schilde, empfindlich gegen Treffer, kein Langstreckenpotential.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#7ab6ff" stroke-width="3"><path d="M60 60 Q120 20 180 60 Q120 100 60 60"/><path d="M180 60 L270 40 L300 40 L300 80 L270 80 Z"/><path d="M60 60 L30 25 L30 95 Z"/><path d="M180 60 L240 25"/><path d="M180 60 L240 95"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#6eb2ff" stroke-width="3"><path d="M180 20 L300 60 L300 100 L180 140 L60 100 L60 60 Z"/><path d="M180 20 L180 140"/><path d="M60 60 L20 30"/><path d="M60 100 L20 130"/></g></svg>',
-          front: '<svg viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#9ecbff" stroke-width="3"><path d="M80 20 L110 80 L110 140 L80 180 L50 140 L50 80 Z"/><path d="M30 70 L50 80"/><path d="M130 70 L110 80"/></g></svg>'
-        },
-        lengthValue: 6.4,
-        power: 38,
-        weapons: [
-          { label: 'Laserkanonen', detail: 'Zwei schnelle Strahlprojektoren für leichte bis mittelstarke Ziele.' }
-        ]
-      },
-      {
-        id: 'tie-advanced-x1',
-        name: 'TIE Advanced x1',
-        category: 'Starfighters',
-        shipClass: 'Experimentalsterngleiter',
-        manufacturer: 'Sienar Fleet Systems',
-        length: '6,7 m',
-        width: '6,8 m',
-        height: '8,0 m',
-        crew: '1',
-        troopCapacity: '0',
-        fighterCapacity: '1',
-        hyperdrive: 'Nein',
-        shields: 'Schildgenerator',
-        primaryWeapons: '2 x verbesserte Laserkanonen',
-        secondaryWeapons: '2 x Protonentorpedos',
-        deployment: 'Eliteaufträge mit hoher Priorität, Kommandoschutz und Spezialoperationen.',
-        firstAppearance: 'Kanonische Jagdplatte',
-        status: 'Canon',
-        knownShips: 'TIE Interceptor, TIE Bomber, TIE Defender',
-        description: 'Ein experimenteller Einzeljäger, der die Grenzen imperialer Standardjäger auslotet. Er kombiniert schwere Bewaffnung mit einem aktiven Schildsystem für selektive Spezialmissionen.',
-        technicalOverview: 'Diese Plattform verfügt über eine verstärkte Rumpfstruktur, moderne Sensoreinheiten und ein begrenztes aktives Schildfeld. Sie ist die Ausnahme unter den TIE-Baureihen.',
-        tacticalRole: 'Abfangen feindlicher Führungseinheiten, gezielte Jagd auf gegnerische Leitjagdschiffe und Eskorte für geheime Operationen.',
-        strengths: 'Schildschutz, Torpedobewaffnung, sehr hohe Wendigkeit.',
-        weaknesses: 'Einzelstück, hohe Wartungsanforderungen, begrenzte Reichweite.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#87c7ff" stroke-width="3"><path d="M70 60 Q120 30 180 60 Q120 90 70 60"/><path d="M180 60 L255 35 L295 35 L295 85 L255 85 Z"/><path d="M70 60 L35 25 L35 95 Z"/><path d="M180 60 L235 25"/><path d="M180 60 L235 95"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#a7d9ff" stroke-width="3"><path d="M180 25 L315 65 L315 95 L180 135 L45 95 L45 65 Z"/><path d="M180 25 L180 135"/><path d="M45 65 L10 35"/><path d="M45 95 L10 125"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#bdf0ff" stroke-width="3"><path d="M85 20 L125 90 L125 150 L85 190 L45 150 L45 90 Z"/><path d="M35 85 L45 95"/><path d="M135 85 L125 95"/></g></svg>'
-        },
-        lengthValue: 6.7,
-        power: 62,
-        weapons: [
-          { label: 'Protonentorpedos', detail: 'Zwei geignete Raketenanker für schwere Ziele und stärkere Raumziele.' },
-          { label: 'Schwere Laserkanonen', detail: 'Zwei überlegene Geschützsysteme mit hoher Feuerrate.' }
-        ]
-      },
-      {
-        id: 'tie-interceptor',
-        name: 'TIE Interceptor',
-        category: 'Interceptors',
-        shipClass: 'TIE Abfangjäger',
-        manufacturer: 'Sienar Fleet Systems',
-        length: '8,2 m',
-        width: '7,8 m',
-        height: '8,4 m',
-        crew: '1',
-        troopCapacity: '0',
-        fighterCapacity: '1',
-        hyperdrive: 'Nein',
-        shields: 'Keine',
-        primaryWeapons: '4 x Laserkanonen',
-        secondaryWeapons: '2 x Selbstzielende Raketen (optional)',
-        deployment: 'Abfangjäger für schnelle Verteidigungsaktionen und das Ausschalten feindlicher Jäger.',
-        firstAppearance: 'Kanonischer Abfangjäger',
-        status: 'Canon',
-        knownShips: 'TIE Fighter, TIE Bomber, TIE Advanced x1',
-        description: 'Der Interceptor ist eine schnelle Abfangplattform, die entworfen wurde, um Lücken im feindlichen Raumjägerschutz zu schließen und gegnerische Strukturen rasch zu stören.',
-        technicalOverview: 'Leichtes Chassis, große Flügel für erhöhte Manövrierfähigkeit und zusätzliche Laserpakete machen ihn ideal für schnelle Attacken in klaustrophobischem Raumkampf.',
-        tacticalRole: 'Ein schneller Störer, der feindliche Jäger bei Vorkämpfen einschüchtert und Flankenangriffe ausführt.',
-        strengths: 'Extrem schnelle Wendefähigkeit, starke Rüstung für einen Jäger, hohe Beschussdecks.',
-        weaknesses: 'Nein Schilde, niedrige Haltbarkeit gegen Großkampfschiffe, keine Langstreckensensorik.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#8dc3ff" stroke-width="3"><path d="M72 64 Q122 36 174 64 Q122 92 72 64"/><path d="M174 64 L270 40 L294 40 L294 80 L270 80 Z"/><path d="M72 64 L40 24 L40 104 Z"/><path d="M174 64 L242 27"/><path d="M174 64 L242 101"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#aae0ff" stroke-width="3"><path d="M180 22 L316 60 L316 98 L180 138 L44 98 L44 60 Z"/><path d="M180 22 L180 138"/><path d="M44 60 L8 34"/><path d="M44 98 L8 126"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c4f0ff" stroke-width="3"><path d="M85 18 L120 84 L120 150 L85 186 L50 150 L50 84 Z"/><path d="M40 80 L50 92"/><path d="M130 80 L120 92"/></g></svg>'
-        },
-        lengthValue: 8.2,
-        power: 52,
-        weapons: [
-          { label: 'Vier Laserkanonen', detail: 'Ein schweres Geschützbündel zur schnellen Gefechtsfeuerunterdrückung.' }
-        ]
-      },
-      {
-        id: 'tie-bomber',
-        name: 'TIE Bomber',
-        category: 'Bombers',
-        shipClass: 'TIE Bombardier',
-        manufacturer: 'Sienar Fleet Systems',
-        length: '12,5 m',
-        width: '11,2 m',
-        height: '7,8 m',
-        crew: '2',
-        troopCapacity: '0',
-        fighterCapacity: '0',
-        hyperdrive: 'Nein',
-        shields: 'Keine',
-        primaryWeapons: '4 x Sprengbehälter',
-        secondaryWeapons: '2 x Laserkanonen',
-        deployment: 'Schwere Trupps für präzise Angriffe auf Kriegsschiffe und Stationen.',
-        firstAppearance: 'Kanonischer Bomber',
-        status: 'Canon',
-        knownShips: 'TIE Fighter, TIE Interceptor, TIE Defender',
-        description: 'Ein spezialisierter Bomber, dessen Rumpf zwei unterschiedliche Behälter für Sprengsätze und Ionenladungen trägt. Ideal zur Zerstörung starker gegnerischer Systeme.',
-        technicalOverview: 'Konzipiert für schwere Nutzlasten und lange Anflugprofile. Die halbstarr montierten Antriebe erlauben stabile Kursverfolgung trotz hoher Bombenlast.',
-        tacticalRole: 'Unterstützung der Flottenlinie durch Zerstörung gegnerischer Schilde und Antriebsmechanismen.',
-        strengths: 'Hohe Sprengkraft, gezielte Angriffe auf Großziele, robuste Waffenplattform.',
-        weaknesses: 'Langsame Manövrierfähigkeit, verwundbar bei Abfangangriffen, keine Schilde.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#7fc6ff" stroke-width="3"><path d="M50 60 Q110 30 170 60 Q110 90 50 60"/><path d="M170 60 L255 35 L285 35 L285 85 L255 85 Z"/><path d="M50 60 L15 25 L15 95 Z"/><path d="M170 60 L225 25"/><path d="M170 60 L225 95"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#9dd7ff" stroke-width="3"><path d="M180 30 L310 70 L310 90 L180 130 L50 90 L50 70 Z"/><path d="M180 30 L180 130"/><path d="M50 70 L18 40"/><path d="M50 90 L18 120"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#b5e7ff" stroke-width="3"><path d="M85 24 L118 84 L118 146 L85 182 L52 146 L52 84 Z"/><path d="M42 80 L52 90"/><path d="M128 80 L118 90"/></g></svg>'
-        },
-        lengthValue: 12.5,
-        power: 65,
-        weapons: [
-          { label: 'Sprengbehälter', detail: 'Vier spezielle Bombencontainer für gepanzerte Ziele und Dockanlagen.' },
-          { label: 'Lasergeschütze', detail: 'Zwei Unterstützungswaffen zur Selbstverteidigung gegen leichte Jäger.' }
-        ]
-      },
-      {
-        id: 'lambda-shuttle',
-        name: 'Lambda-class Shuttle',
-        category: 'Shuttles',
-        shipClass: 'Lambda-class T-4a Shuttle',
-        manufacturer: 'Cygnus Spaceworks',
-        length: '20,0 m',
-        width: '20,4 m',
-        height: '6,6 m',
-        crew: '6',
-        troopCapacity: '20',
-        fighterCapacity: '0',
-        hyperdrive: 'Ja, Klasse 2',
-        shields: 'Schildprojektoren',
-        primaryWeapons: '2 x Laserkanonen',
-        secondaryWeapons: '1 x Ionenkanone',
-        deployment: 'Offizierstransport, Spezialmissionen, verdeckte Truppenverlegungen.',
-        firstAppearance: 'Imperiale Verkehrsflotte',
-        status: 'Canon',
-        knownShips: 'Sentinel-class Shuttle, Raider-class Transporter',
-        description: 'Ein vielseitiges Shuttle, das für den Transport hoher Offiziersränge und kleiner Einsatzgruppen entwickelt wurde. Seine Flügel lassen sich für Landung und Stillstand einfahren.',
-        technicalOverview: 'Das Shuttle kombiniert Mobilität und Schutz, mit einem stabilen Hyperantriebsmodul der Klasse 2 und einem aktiven Schildfeld zur Absicherung priorisierter Fracht.',
-        tacticalRole: 'Sicherer Transport von Führungskräften und schnellen Truppenaushebungen hinter feindlichen Linien.',
-        strengths: 'Flexibel, hyperraumfähig, gut geschützt für ein Shuttle.',
-        weaknesses: 'Begrenzte Feuerkraft, langsamer als ein Jäger, empfindlich gegen Raketenangriffe.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#a4d5ff" stroke-width="3"><path d="M80 60 Q140 30 220 60 Q140 90 80 60"/><path d="M220 60 L285 40 L300 40 L300 80 L285 80 Z"/><path d="M80 60 L45 35 L45 85 Z"/><path d="M220 60 L250 30"/><path d="M220 60 L250 90"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c1efff" stroke-width="3"><path d="M180 30 L305 75 L305 85 L180 130 L55 85 L55 75 Z"/><path d="M180 30 L180 130"/><path d="M55 75 L20 45"/><path d="M55 85 L20 115"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d8f8ff" stroke-width="3"><path d="M85 28 L120 92 L120 152 L85 188 L50 152 L50 92 Z"/><path d="M40 88 L50 98"/><path d="M130 88 L120 98"/></g></svg>'
-        },
-        lengthValue: 20,
-        power: 40,
-        weapons: [
-          { label: 'Laserkanonen', detail: 'Zwei automatische Seitengeschütze für defensive Feuerunterstützung.' },
-          { label: 'Ionenkanone', detail: 'Ein mittlerer Strahler zur Unterdrückung von feindlichen Schiffsystemen.' }
-        ]
-      },
-      {
-        id: 'sentinel-shuttle',
-        name: 'Sentinel-class Shuttle',
-        category: 'Shuttles',
-        shipClass: 'Sentinel-class Landing Craft',
-        manufacturer: 'Rothana Heavy Engineering',
-        length: '18,8 m',
-        width: '17,6 m',
-        height: '6,2 m',
-        crew: '4',
-        troopCapacity: '24',
-        fighterCapacity: '0',
-        hyperdrive: 'Ja, Klasse 3',
-        shields: 'Schildprojektoren',
-        primaryWeapons: '2 x Modulare Laserkanonen',
-        secondaryWeapons: 'Geräuschloser Triebwerksmodus',
-        deployment: 'Marineinfanterieeinsätze, Gefangenentransport, sichere Landungspatrouillen.',
-        firstAppearance: 'Imperiale Landungseinheiten',
-        status: 'Legends',
-        knownShips: 'Lambda-class Shuttle, Raider-class Transporter',
-        description: 'Ein schwer gepanzertes Landungsshuttle, das primär für Invasionskräfte und geschützte Raumlandeoperationen entwickelt worden ist.',
-        technicalOverview: 'Die Konstruktion nutzt robuste Aufhängungssysteme, einen verstärkten Rumpf und eine variable Schubdüse für kontrollierte Einflüge in enger Atmosphäre.',
-        tacticalRole: 'Sichere Einbringung von Truppen in ungesicherten Landezonen sowie Störangriffe auf Frontlinien.',
-        strengths: 'Robustheit, Truppenraum, stabile Landefähigkeit.',
-        weaknesses: 'Langsamer Hyperantrieb, plünderbare Sensorpakete, eingeschränkte Agilität.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#95d3ff" stroke-width="3"><path d="M60 60 Q120 35 190 60 Q120 85 60 60"/><path d="M190 60 L280 45 L295 45 L295 75 L280 75 Z"/><path d="M60 60 L25 30 L25 90 Z"/><path d="M190 60 L245 30"/><path d="M190 60 L245 90"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#baf0ff" stroke-width="3"><path d="M180 28 L310 70 L310 90 L180 132 L50 90 L50 70 Z"/><path d="M180 28 L180 132"/><path d="M50 70 L20 42"/><path d="M50 90 L20 118"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#caf9ff" stroke-width="3"><path d="M85 30 L118 88 L118 152 L85 188 L52 152 L52 88 Z"/><path d="M42 86 L52 98"/><path d="M132 86 L118 98"/></g></svg>'
-        },
-        lengthValue: 18.8,
-        power: 35,
-        weapons: [
-          { label: 'Modulare Laserkanonen', detail: 'Zwei flexible Verteidigungswaffen für Nahbereichsschutz.' }
-        ]
-      },
-      {
-        id: 'assault-gunship',
-        name: 'Imperial Assault Gunship',
-        category: 'Gunships',
-        shipClass: 'Tactical Gunship',
-        manufacturer: 'Sienar Fleet Systems',
-        length: '32,5 m',
-        width: '28,0 m',
-        height: '9,0 m',
-        crew: '5',
-        troopCapacity: '12',
-        fighterCapacity: '0',
-        hyperdrive: 'Ja, Klasse 2',
-        shields: 'Schildprojektoren',
-        primaryWeapons: '4 x Schwerlasergeschütze',
-        secondaryWeapons: '2 x Schulter Raketenwerfer',
-        deployment: 'Schlachtfeldunterstützung in Atmosphären und im Weltraum.',
-        firstAppearance: 'Imperiale Marineaufklärung',
-        status: 'Legends',
-        knownShips: 'Arquitens-class, Carrack-class',
-        description: 'Ein breiter, gepanzerter Gunship, der Infanterie und leichte Fahrzeuge direkt hinter feindlichen Linien einsetzt.',
-        technicalOverview: 'Ausgelegt auf hohen Schutz und Feuerkraft, mit einem kombinierten Hypersprungantrieb zur schnellen Umverteilung auf den Schlachtfeldern.',
-        tacticalRole: 'Feuerunterstützung für Landeoperationen und Abwehr von Raumjägerangriffen gegen Truppentransporter.',
-        strengths: 'Schwer bewaffnet, gepanzert, vielseitig einsetzbar.',
-        weaknesses: 'Kompromiss bei Geschwindigkeit, hohe Signatur, auffällige Zielscheibe.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#70b8ff" stroke-width="3"><path d="M40 60 Q120 20 210 60 Q120 100 40 60"/><path d="M210 60 L280 50 L296 50 L296 70 L280 70 Z"/><path d="M40 60 L10 30 L10 90 Z"/><path d="M210 60 L260 22"/><path d="M210 60 L260 98"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#94d9ff" stroke-width="3"><path d="M180 28 L320 70 L320 90 L180 132 L40 90 L40 70 Z"/><path d="M180 28 L180 132"/><path d="M40 70 L10 36"/><path d="M40 90 L10 124"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#b4efff" stroke-width="3"><path d="M85 22 L128 90 L128 150 L85 186 L42 150 L42 90 Z"/><path d="M32 84 L42 96"/><path d="M138 84 L128 96"/></g></svg>'
-        },
-        lengthValue: 32.5,
-        power: 88,
-        weapons: [
-          { label: 'Schwerlaser', detail: 'Vier Langstreckengeschütze für Angriffe auf geschützte Ziele.' },
-          { label: 'Raketenwerfer', detail: 'Zwei Geschütze zur Unterstützung von Bodenoperationen.' }
-        ]
-      },
-      {
-        id: 'raider-bomber',
-        name: 'Raider-class Bomber',
-        category: 'Bombers',
-        shipClass: 'Heavy Raider Bomber',
-        manufacturer: 'Kuat Systems Engineering',
-        length: '34,0 m',
-        width: '24,2 m',
-        height: '9,3 m',
-        crew: '3',
-        troopCapacity: '6',
-        fighterCapacity: '0',
-        hyperdrive: 'Ja, Klasse 1.5',
-        shields: 'Schildprojektoren',
-        primaryWeapons: '2 x Schwerlaserbatterien',
-        secondaryWeapons: '12 x Protonentorpedos',
-        deployment: 'Langstreckenangriffe gegen Transport- und Versorgungsschiffe.',
-        firstAppearance: 'Legendenbomber',
-        status: 'Legends',
-        knownShips: 'TIE Bomber, TIE Fighter, TIE Interceptor',
-        description: 'Ein schwerer Bomber, der sowohl strategische Gebäude als auch feindliche Großschiffe mit präzisem Gefechtskopfgeschoss bekämpft.',
-        technicalOverview: 'Die Plattform nutzt eine robuste Hülle und getrennte Bombenschächte, um Ladungen zielgerichtet abzuwerfen und mehrere Ziele hintereinander anzugreifen.',
-        tacticalRole: 'Verwenden von verdeckten Anflügen zur Störung gegnerischer Nachschublinien und Beschädigung von Brückensystemen.',
-        strengths: 'Schwere Ladung, Reichweite, starker Schutz für Bomberbesatzung.',
-        weaknesses: 'Langsam, leichtes Ziel für Abfangjäger, hoher Treibstoffverbrauch.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#76b5ff" stroke-width="3"><path d="M45 60 Q120 25 200 60 Q120 95 45 60"/><path d="M200 60 L285 48 L295 48 L295 72 L285 72 Z"/><path d="M45 60 L12 32 L12 88 Z"/><path d="M200 60 L255 20"/><path d="M200 60 L255 100"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#a9dfff" stroke-width="3"><path d="M180 32 L320 72 L320 88 L180 128 L40 88 L40 72 Z"/><path d="M180 32 L180 128"/><path d="M40 72 L10 44"/><path d="M40 88 L10 118"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#ccf7ff" stroke-width="3"><path d="M85 26 L130 92 L130 150 L85 186 L40 150 L40 92 Z"/><path d="M30 86 L40 98"/><path d="M140 86 L130 98"/></g></svg>'
-        },
-        lengthValue: 34,
-        power: 95,
-        weapons: [
-          { label: 'Protonentorpedos', detail: 'Zwölf schwere Raketen für punktgenaue Angriffe.' },
-          { label: 'Schwerlaserbatterien', detail: 'Zwei unterstützende Geschütze zur Selbstverteidigung.' }
-        ]
-      },
-      {
-        id: 'arquitens-cruiser',
-        name: 'Arquitens-class Cruiser',
-        category: 'Frigates',
-        shipClass: 'Arquitens Light Cruiser',
-        manufacturer: 'Rothana Heavy Engineering',
-        length: '325 m',
-        width: '207 m',
-        height: '75 m',
-        crew: '145',
-        troopCapacity: '600',
-        fighterCapacity: '18',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Standard-Schildgeneratoren',
-        primaryWeapons: '4 x Schwerlaserbatterien',
-        secondaryWeapons: '12 x Traktorstrahlprojektoren',
-        deployment: 'Eskorte, schnelle Eingreiftruppen und Aufklärung für Sternzerstörerverbände.',
-        firstAppearance: 'Kanonische Flottenbegleitung',
-        status: 'Canon',
-        knownShips: 'Imperial I-class Star Destroyer, Victory-class Star Destroyer',
-        description: 'Ein schlanker Kreuzer mit einer ausgeglichenen Mischung aus Feuerkraft, Geschwindigkeit und Unterstützungskapazität. Er dient als taktischer Bindeglied zwischen Zerstörern und schnellen Jägern.',
-        technicalOverview: 'Das Schiff verfügt über flexible Waffenpylonen, ein robustes Schildnetz und ein internes Hangarvolumen für mehrere Jäger und Landetruppen.',
-        tacticalRole: 'Begleitung großer Kampfverbände, Unterdrückung feindlicher Jäger und schnelle Einsatzunterstützung.',
-        strengths: 'Vielseitig, schnelle Reaktionszeit, gute Verteidigung für leichtere Schiffe.',
-        weaknesses: 'Nicht so massiv wie ein Star Destroyer, begrenzte Langstrecken-Raddarbereiche.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#77c7ff" stroke-width="3"><path d="M20 60 Q100 20 220 60 Q100 100 20 60"/><path d="M220 60 L290 48 L300 48 L300 72 L290 72 Z"/><path d="M20 60 L10 30 L10 90 Z"/><path d="M220 60 L250 22"/><path d="M220 60 L250 98"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#a5ddff" stroke-width="3"><path d="M180 30 L315 70 L315 90 L180 130 L45 90 L45 70 Z"/><path d="M180 30 L180 130"/><path d="M45 70 L18 42"/><path d="M45 90 L18 118"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c8f0ff" stroke-width="3"><path d="M85 24 L125 92 L125 150 L85 186 L45 150 L45 92 Z"/><path d="M35 88 L45 98"/><path d="M135 88 L125 98"/></g></svg>'
-        },
-        lengthValue: 325,
-        power: 210,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Vier schwere Batterieblöcke für Breitseitenfeuer.' },
-          { label: 'Traktorstrahlproj.', detail: 'Zwölf Projektoren zur Zielerfassung und Raumkontrolle.' }
-        ]
-      },
-      {
-        id: 'carrack-dreadnought',
-        name: 'Carrack-class Dreadnought',
-        category: 'Dreadnoughts',
-        shipClass: 'Carrack-class Heavy Cruiser',
-        manufacturer: 'Kuat Drive Yards',
-        length: '960 m',
-        width: '485 m',
-        height: '152 m',
-        crew: '2.725',
-        troopCapacity: '1.500',
-        fighterCapacity: '75',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Fortgeschrittene Schildbatterien',
-        primaryWeapons: '36 x Schwerlaserbatterien',
-        secondaryWeapons: '60 x Ionengeschütze',
-        deployment: 'Große Kampfverbände, Blockadeoperationen, Raumfestungsangriffe.',
-        firstAppearance: 'Legenden-dreadnought',
-        status: 'Legends',
-        knownShips: 'Arquitens-class, Interdictor-class, Mandator-class',
-        description: 'Ein schwer gepanzertes Dreadnought, das imperiale Schlagkraft und Abschreckung in einem einzigen Schiff bündelt. Entwickelt, um Raumgefechte zu dominieren und Flottenmissionen abzusichern.',
-        technicalOverview: 'Mit starker Panzerung, einem massiven Schildnetz und umfangreichen Hangarkapazitäten ist die Carrack darauf ausgelegt, anhaltende Engagements zu überstehen.',
-        tacticalRole: 'Führer des Hauptangriffs, gestützt durch Begleitschiffe zur Unterdrückung feindlicher Schilde und zur Sicherung strategischer Luftraumzonen.',
-        strengths: 'Immense Feuerkraft, starke Verteidigung, hohe Ausdauer.',
-        weaknesses: 'Langsam, energieintensiv, leichtes Ziel für kampfwertige Interdictor-Schiffe bei Unterbrechung der Schildstärke.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#6bb2ff" stroke-width="3"><path d="M15 60 Q140 20 260 60 Q140 100 15 60"/><path d="M260 60 L295 50 L305 50 L305 70 L295 70 Z"/><path d="M15 60 L5 30 L5 90 Z"/><path d="M260 60 L275 24"/><path d="M260 60 L275 96"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#97d9ff" stroke-width="3"><path d="M180 30 L320 70 L320 90 L180 130 L40 90 L40 70 Z"/><path d="M180 30 L180 130"/><path d="M40 70 L10 44"/><path d="M40 90 L10 116"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c6efff" stroke-width="3"><path d="M85 28 L125 94 L125 154 L85 188 L45 154 L45 94 Z"/><path d="M35 90 L45 100"/><path d="M135 90 L125 100"/></g></svg>'
-        },
-        lengthValue: 960,
-        power: 420,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Vierunddreißig schwere Batterien für umfassende Breitseitenangriffe.' },
-          { label: 'Ionengeschütze', detail: 'Sechzig Geschütze für elektronische Störungen und Schilddurchdringung.' }
-        ]
-      },
-      {
-        id: 'imperial-i',
-        name: 'Imperial I-class Star Destroyer',
-        category: 'Star Destroyers',
-        shipClass: 'Imperial-class Star Destroyer',
-        manufacturer: 'Kuat Drive Yards',
-        length: '1.600 m',
-        width: '850 m',
-        height: '365 m',
-        crew: '37.000',
-        troopCapacity: '9.700',
-        fighterCapacity: '72',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Fortgeschrittene Schildgeneratoren',
-        primaryWeapons: '60 x Schwerlaserbatterien',
-        secondaryWeapons: '40 x Ionenkanonen',
-        deployment: 'Verbandsführung, Unterdrückung von Aufständen und Raumblockaden.',
-        firstAppearance: 'Kanonischer Starkreuzer',
-        status: 'Canon',
-        knownShips: 'Imperial II-class, Victory-class, Executor-class',
-        description: 'Das Arbeitstier der imperialen Kriegsflotte. Der Imperial I-Class bietet einen ausgewogenen Mix aus Feuerkraft, Truppenkapazität und Festungspräsenz.',
-        technicalOverview: 'Mit einer mächtigen A-Schildmatrix, umfassenden Hangarkapazitäten und modularen Waffensystemen ist dieses Schiff bestens für die Unterstützung großer Flottenaufstellungen geeignet.',
-        tacticalRole: 'Hauptkampfschiff, das feindliche Linien durchbricht, Raumblockaden errichtet und Flottenbefehle ausführt.',
-        strengths: 'Robust, vielseitig, fähig zur Massenprojektion imperiale Macht.',
-        weaknesses: 'Schwerfällig, große Zielscheibe, hohe Betriebsanforderungen.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#66aaff" stroke-width="3"><path d="M20 60 Q180 10 300 60 Q180 110 20 60"/><path d="M300 60 L320 50 L320 70 Z"/><path d="M20 60 L0 30 L0 90 Z"/><path d="M300 60 L290 18"/><path d="M300 60 L290 102"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#8fcfff" stroke-width="3"><path d="M180 32 L340 72 L340 88 L180 128 L20 88 L20 72 Z"/><path d="M180 32 L180 128"/><path d="M20 72 L10 38"/><path d="M20 88 L10 122"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#bdeeff" stroke-width="3"><path d="M85 28 L145 94 L145 154 L85 188 L25 154 L25 94 Z"/><path d="M15 90 L25 100"/><path d="M155 90 L145 100"/></g></svg>'
-        },
-        lengthValue: 1600,
-        power: 520,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Sechzig schwere Batterien für präzise breite Feuerlinien.' },
-          { label: 'Ionenkanonen', detail: 'Vierzig Projektoren zur Energieentladung gegen elektronische Systeme.' }
-        ]
-      },
-      {
-        id: 'imperial-ii',
-        name: 'Imperial II-class Star Destroyer',
-        category: 'Star Destroyers',
-        shipClass: 'Imperial II-class Star Destroyer',
-        manufacturer: 'Kuat Drive Yards',
-        length: '1.620 m',
-        width: '850 m',
-        height: '365 m',
-        crew: '40.000',
-        troopCapacity: '10.500',
-        fighterCapacity: '75',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Fortgeschrittene Schildgeneratoren',
-        primaryWeapons: '68 x Schwerlaserbatterien',
-        secondaryWeapons: '44 x Ionenkanonen',
-        deployment: 'Verstärkte Operativeinsätze, Zerschlagung von Widerstandszellen und Eskortmissionen.',
-        firstAppearance: 'Kanonischer Nachfolger',
-        status: 'Canon',
-        knownShips: 'Imperial I-class, Eclipse-class, Executor-class',
-        description: 'Der Imperial II stellt eine verbesserte Variante mit stärkerer Feuerkraft und stabilisiertem Schildfeld dar. Er ist auf längere Missionen und härtere Gefechte ausgelegt.',
-        technicalOverview: 'Modernisierte Systeme, automatische Verteidigungsdrohnen und ein verfeinertes Hangardesign erweitern seine Einsatzreichweite gegenüber dem Vorgängermodell.',
-        tacticalRole: 'Verstärkte Linienformation, Frontbrecher und mobile Kommandozentrale.',
-        strengths: 'Mehr Waffen, stärkere Verteidigung, erhöhte Truppenreserven.',
-        weaknesses: 'Noch schwerfälliger als die Klasse I, hoher Wartungsaufwand.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#62a9ff" stroke-width="3"><path d="M20 60 Q180 10 300 60 Q180 110 20 60"/><path d="M300 60 L320 50 L320 70 Z"/><path d="M20 60 L0 30 L0 90 Z"/><path d="M300 60 L290 18"/><path d="M300 60 L290 102"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#8fd1ff" stroke-width="3"><path d="M180 32 L340 72 L340 88 L180 128 L20 88 L20 72 Z"/><path d="M180 32 L180 128"/><path d="M20 72 L10 38"/><path d="M20 88 L10 122"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c4ecff" stroke-width="3"><path d="M85 28 L145 94 L145 154 L85 188 L25 154 L25 94 Z"/><path d="M15 90 L25 100"/><path d="M155 90 L145 100"/></g></svg>'
-        },
-        lengthValue: 1620,
-        power: 560,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Erweiterte Batterieblöcke für verstärkte Feuerüberlegenheit.' },
-          { label: 'Ionenkanonen', detail: 'Vierzig Projektoren zur elektronischen Unterdrückung.' }
-        ]
-      },
-      {
-        id: 'victory-class',
-        name: 'Victory-class Star Destroyer',
-        category: 'Cruisers',
-        shipClass: 'Victory-class Star Destroyer',
-        manufacturer: 'Kuat Drive Yards',
-        length: '900 m',
-        width: '460 m',
-        height: '175 m',
-        crew: '27.000',
-        troopCapacity: '5.000',
-        fighterCapacity: '50',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Standard-Schildgeneratoren',
-        primaryWeapons: '32 x Schwerlaserbatterien',
-        secondaryWeapons: '22 x Ionenkanonen',
-        deployment: 'Patrouillen, Eskorte und Flottenlogistik im imperialen Kerngebiet.',
-        firstAppearance: 'Kanonischer Unterstützer',
-        status: 'Canon',
-        knownShips: 'Imperial I-class, Imperial II-class, Arquitens-class',
-        description: 'Ein kompakteres Schlachtschiff, das anstelle massiver Größe auf Effizienz und breitere Einsatzmöglichkeiten setzt. Es eignet sich besonders zur Präsenz in engen Systemen.',
-        technicalOverview: 'Das Victory verfügt über moderat starke Panzerung und ein gutes Hangarvolumen. Seine kompakte Form erlaubt bessere Manövrierbarkeit als größere Starkreuzer.',
-        tacticalRole: 'Konfliktdeeskalation, Patrouilleneinsätze und schnelle Unterstützung von Raumstationen.',
-        strengths: 'Effizient, breit eingesetzbar, schneller als größere Klassen.',
-        weaknesses: 'Begrenzte Schlagkraft gegenüber Super-Sternenzerstörern, mäßige Reichweite.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#82bfff" stroke-width="3"><path d="M25 60 Q150 25 280 60 Q150 95 25 60"/><path d="M280 60 L295 50 L295 70 Z"/><path d="M25 60 L5 30 L5 90 Z"/><path d="M280 60 L267 18"/><path d="M280 60 L267 102"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#b8e6ff" stroke-width="3"><path d="M180 32 L320 70 L320 90 L180 128 L40 90 L40 70 Z"/><path d="M180 32 L180 128"/><path d="M40 70 L12 42"/><path d="M40 90 L12 118"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d4f2ff" stroke-width="3"><path d="M85 25 L130 90 L130 150 L85 186 L40 150 L40 90 Z"/><path d="M30 84 L40 96"/><path d="M140 84 L130 96"/></g></svg>'
-        },
-        lengthValue: 900,
-        power: 260,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Dreißig Batterieeinheiten für ausgewogene Feuerkraft.' },
-          { label: 'Ionenkanonen', detail: 'Zweiundzwanzig Ionenstrahler zur elektronischen Störung.' }
-        ]
-      },
-      {
-        id: 'executor-class',
-        name: 'Executor-class Super Star Destroyer',
-        category: 'Super Star Destroyers',
-        shipClass: 'Executor-class Dreadnought',
-        manufacturer: 'Kuat Drive Yards',
-        length: '19.000 m',
-        width: '9.000 m',
-        height: '2.000 m',
-        crew: '279.144',
-        troopCapacity: '380.000',
-        fighterCapacity: '144',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Maximale Schildmatrix',
-        primaryWeapons: '100 x Schwerlaserbatterien',
-        secondaryWeapons: '60 x Ionenkanonen',
-        deployment: 'Flottenkommando, planetare Belagerung und Abschreckung im gesamten inneren Imperium.',
-        firstAppearance: 'Legends-Supersternzerstörer',
-        status: 'Legends',
-        knownShips: 'Imperial II-class, Eclipse-class, Mandator-class',
-        description: 'Der Executor ist ein monumentales Flaggschiff, konstruiert als bewegliche Festung, um selbst feindliche Schlachtflotten in Schach zu halten. Seine Präsenz allein ist strategisch einschüchternd.',
-        technicalOverview: 'Ein Extremprototyp mit riesigen Schildgeneratoren, massiven Traktorstrahlen und einer Vielzahl von Hangars zur Projektion imperialer Macht.',
-        tacticalRole: 'Zentraler Kommando- und Kontrollpunkt, der verbündete Streitkräfte koordiniert und feindliche Linien erdrückt.',
-        strengths: 'Unvorstellbare Feuerkraft, massive Verteidigung, enorme Truppenstärke.',
-        weaknesses: 'Sehr langsam, hoher Energiebedarf, Zielgröße macht es anfällig für koordinierte Präzisionsschläge.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#63a9ff" stroke-width="3"><path d="M5 60 Q150 20 310 60 Q150 100 5 60"/><path d="M310 60 L320 50 L320 70 Z"/><path d="M5 60 L0 28 L0 92 Z"/><path d="M310 60 L305 18"/><path d="M310 60 L305 102"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#8fc8ff" stroke-width="3"><path d="M180 34 L345 72 L345 88 L180 126 L15 88 L15 72 Z"/><path d="M180 34 L180 126"/><path d="M15 72 L5 38"/><path d="M15 88 L5 122"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c4f0ff" stroke-width="3"><path d="M85 26 L150 92 L150 150 L85 188 L20 150 L20 92 Z"/><path d="M10 88 L20 100"/><path d="M160 88 L150 100"/></g></svg>'
-        },
-        lengthValue: 19000,
-        power: 1000,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Hundert schwere Geschütze für geballte Feuerangriffe.' },
-          { label: 'Ionenkanonen', detail: 'Sechzig Projektoren zur Schwächung feindlicher Schildsysteme.' }
-        ]
-      },
-      {
-        id: 'bellator-class',
-        name: 'Bellator-class Dreadnought',
-        category: 'Dreadnoughts',
-        shipClass: 'Bellator-class Star Destroyer',
-        manufacturer: 'Slayn & Korpil',
-        length: '5.020 m',
-        width: '2.900 m',
-        height: '1.100 m',
-        crew: '82.000',
-        troopCapacity: '52.000',
-        fighterCapacity: '126',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Starke Schildmatrix',
-        primaryWeapons: '74 x Schwerlaserbatterien',
-        secondaryWeapons: '52 x Ionenkanonen',
-        deployment: 'Belagerungsoperationen, Flottenvorstöße und langsame Blockadeeinheiten.',
-        firstAppearance: 'Legenden-Dreadnought',
-        status: 'Legends',
-        knownShips: 'Imperial II-class, Executor-class, Mandator-class',
-        description: 'Eine furchterregende monochrome Kampfmaschine, die imperialen Stützpunkten zur Seite steht und die Flanken in groß angelegten Gefechten deckt.',
-        technicalOverview: 'Das Schiff verbindet eine breite Waffenaufstellung mit zusätzlichen Schilden und starken Antriebsreserven, um schwere Flächenverbände zu führen.',
-        tacticalRole: 'Führung schwerer Stoßtruppen, Blockaden und Durchbruchoperationen in dichtem Raumumfeld.',
-        strengths: 'Beeindruckende Feuerkraft, hoher Schutz, starke Truppenkapazität.',
-        weaknesses: 'Massiv, langsam, anfällig bei Verlust der Schildfeldkontrollen.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#6facff" stroke-width="3"><path d="M18 60 Q160 18 300 60 Q160 102 18 60"/><path d="M300 60 L320 50 L320 70 Z"/><path d="M18 60 L0 28 L0 92 Z"/><path d="M300 60 L288 20"/><path d="M300 60 L288 100"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#9bd7ff" stroke-width="3"><path d="M180 30 L345 70 L345 90 L180 130 L15 90 L15 70 Z"/><path d="M180 30 L180 130"/><path d="M15 70 L5 38"/><path d="M15 90 L5 122"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c9efff" stroke-width="3"><path d="M85 26 L145 96 L145 154 L85 188 L25 154 L25 96 Z"/><path d="M15 90 L25 102"/><path d="M155 90 L145 102"/></g></svg>'
-        },
-        lengthValue: 5020,
-        power: 670,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Vierundsiebzig schwere Blöcke für koordinierte Schlachtlinie.' },
-          { label: 'Ionenkanonen', detail: 'Zweiundfünfzig Systeme zur Energieneutralisation.' }
-        ]
-      },
-      {
-        id: 'mandator-class',
-        name: 'Mandator-class Capital Ship',
-        category: 'Experimental Ships',
-        shipClass: 'Mandator III-class Capital Ship',
-        manufacturer: 'Kuat Drive Yards',
-        length: '1.308 m',
-        width: '842 m',
-        height: '280 m',
-        crew: '48.000',
-        troopCapacity: '24.000',
-        fighterCapacity: '120',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Hochleistungs-Schildgeneratoren',
-        primaryWeapons: '48 x Schwerlaserbatterien',
-        secondaryWeapons: '32 x Ionenkanonen',
-        deployment: 'Technologieerprobung, Flottenversuche und Einsätze bei besonders komplexen Missionen.',
-        firstAppearance: 'Legenden-experimentell',
-        status: 'Legends',
-        knownShips: 'Executor-class, Bellator-class, Assertor-class',
-        description: 'Die Mandator dient als experimentelles Testbett für neue Kampftechnologien und verbindet Elemente von Schlachtkreuzern und Dreadnoughts.',
-        technicalOverview: 'Dieses Schiff verwendet eine neue Schildverteilung und ein modular geteiltes Hangarsystem für schnelle Wechsel von Kampffähigkeiten.',
-        tacticalRole: 'Vorlaufende Technologieplattform und mobile Kommandozentrale mit ausgewogener Unterstützungskapazität.',
-        strengths: 'Vielseitig, technologisch fortschrittlich, hohe Anpassungsfähigkeit.',
-        weaknesses: 'Hoher Wartungsbedarf, riskante Systeme, begrenzte Serienproduktion.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#78b9ff" stroke-width="3"><path d="M15 60 Q150 25 300 60 Q150 95 15 60"/><path d="M300 60 L320 52 L320 68 Z"/><path d="M15 60 L2 28 L2 92 Z"/><path d="M300 60 L288 24"/><path d="M300 60 L288 96"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#a8e0ff" stroke-width="3"><path d="M180 30 L345 70 L345 90 L180 130 L15 90 L15 70 Z"/><path d="M180 30 L180 130"/><path d="M15 70 L6 40"/><path d="M15 90 L6 120"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#cceeff" stroke-width="3"><path d="M85 28 L147 94 L147 154 L85 188 L23 154 L23 94 Z"/><path d="M13 90 L23 102"/><path d="M157 90 L147 102"/></g></svg>'
-        },
-        lengthValue: 1308,
-        power: 410,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Vierzig bis achtundvierzig Batterien in modularem Verbund.' },
-          { label: 'Ionenkanonen', detail: 'Multi-Array-System zur Störwirkung gegen feindliche Energieverteidigung.' }
-        ]
-      },
-      {
-        id: 'assertor-class',
-        name: 'Assertor-class Battle Cruiser',
-        category: 'Support Ships',
-        shipClass: 'Assertor-class Battle Cruiser',
-        manufacturer: 'Kuat Drive Yards',
-        length: '2.300 m',
-        width: '880 m',
-        height: '380 m',
-        crew: '88.000',
-        troopCapacity: '26.000',
-        fighterCapacity: '150',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Elite-Schildmatrix',
-        primaryWeapons: '58 x Schwerlaserbatterien',
-        secondaryWeapons: '48 x Ionenkanonen',
-        deployment: 'Zur Unterstützung größerer Formationen und als mobile Schaltzentrale.',
-        firstAppearance: 'Legenden-Support',
-        status: 'Legends',
-        knownShips: 'Imperial II-class, Carrack-class, Bellator-class',
-        description: 'Der Assertor kombiniert Elemente eines Schlachtkreuzers mit spezialisierter Unterstützungstechnik für Imperiale Offensiven.',
-        technicalOverview: 'Seine Waffenarrays sind in Gruppen organisiert, um sowohl direkte Feuerkraft als auch elektronische Blockadeoperationen zu ermöglichen.',
-        tacticalRole: 'Stützpfeiler für Flottenangriffe und Schutz für schwere Trägerabteilungen.',
-        strengths: 'Hohe Feuerkraft, starke Schilde, flexible Einsatzoptionen.',
-        weaknesses: 'Schwerfällig, großer Wartungsbedarf, wird selten mobil eingesetzt.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#7eb5ff" stroke-width="3"><path d="M15 60 Q150 22 300 60 Q150 98 15 60"/><path d="M300 60 L320 52 L320 68 Z"/><path d="M15 60 L2 28 L2 92 Z"/><path d="M300 60 L288 24"/><path d="M300 60 L288 96"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#abdfff" stroke-width="3"><path d="M180 30 L345 70 L345 90 L180 130 L15 90 L15 70 Z"/><path d="M180 30 L180 130"/><path d="M15 70 L6 40"/><path d="M15 90 L6 120"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c9f0ff" stroke-width="3"><path d="M85 28 L147 94 L147 154 L85 188 L23 154 L23 94 Z"/><path d="M13 90 L23 102"/><path d="M157 90 L147 102"/></g></svg>'
-        },
-        lengthValue: 2300,
-        power: 540,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Fast sechzig Geschütze zur Unterstützung von Kampfverbänden.' },
-          { label: 'Ionenkanonen', detail: 'Vierzig Projektoren zur systematischen Entladung auf Gegner.' }
-        ]
-      },
-      {
-        id: 'gozanti-class',
-        name: 'Gozanti-class Carrier',
-        category: 'Carriers',
-        shipClass: 'Gozanti-class Transport Cruiser',
-        manufacturer: 'Corellian Engineering Corporation',
-        length: '150 m',
-        width: '100 m',
-        height: '45 m',
-        crew: '20',
-        troopCapacity: '48',
-        fighterCapacity: '12',
-        hyperdrive: 'Ja, Klasse 2',
-        shields: 'Schildgeschützte Kapseln',
-        primaryWeapons: '4 x Laserkanonen',
-        secondaryWeapons: '2 x Protonentorpedorohre',
-        deployment: 'Mini-Flottenbasen, Träger für geheime Einheiten und Versorgungsflotten.',
-        firstAppearance: 'Bekannte Flottenbasis',
-        status: 'Canon',
-        knownShips: 'Carrack-class, Arquitens-class, Sentinel-class Shuttle',
-        description: 'Dieses kleinere Trägerschiff agiert als mobiler Stützpunkt für Jägerstaffeln, schwere Aufklärung und logistische Abläufe.',
-        technicalOverview: 'Die Gozanti ist auf Geschwindigkeit und Wartbarkeit ausgelegt. Ihr Hangar kann mehrere Jäger aufnehmen, und ihre Systeme sind auf unterstützende Aufgaben optimiert.',
-        tacticalRole: 'Vorrat und Versorgung von Jägern, schnelle Flottenverstärkung in abgelegenen Sektoren.',
-        strengths: 'Mobil, flexibel, schnell verfügbar.',
-        weaknesses: 'Leicht gepanzert, niedrigere Feuerkraft, benötigt Begleitschutz.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#93d0ff" stroke-width="3"><path d="M70 60 Q140 30 230 60 Q140 90 70 60"/><path d="M230 60 L280 45 L295 45 L295 75 L280 75 Z"/><path d="M70 60 L40 28 L40 92 Z"/><path d="M230 60 L265 25"/><path d="M230 60 L265 95"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c4f1ff" stroke-width="3"><path d="M180 28 L310 70 L310 90 L180 132 L50 90 L50 70 Z"/><path d="M180 28 L180 132"/><path d="M50 70 L20 38"/><path d="M50 90 L20 118"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d6f8ff" stroke-width="3"><path d="M85 24 L118 86 L118 148 L85 184 L52 148 L52 86 Z"/><path d="M42 82 L52 94"/><path d="M132 82 L118 94"/></g></svg>'
-        },
-        lengthValue: 150,
-        power: 50,
-        weapons: [
-          { label: 'Laserkanonen', detail: 'Vier kleine Batterien für Selbstschutz gegen leichte Angreifer.' },
-          { label: 'Torpedorohre', detail: 'Zwei Rohre zur Bekämpfung schwerer Gegner.' }
-        ]
-      },
-      {
-        id: 'interdictor-class',
-        name: 'Interdictor-class Cruiser',
-        category: 'Support Ships',
-        shipClass: 'Interdictor-class Star Destroyer',
-        manufacturer: 'Kuat Drive Yards',
-        length: '720 m',
-        width: '600 m',
-        height: '225 m',
-        crew: '12.000',
-        troopCapacity: '3.600',
-        fighterCapacity: '48',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Schildgeneratoren',
-        primaryWeapons: '40 x Schwerlaserbatterien',
-        secondaryWeapons: '12 x Interdictor-Schleppstrahlen',
-        deployment: 'Abfangen feindlicher Flotten, Erzwungene Raumsprunganomalien und Blockaden.',
-        firstAppearance: 'Imperiale Raumkontrolle',
-        status: 'Canon',
-        knownShips: 'Imperial I-class, Arquitens-class, Victory-class',
-        description: 'Ein spezieller Zerstörer, der in der Lage ist, Raumsprungspunkte zu manipulieren und feindliche Flotten im Raum einzukesseln.',
-        technicalOverview: 'Neben herkömmlicher Feuerkraft verfügt dieser Kreuzer über riesige Subraumspulen, die lokale Sprungfelder stören und Räume künstlich öffnen können.',
-        tacticalRole: 'Blockadebrecher, Ablenkung und Unterbrechung gegnerischer Rückzugsrouten.',
-        strengths: 'Unabhängige Raumkontrolle, gute Schiffstützung, starker psychologischer Effekt.',
-        weaknesses: 'Begrenzte Panzerung, auf Nahfeldzählung angewiesen, hochkomplexe Systemwartung.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#7ec5ff" stroke-width="3"><path d="M20 60 Q160 22 300 60 Q160 98 20 60"/><path d="M300 60 L320 50 L320 70 Z"/><path d="M20 60 L0 30 L0 90 Z"/><path d="M300 60 L290 22"/><path d="M300 60 L290 98"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#aadfff" stroke-width="3"><path d="M180 32 L342 72 L342 88 L180 128 L18 88 L18 72 Z"/><path d="M180 32 L180 128"/><path d="M18 72 L8 38"/><path d="M18 88 L8 122"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c7f0ff" stroke-width="3"><path d="M85 28 L145 96 L145 154 L85 188 L25 154 L25 96 Z"/><path d="M15 90 L25 100"/><path d="M155 90 L145 100"/></g></svg>'
-        },
-        lengthValue: 720,
-        power: 250,
-        weapons: [
-          { label: 'Interdictor-Schleppstrahlen', detail: 'Systeme zur Erzeugung künstlicher Raumsprunganomalien.' },
-          { label: 'Schwerlaserbatterien', detail: 'Defense-Feuer gegen gegnerische Angreifer.' }
-        ]
-      },
-      {
-        id: 'eclipse-class',
-        name: 'Eclipse-class Dreadnought',
-        category: 'Super Star Destroyers',
-        shipClass: 'Eclipse-class Dreadnought',
-        manufacturer: 'Kuat Drive Yards',
-        length: '19.400 m',
-        width: '8.900 m',
-        height: '2.100 m',
-        crew: '250.000',
-        troopCapacity: '330.000',
-        fighterCapacity: '100',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Schildmatrix der höchsten Stufe',
-        primaryWeapons: '120 x Schwerlaserbatterien',
-        secondaryWeapons: '90 x Ionenkanonen',
-        deployment: 'Strategische Ausrichtung auf Flottendominanz und Planetenüberwachung.',
-        firstAppearance: 'Legenden-Flaggschiff',
-        status: 'Legends',
-        knownShips: 'Executor-class, Bellator-class, Mandator-class',
-        description: 'Ein gewaltiges Flaggschiff mit zusätzlichen Schildkapazitäten und modularer Kampftechnik. Es ist eine Art bewegliches Fort, darauf ausgelegt, alle Feindflächen zu kontrollieren.',
-        technicalOverview: 'Die Eclipse nutzt ein erweitertes Schildnetz, um größere Treffer zu absorbieren, und verfügt über ein automatisiertes Raketenabwehrsystem für Nahkampfkonfrontationen.',
-        tacticalRole: 'Supreme command ship, das sämtliche Truppenbewegungen steuert und feindliche Formationen auf Distanz hält.',
-        strengths: 'Extreme Abschreckung, überlegene defensive Systeme, kombiniertes Feuerkraftpotenzial.',
-        weaknesses: 'Enorme Größe, hohe Ressourcenbindung, schwerfällig bei Manövern.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#69a9ff" stroke-width="3"><path d="M5 60 Q150 18 315 60 Q150 102 5 60"/><path d="M315 60 L320 52 L320 68 Z"/><path d="M5 60 L0 26 L0 94 Z"/><path d="M315 60 L305 20"/><path d="M315 60 L305 100"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#8fcbff" stroke-width="3"><path d="M180 34 L345 72 L345 88 L180 126 L15 88 L15 72 Z"/><path d="M180 34 L180 126"/><path d="M15 72 L5 40"/><path d="M15 88 L5 120"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c1efff" stroke-width="3"><path d="M85 26 L150 92 L150 150 L85 188 L20 150 L20 92 Z"/><path d="M10 90 L20 100"/><path d="M160 90 L150 100"/></g></svg>'
-        },
-        lengthValue: 19400,
-        power: 1200,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Hundertzwanzig Geschütze für dominantes Breitseitenfeuer.' },
-          { label: 'Ionenkanonen', detail: 'Neunzig Ionenstrahler für elektronische Destabilisierung.' }
-        ]
-      },
-      {
-        id: 'star-dreadnought',
-        name: 'Tector-class Dreadnought',
-        category: 'Dreadnoughts',
-        shipClass: 'Tector-class Dreadnought',
-        manufacturer: 'Kuat Drive Yards',
-        length: '5.320 m',
-        width: '1.480 m',
-        height: '1.100 m',
-        crew: '84.000',
-        troopCapacity: '28.000',
-        fighterCapacity: '82',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Verstärkte Schildmatrix',
-        primaryWeapons: '80 x Schwerlaserbatterien',
-        secondaryWeapons: '38 x Ionenkanonen',
-        deployment: 'Schwere Frontlogistik und direkte Konfrontation mit gegnerischen Kriegsschiffen.',
-        firstAppearance: 'Imperiale Dreadnought-Linie',
-        status: 'Canon',
-        knownShips: 'Interdictor-class, Arquitens-class, Victory-class',
-        description: 'Ein Dreadnought entworfen, um imperialen Fronten unmittelbare Schlagkraft zu liefern. Seine Präsenz verändert die Dynamik im Gefecht.',
-        technicalOverview: 'Die Technik des Tectors basiert auf einer stabilen Schildauslegung und einer großen Munitionsträgerkapazität für lang andauernde Einsätze.',
-        tacticalRole: 'Führer von schweren Angriffswellen und Blockadediensten in kritischen Sektoren.',
-        strengths: 'Starke Feuerkraft, robustes Schildverhalten, hohe Gefechtsausdauer.',
-        weaknesses: 'Geringe Manövrierfähigkeit, energiehungrig, leichtes Ziel für Koordinationseinheiten.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#74b7ff" stroke-width="3"><path d="M15 60 Q150 20 300 60 Q150 100 15 60"/><path d="M300 60 L320 50 L320 70 Z"/><path d="M15 60 L0 30 L0 90 Z"/><path d="M300 60 L290 22"/><path d="M300 60 L290 98"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#9cd7ff" stroke-width="3"><path d="M180 32 L345 72 L345 88 L180 128 L15 88 L15 72 Z"/><path d="M180 32 L180 128"/><path d="M15 72 L5 38"/><path d="M15 88 L5 122"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c9f0ff" stroke-width="3"><path d="M85 28 L145 96 L145 154 L85 188 L25 154 L25 96 Z"/><path d="M15 90 L25 100"/><path d="M155 90 L145 100"/></g></svg>'
-        },
-        lengthValue: 5320,
-        power: 620,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Achtzig Batterieblöcke zur direkten Zerstörung.' },
-          { label: 'Ionenkanonen', detail: 'Dreiunddreißig Projektoren zur Störung feindlicher Elektronik.' }
-        ]
-      },
-      {
-        id: 'death-star',
-        name: 'DS-1 Orbital Battle Station',
-        category: 'Space Stations',
-        shipClass: 'Orbital Battle Station',
-        manufacturer: 'Sienar Fleet Systems / Kuat',
-        length: '120.000 m',
-        width: '120.000 m',
-        height: '120.000 m',
-        crew: '1.200.000',
-        troopCapacity: '800.000',
-        fighterCapacity: '2.400',
-        hyperdrive: 'Nein',
-        shields: 'Fortgeschrittene Schildmatrix',
-        primaryWeapons: 'Superlaser',
-        secondaryWeapons: 'Hundert Schützentürme',
-        deployment: 'Zerstörung ganzer Planetenoberflächen und Abschreckung von Systemen.',
-        firstAppearance: 'Kanonische Schlachtstation',
-        status: 'Canon',
-        knownShips: 'Eclipse-class, Executor-class, Interdictor-class',
-        description: 'Ein stationäres Imperiumssymbol, das als strategischer Vergeltungsmechanismus und symbolische Machtdemonstration dient.',
-        technicalOverview: 'Die gewaltige Kugel beherbergt einen Superlaser, der enorme Energie aus einem dezentralen Reaktorsystem bündelt. Zusätzlich sind massive Schildgeneratoren zur Abwehr von Schiffen vorhanden.',
-        tacticalRole: 'Planetare Exekutionseinheit, Abschreckung und zentrale Kontrollstation für große Flottenbeziehungen.',
-        strengths: 'Unvergleichliche Zerstörungskraft, symbolischer Schockeffekt, massive Defensivkapazität.',
-        weaknesses: 'Stationär, riesige Zielgröße, verwundbar bei kritischen Strukturtreffern.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><circle cx="160" cy="60" r="55" fill="none" stroke="#84c4ff" stroke-width="3"/><circle cx="160" cy="60" r="30" fill="none" stroke="#b6ecff" stroke-width="3"/></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><circle cx="180" cy="80" r="65" fill="none" stroke="#92d8ff" stroke-width="3"/><circle cx="180" cy="80" r="38" fill="none" stroke="#c8f0ff" stroke-width="3"/></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><circle cx="85" cy="105" r="60" fill="none" stroke="#b2e6ff" stroke-width="3"/><circle cx="85" cy="105" r="32" fill="none" stroke="#e1f8ff" stroke-width="3"/></svg>'
-        },
-        lengthValue: 120000,
-        power: 1500,
-        weapons: [
-          { label: 'Superlaser', detail: 'Ein großer konzentrierter Strahl, der gezielt Planetenoberflächen zerreißt.' },
-          { label: 'Schützentürme', detail: 'Hundert defensive Türme zur Abwehr von Frontangriffen.' }
-        ]
-      },
-      {
-        id: 'imperial-station',
-        name: 'Imperial Relay Station',
-        category: 'Space Stations',
-        shipClass: 'Relay Communication Platform',
-        manufacturer: 'Rothana Heavy Engineering',
-        length: '1.250 m',
-        width: '1.250 m',
-        height: '1.250 m',
-        crew: '3.100',
-        troopCapacity: '340',
-        fighterCapacity: '12',
-        hyperdrive: 'Nein',
-        shields: 'Schildcluster',
-        primaryWeapons: '8 x Tracking Lasers',
-        secondaryWeapons: '4 x Ionenkanonen',
-        deployment: 'Signalrelais, Überwachung, kurze Raumverteidigung.',
-        firstAppearance: 'Imperiale Kommunikationsstation',
-        status: 'Legends',
-        knownShips: 'Gozanti-class, Arquitens-class, Interdictor-class',
-        description: 'Eine stationäre Kommunikationsplattform, die Nachrichtendurchsatz und Flottenkoordination im äußeren Rand sicherstellt.',
-        technicalOverview: 'Die Station ist mit leistungsfähigen Sensorarrays ausgestattet und besitzt einen kleinen Verteidigungsring zur Abschirmung gegen Angriffe.',
-        tacticalRole: 'Verbindungs- und Aufklärungszentrum, das Kommandosignale an Entfernungen weiterleitet und eine Gefahrenwarnung aufbaut.',
-        strengths: 'Hohe Reichweite, stabile Übertragungen, mobile Abwehrkapazität.',
-        weaknesses: 'Begrenzte Mobilität, verwundbar bei gezieltem Angriff auf Kommunikationsknoten.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#92d1ff" stroke-width="3"><path d="M80 50 L240 50"/><path d="M80 70 L240 70"/><circle cx="160" cy="60" r="30" fill="none" stroke="#c8f0ff" stroke-width="3"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#bdefff" stroke-width="3"><circle cx="180" cy="80" r="44"/><path d="M180 36 L180 124"/><path d="M136 80 L224 80"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d9f6ff" stroke-width="3"><circle cx="85" cy="105" r="40"/><path d="M85 65 L85 145"/><path d="M45 105 L125 105"/></g></svg>'
-        },
-        lengthValue: 1250,
-        power: 110,
-        weapons: [
-          { label: 'Tracking Laser', detail: 'Acht Lasertürme zur Verteidigung gegen Jäger und kleine Schiffe.' },
-          { label: 'Ionenkanonen', detail: 'Vier Systeme zur Unterdrückung elektronischer Angriffe.' }
-        ]
-      },
-      {
-        id: 'gladiator-cruiser',
-        name: 'Gladiator-class Cruiser',
-        category: 'Cruisers',
-        shipClass: 'Gladiator-class Star Cruiser',
-        manufacturer: 'Kuat Drive Yards',
-        length: '544 m',
-        width: '381 m',
-        height: '161 m',
-        crew: '35.000',
-        troopCapacity: '4.000',
-        fighterCapacity: '56',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Schildgrid',
-        primaryWeapons: '30 x Schwerlaserbatterien',
-        secondaryWeapons: '30 x Ionenkanonen',
-        deployment: 'Kerngebietsverteidigung, Patrouillen und Eskorte für wichtige Konvois.',
-        firstAppearance: 'Legenden-Kreuzer',
-        status: 'Legends',
-        knownShips: 'Victory-class, Imperial I-class, Arquitens-class',
-        description: 'Ein Kreuzer für schnelle Eingriffe, der eine gute Mischung aus Feuerkraft und Beweglichkeit bietet. Er dient als erste Support-Linie für größere imperiale Flotten.',
-        technicalOverview: 'Die Maschine nutzt ein schräg gezogenen Oberdeckdesign und ein effizientes Schildmanagement, um im Gefecht schnell auf Bedrohungen zu reagieren.',
-        tacticalRole: 'Aufspüren feindlicher Flotten, Angriffe in Mitte-Entfernung und Sicherung von Zulieferungswegen.',
-        strengths: 'Schnell für eine Kreuzerklasse, gute Feuerverteilung, vielseitige Rollen.',
-        weaknesses: 'Nicht so gut gepanzert wie größere Zerstörer, begrenzte Langzeitversorgung.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#8cc7ff" stroke-width="3"><path d="M20 60 Q150 25 280 60 Q150 95 20 60"/><path d="M280 60 L295 52 L295 68 Z"/><path d="M20 60 L5 28 L5 92 Z"/><path d="M280 60 L268 22"/><path d="M280 60 L268 98"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#bbecff" stroke-width="3"><path d="M180 32 L345 72 L345 88 L180 128 L15 88 L15 72 Z"/><path d="M180 32 L180 128"/><path d="M15 72 L5 38"/><path d="M15 88 L5 122"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d5f4ff" stroke-width="3"><path d="M85 28 L145 98 L145 156 L85 188 L25 156 L25 98 Z"/><path d="M15 94 L25 104"/><path d="M155 94 L145 104"/></g></svg>'
-        },
-        lengthValue: 544,
-        power: 280,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Dreißig schwere Batterien für mittlere Gefechtsreichweiten.' },
-          { label: 'Ionenkanonen', detail: 'Dreißig Projektoren als zweite Verteidigungslinie.' }
-        ]
-      },
-      {
-        id: 'raider-transporter',
-        name: 'Raider-class Transporter',
-        category: 'Support Ships',
-        shipClass: 'Heavy Transporter',
-        manufacturer: 'Kuat Drive Yards',
-        length: '95 m',
-        width: '62 m',
-        height: '32 m',
-        crew: '18',
-        troopCapacity: '132',
-        fighterCapacity: '8',
-        hyperdrive: 'Ja, Klasse 2',
-        shields: 'Schildprojektoren',
-        primaryWeapons: '2 x Laserkanonen',
-        secondaryWeapons: '4 x Minenabwurfmodule',
-        deployment: 'Nachschub, Truppentransport und mobile Bodenunterstützung.',
-        firstAppearance: 'Imperialer Transportdienst',
-        status: 'Canon',
-        knownShips: 'Gozanti-class, Lambda-class Shuttle, Sentinel-class Shuttle',
-        description: 'Ein robuster Transporter, der dafür konstruiert ist, schwere Ladung und Truppen in gefährdete Raumsektoren zu bringen.',
-        technicalOverview: 'Mit verstärkter Ladungskammer und starken Antriebseinheiten ermöglicht der Raider schnellen Nachschub unter moderatem Schutz.',
-        tacticalRole: 'Einsatz als logistische Flanke, Evakuationshilfe und Transport von Spezialverstärkung.',
-        strengths: 'Hohe Nutzlast, gute Widerstandsfähigkeit, moderates Schild.',
-        weaknesses: 'Nicht für direkte Gefechte ausgelegt, langsamer als Jäger, wenig Flexibilität.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#84c2ff" stroke-width="3"><path d="M60 60 Q140 35 220 60 Q140 85 60 60"/><path d="M220 60 L280 50 L294 50 L294 70 L280 70 Z"/><path d="M60 60 L30 30 L30 90 Z"/><path d="M220 60 L250 30"/><path d="M220 60 L250 90"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#b0eeff" stroke-width="3"><path d="M180 28 L310 70 L310 90 L180 132 L50 90 L50 70 Z"/><path d="M180 28 L180 132"/><path d="M50 70 L20 38"/><path d="M50 90 L20 118"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d5f2ff" stroke-width="3"><path d="M85 24 L118 86 L118 146 L85 182 L52 146 L52 86 Z"/><path d="M42 82 L52 92"/><path d="M132 82 L118 92"/></g></svg>'
-        },
-        lengthValue: 95,
-        power: 48,
-        weapons: [
-          { label: 'Laserkanonen', detail: 'Zwei Grundwaffen zur Verteidigung gegen leichte Angreifer.' },
-          { label: 'Minenmodule', detail: 'Vier Einsätze zur Bildung von feindlichen Sperrfeldern.' }
-        ]
-      },
-      {
-        id: 'tector-dreadnought',
-        name: 'Tector-class Dreadnought',
-        category: 'Dreadnoughts',
-        shipClass: 'Tector-class Dreadnought',
-        manufacturer: 'Kuat Drive Yards',
-        length: '5.000 m',
-        width: '1.600 m',
-        height: '1.030 m',
-        crew: '72.000',
-        troopCapacity: '28.000',
-        fighterCapacity: '80',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Starkes Schildfeld',
-        primaryWeapons: '84 x Schwerlaserbatterien',
-        secondaryWeapons: '42 x Ionenkanonen',
-        deployment: 'Schwere Truppenunterstützung, direkte Konfrontation mit gegnerischen Schlachtlinien.',
-        firstAppearance: 'Legenden-Dreadnought',
-        status: 'Legends',
-        knownShips: 'Imperial II-class, Carrack-class, Interdictor-class',
-        description: 'Ein fortschrittlicher Dreadnought, der für Dauergefechte und direkte Konfrontation mit gegnerischen Hauptstreitkräften bestimmt ist.',
-        technicalOverview: 'Das Schiff bietet ein ausgewogenes Verhältnis zwischen Panzerung, Feuerkraft und Operationsausdauer.',
-        tacticalRole: 'Führung konventioneller Gefechtslinien und Unterstützung schwerer Angriffswellen.',
-        strengths: 'Starke Feuerkraft, solide Schilde, gute Truppenunterstützung.',
-        weaknesses: 'Wenig Manövrierfähigkeit, hoher Energieverbrauch, anfällig bei flankiertem Angriff.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#8cb3ff" stroke-width="3"><path d="M15 60 Q150 18 300 60 Q150 98 15 60"/><path d="M300 60 L320 50 L320 70 Z"/><path d="M15 60 L0 30 L0 90 Z"/><path d="M300 60 L288 22"/><path d="M300 60 L288 98"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#aadfff" stroke-width="3"><path d="M180 32 L345 72 L345 88 L180 128 L15 88 L15 72 Z"/><path d="M180 32 L180 128"/><path d="M15 72 L5 38"/><path d="M15 88 L5 122"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c9efff" stroke-width="3"><path d="M85 28 L145 96 L145 154 L85 188 L25 154 L25 96 Z"/><path d="M15 90 L25 100"/><path d="M155 90 L145 100"/></g></svg>'
-        },
-        lengthValue: 5000,
-        power: 620,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Achtundachtzig leistungsstarke Geschütze.' },
-          { label: 'Ionenkanonen', detail: 'Zweiundvierzig Strahlgeber zur Energieunterdrückung.' }
-        ]
-      },
-      {
-        id: 'imperial-assault-ship',
-        name: 'Imperial Assault Ship',
-        category: 'Gunships',
-        shipClass: 'Classified Gunship',
-        manufacturer: 'Sienar Fleet Systems',
-        length: '27,0 m',
-        width: '26,0 m',
-        height: '7,2 m',
-        crew: '6',
-        troopCapacity: '18',
-        fighterCapacity: '0',
-        hyperdrive: 'Ja, Klasse 2',
-        shields: 'Schildgenerator',
-        primaryWeapons: '4 x Plasmakanonen',
-        secondaryWeapons: '2 x Raketenwerfer',
-        deployment: 'Schnelle Invasionsszenarien und gezielte Angriffseinheiten.',
-        firstAppearance: 'Legenden-Testreihe',
-        status: 'Legends',
-        knownShips: 'TIE Bomber, Assault Gunship, Lambda-class Shuttle',
-        description: 'Ein schwer bewaffneter Gunship, der als mobile Feuerbasis für Bodenoperationen arbeitet.',
-        technicalOverview: 'Sein kohärenter Antrieb ist auf Kurzeinsätze und direkte Unterstützung von Landungen ausgelegt.',
-        tacticalRole: 'Angriff aus mittlerer Höhe, Unterstützung von Sturmtruppen und Abdeckung von Bodentruppen.',
-        strengths: 'Starke Bewaffnung, schnelle Angriffsprofile, hoher Truppenschutz.',
-        weaknesses: 'Begrenzte Langstreckenkapazität, anfällig gegen präzise Jägerangriffe.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#7abaff" stroke-width="3"><path d="M60 60 Q140 32 220 60 Q140 88 60 60"/><path d="M220 60 L280 48 L295 48 L295 72 L280 72 Z"/><path d="M60 60 L30 28 L30 92 Z"/><path d="M220 60 L255 24"/><path d="M220 60 L255 96"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#b3efff" stroke-width="3"><path d="M180 28 L310 70 L310 90 L180 132 L50 90 L50 70 Z"/><path d="M180 28 L180 132"/><path d="M50 70 L20 38"/><path d="M50 90 L20 118"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d2f6ff" stroke-width="3"><path d="M85 26 L118 88 L118 148 L85 184 L52 148 L52 88 Z"/><path d="M42 84 L52 96"/><path d="M132 84 L118 96"/></g></svg>'
-        },
-        lengthValue: 27,
-        power: 76,
-        weapons: [
-          { label: 'Plasmakanonen', detail: 'Vier schwere Kanonen für verschließende Angriffe.' },
-          { label: 'Raketenwerfer', detail: 'Zwei Systeme für punktgenaue Einsätze.' }
-        ]
-      },
-      {
-        id: 'carrack-class-light-cruiser',
-        name: 'Carrack-class Light Cruiser',
-        category: 'Corvettes',
-        shipClass: 'Carrack-class Light Cruiser',
-        manufacturer: 'Kuat Drive Yards',
-        length: '470 m',
-        width: '265 m',
-        height: '120 m',
-        crew: '12.000',
-        troopCapacity: '3.200',
-        fighterCapacity: '32',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Adaptives Schildsystem',
-        primaryWeapons: '24 x Schwerlaserbatterien',
-        secondaryWeapons: '20 x Ionenkanonen',
-        deployment: 'Patrouillen und Unterstützung von Konvois im imperialen Kernregion.',
-        firstAppearance: 'Kanonische Unterstützung',
-        status: 'Canon',
-        knownShips: 'Imperial I-class, Arquitens-class, Gozanti-class',
-        description: 'Ein leichter Kreuzer, der für Patrouillen und Eskorte von Versorgungskonvois konzipiert ist. Er ist agil für seine Größe.',
-        technicalOverview: 'Mit einer effizienten Rumpfform und einem gehärteten Navigationssystem bietet er Zuverlässigkeit für Freihandelsrouten und militärische Transportaufgaben.',
-        tacticalRole: 'Führt geringe Flotten, schützt Nachschub und kümmert sich um schnelle Aufklärung.',
-        strengths: 'Geringere Kosten, gut für schnelles Eingreifen, flexible Einsatzoptionen.',
-        weaknesses: 'Nicht so schwer bewaffnet wie größere Kreuzer, keine große Schlagkraft gegen Superdreadnoughts.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#86c8ff" stroke-width="3"><path d="M30 60 Q160 24 290 60 Q160 96 30 60"/><path d="M290 60 L305 52 L305 68 Z"/><path d="M30 60 L5 30 L5 90 Z"/><path d="M290 60 L275 22"/><path d="M290 60 L275 98"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#bff2ff" stroke-width="3"><path d="M180 30 L345 70 L345 90 L180 130 L15 90 L15 70 Z"/><path d="M180 30 L180 130"/><path d="M15 70 L5 40"/><path d="M15 90 L5 120"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d9f4ff" stroke-width="3"><path d="M85 25 L140 88 L140 148 L85 184 L30 148 L30 88 Z"/><path d="M20 84 L30 94"/><path d="M150 84 L140 94"/></g></svg>'
-        },
-        lengthValue: 470,
-        power: 220,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Vierteilige Batterieaufstellung für mittlere Feuerreichweiten.' },
-          { label: 'Ionenkanonen', detail: 'Zwanzig Systeme für elektronische Störungen.' }
-        ]
-      },
-      {
-        id: 'imperial-shuttle-escort',
-        name: 'Sentinel-class Escort Shuttle',
-        category: 'Support Ships',
-        shipClass: 'Escort Transport Shuttle',
-        manufacturer: 'Rothana Heavy Engineering',
-        length: '16,5 m',
-        width: '14,7 m',
-        height: '5,6 m',
-        crew: '3',
-        troopCapacity: '16',
-        fighterCapacity: '0',
-        hyperdrive: 'Ja, Klasse 2',
-        shields: 'Schildprojektoren',
-        primaryWeapons: '2 x Laserkanonen',
-        secondaryWeapons: '2 x Mini-Ionen-Geschütze',
-        deployment: 'Begleitschutz von Kommandoshuttles und schnellen Versorgungsflügen.',
-        firstAppearance: 'Imperiale Eskorte',
-        status: 'Canon',
-        knownShips: 'Lambda-class Shuttle, Gozanti-class Carrier, Raider-class Transporter',
-        description: 'Ein schnelles Begleitfahrzeug, das den Transport offizieller Einheiten sichert und Bedrohungen in kurzer Range abwehrt.',
-        technicalOverview: 'Kompakte Bauweise und moderate Schildung machen es ideal für eskortierende Aufgaben und schnelle Rückzugsmanöver.',
-        tacticalRole: 'Schutz von Shuttles und Nachschub gegen leichte Angriffe.',
-        strengths: 'Schnell, gut gepanzert für seine Größe, geeignet für Schnellreaktionen.',
-        weaknesses: 'Kleine Munition, wenig Truppenraum, begrenzte Langstreckenfähigkeiten.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#7fc7ff" stroke-width="3"><path d="M70 60 Q140 36 210 60 Q140 84 70 60"/><path d="M210 60 L270 48 L292 48 L292 72 L270 72 Z"/><path d="M70 60 L40 33 L40 87 Z"/><path d="M210 60 L245 28"/><path d="M210 60 L245 92"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#b9efff" stroke-width="3"><path d="M180 30 L305 70 L305 90 L180 130 L55 90 L55 70 Z"/><path d="M180 30 L180 130"/><path d="M55 70 L25 40"/><path d="M55 90 L25 120"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d7f0ff" stroke-width="3"><path d="M85 26 L118 86 L118 146 L85 182 L52 146 L52 86 Z"/><path d="M42 82 L52 92"/><path d="M132 82 L118 92"/></g></svg>'
-        },
-        lengthValue: 16.5,
-        power: 45,
-        weapons: [
-          { label: 'Laserkanonen', detail: 'Zwei leichte Verteidigungswaffen für nahe Bedrohungen.' },
-          { label: 'Mini-Ionen-Geschütze', detail: 'Zwei Systeme zur Unterdrückung feindlicher Sensoren.' }
-        ]
-      },
-      {
-        id: 'penitent-class',
-        name: 'Penitent-class Heavy Cruiser',
-        category: 'Cruisers',
-        shipClass: 'Penitent-class Heavy Cruiser',
-        manufacturer: 'Corellian Engineering Corporation',
-        length: '550 m',
-        width: '300 m',
-        height: '160 m',
-        crew: '31.200',
-        troopCapacity: '4.100',
-        fighterCapacity: '60',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Fortgeschrittene Schilde',
-        primaryWeapons: '38 x Schwerlaserbatterien',
-        secondaryWeapons: '24 x Ionenkanonen',
-        deployment: 'Standardeinsatz als schlanke Flottenunterstützung und Hafenverteidigung.',
-        firstAppearance: 'Legenden-Kreuzer',
-        status: 'Legends',
-        knownShips: 'Victory-class, Imperiale I-class, Carrack-class',
-        description: 'Ein schwerer Kreuzer, der sich durch eine kompakte Struktur und zuverlässige Systeme auszeichnet. Er ist für ständige Präsenz in zentralen Sternensystemen ausgelegt.',
-        technicalOverview: 'Die Penitent nutzt ein modulares Waffenlayout und einen effizienten Schildgenerator, der bei Flottenkonfrontationen schnell zwischen Sektorzonen wechseln kann.',
-        tacticalRole: 'Schutz wichtiger Sektoren, Unterstützung der Logistik und schnelle Verstärkung neuer Schocktruppen.',
-        strengths: 'Robust, robuste Feuerverteilung, zuverlässige Systeme.',
-        weaknesses: 'Weniger gewichtig als ein Dreadnought, eingeschränkte Langzeitlieferfähigkeit.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#8dc5ff" stroke-width="3"><path d="M30 60 Q160 28 290 60 Q160 92 30 60"/><path d="M290 60 L305 52 L305 68 Z"/><path d="M30 60 L8 30 L8 90 Z"/><path d="M290 60 L272 24"/><path d="M290 60 L272 96"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c0f0ff" stroke-width="3"><path d="M180 32 L345 72 L345 88 L180 128 L15 88 L15 72 Z"/><path d="M180 32 L180 128"/><path d="M15 72 L5 38"/><path d="M15 88 L5 122"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d6f4ff" stroke-width="3"><path d="M85 26 L145 94 L145 154 L85 188 L25 154 L25 94 Z"/><path d="M15 90 L25 100"/><path d="M155 90 L145 100"/></g></svg>'
-        },
-        lengthValue: 550,
-        power: 245,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Zweiunddreißig robust angelegte Blöcke.' },
-          { label: 'Ionenkanonen', detail: 'Vierundzwanzig Systeme zur Bordunterdrückung.' }
-        ]
-      },
-      {
-        id: 'raider-support',
-        name: 'Raider Support Frigate',
-        category: 'Frigates',
-        shipClass: 'Support Frigate',
-        manufacturer: 'Kuat Systems Engineering',
-        length: '310 m',
-        width: '180 m',
-        height: '92 m',
-        crew: '850',
-        troopCapacity: '420',
-        fighterCapacity: '14',
-        hyperdrive: 'Ja, Klasse 1.5',
-        shields: 'Standard-Schildgeneratoren',
-        primaryWeapons: '16 x Laserbatterien',
-        secondaryWeapons: '12 x Ionenkanonen',
-        deployment: 'Bereitstellung von Reparaturhub, medizinischer Hilfe und Truppenversetzung in Grenzsystemen.',
-        firstAppearance: 'Kanonischer Unterstützer',
-        status: 'Canon',
-        knownShips: 'Arquitens-class, Victory-class, Gozanti-class',
-        description: 'Eine agile Unterstützungsfregatte, die logistische und medizinische Unterstützung auf dem Schlachtfeld liefert.',
-        technicalOverview: 'Die Plattform ist sehr vielseitig, mit modularen Innenräumen für Feldkliniken und Reparaturdrohnen.',
-        tacticalRole: 'Sichern feindlicher Gebiete nach Erstangriffen und schnelle Heilung sowie Reperatur von beschädigten Kampfverbänden.',
-        strengths: 'Vielseitig, schnell, gut ausgerüstet für Supportaufgaben.',
-        weaknesses: 'Geringe Feuerkraft, braucht Begleitschutz, anfällig bei direkten Nahkämpfen.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#8bc8ff" stroke-width="3"><path d="M40 60 Q160 24 280 60 Q160 96 40 60"/><path d="M280 60 L295 52 L295 68 Z"/><path d="M40 60 L15 30 L15 90 Z"/><path d="M280 60 L265 24"/><path d="M280 60 L265 96"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#bcf3ff" stroke-width="3"><path d="M180 30 L345 70 L345 90 L180 130 L15 90 L15 70 Z"/><path d="M180 30 L180 130"/><path d="M15 70 L5 40"/><path d="M15 90 L5 120"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d8f6ff" stroke-width="3"><path d="M85 28 L145 96 L145 154 L85 188 L25 154 L25 96 Z"/><path d="M15 90 L25 100"/><path d="M155 90 L145 100"/></g></svg>'
-        },
-        lengthValue: 310,
-        power: 170,
-        weapons: [
-          { label: 'Laserbatterien', detail: 'Sechzehn Batterien zur Grundverteidigung.' },
-          { label: 'Ionenkanonen', detail: 'Zwölf Systeme für elektronische Gegenmaßnahmen.' }
-        ]
-      },
-      {
-        id: 'victory-i',
-        name: 'Victory I-class Star Destroyer',
-        category: 'Star Destroyers',
-        shipClass: 'Victory I-class',
-        manufacturer: 'Kuat Drive Yards',
-        length: '900 m',
-        width: '460 m',
-        height: '160 m',
-        crew: '25.000',
-        troopCapacity: '4.000',
-        fighterCapacity: '40',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Standard-Schildgeneratoren',
-        primaryWeapons: '30 x Schwerlaserbatterien',
-        secondaryWeapons: '18 x Ionenkanonen',
-        deployment: 'Leichte Beschlagnahmeoperationen, Zonenkontrolle und schnelle Reaktionsverbände.',
-        firstAppearance: 'Kanonische Marineeinheit',
-        status: 'Canon',
-        knownShips: 'Imperial I-class, Imperial II-class, Arquitens-class',
-        description: 'Ein kompakter Sternenzerstörer mit ausreichender Feuerkraft, der aufgrund seiner geringeren Größe leichter in dichter Raumregionen operieren kann.',
-        technicalOverview: 'Die Victory I hat weniger Gewicht, was sich in verbesserten Manövriertendenzen und einem effizienten Schubmodulsystem äußert.',
-        tacticalRole: 'Patrouillen, gezieltes Eindringen in Städte und schnelle Einsätze gegen kleinere Gegner.',
-        strengths: 'Gute Mischung aus Beweglichkeit und Stärke, schneller als größere Zerstörer.',
-        weaknesses: 'Begrenzte Feuerkraft gegenüber Dreadnoughts, geringere Truppenkapazität.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#8dcaff" stroke-width="3"><path d="M25 60 Q150 25 280 60 Q150 95 25 60"/><path d="M280 60 L295 52 L295 68 Z"/><path d="M25 60 L5 30 L5 90 Z"/><path d="M280 60 L268 24"/><path d="M280 60 L268 96"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#b8eaff" stroke-width="3"><path d="M180 32 L345 72 L345 88 L180 128 L15 88 L15 72 Z"/><path d="M180 32 L180 128"/><path d="M15 72 L5 38"/><path d="M15 88 L5 122"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d4f2ff" stroke-width="3"><path d="M85 25 L140 88 L140 148 L85 184 L30 148 L30 88 Z"/><path d="M20 84 L30 94"/><path d="M150 84 L140 94"/></g></svg>'
-        },
-        lengthValue: 900,
-        power: 250,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Dreißig Batterien zur Abschreckung feindlicher Schlachtschiffe.' },
-          { label: 'Ionenkanonen', detail: 'Achtzehn Systeme zur Störung technischer Geräte.' }
-        ]
-      },
-      {
-        id: 'gozanti-escort',
-        name: 'Gozanti Escort Vessel',
-        category: 'Corvettes',
-        shipClass: 'Gozanti-class Escort',
-        manufacturer: 'Corellian Engineering Corporation',
-        length: '155 m',
-        width: '102 m',
-        height: '48 m',
-        crew: '22',
-        troopCapacity: '30',
-        fighterCapacity: '10',
-        hyperdrive: 'Ja, Klasse 2',
-        shields: 'Schildverstärkungen',
-        primaryWeapons: '6 x Laserkanonen',
-        secondaryWeapons: '2 x Torpedorohr',
-        deployment: 'Begleitschutz für kleine Truppenkonvois und mobile Flugzeugträger.',
-        firstAppearance: 'Legendenbegleitung',
-        status: 'Legends',
-        knownShips: 'Carrack-class, Arquitens-class, Raider-class Transporter',
-        description: 'Ein wendiges Begleitschiff, das kleinere Transporte und Angriffsgruppen schützt und zugleich selbst leichte Feuerkraft mitführt.',
-        technicalOverview: 'Es nutzt kompakte Schildwände, um es zu schützen, während es Zonen mit Truppentransporten überquert.',
-        tacticalRole: 'Eskorte bei konvoibasierten Operationen und schnelle Reaktion auf Störungen entlang der Lieferkette.',
-        strengths: 'Beweglich, gut für Eskorten, nützlich für taktische Umgehungen.',
-        weaknesses: 'Weniger Feuerkraft als Trägerschiffe, geringere Haltbarkeit in direkten Schlachten.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#88c6ff" stroke-width="3"><path d="M70 60 Q140 32 220 60 Q140 88 70 60"/><path d="M220 60 L280 50 L294 50 L294 70 L280 70 Z"/><path d="M70 60 L40 32 L40 88 Z"/><path d="M220 60 L255 28"/><path d="M220 60 L255 92"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#b3edff" stroke-width="3"><path d="M180 28 L310 70 L310 90 L180 132 L50 90 L50 70 Z"/><path d="M180 28 L180 132"/><path d="M50 70 L20 38"/><path d="M50 90 L20 118"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d8f8ff" stroke-width="3"><path d="M85 26 L118 88 L118 148 L85 182 L52 148 L52 88 Z"/><path d="M42 84 L52 96"/><path d="M132 84 L118 96"/></g></svg>'
-        },
-        lengthValue: 155,
-        power: 58,
-        weapons: [
-          { label: 'Laserkanonen', detail: 'Sechs Geschütze zur Abwehr von leichten Raiderelementen.' },
-          { label: 'Torpedorohr', detail: 'Ein Torpedorohr zur Unterstützung bei Überraschungsmomenten.' }
-        ]
-      },
-      {
-        id: 'assertor-escort',
-        name: 'Assertor-class Escort Cruiser',
-        category: 'Carriers',
-        shipClass: 'Escort Cruiser',
-        manufacturer: 'Kuat Drive Yards',
-        length: '1.300 m',
-        width: '800 m',
-        height: '260 m',
-        crew: '26.500',
-        troopCapacity: '17.000',
-        fighterCapacity: '96',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Starke Schildgeneratoren',
-        primaryWeapons: '42 x Schwerlaserbatterien',
-        secondaryWeapons: '34 x Ionenkanonen',
-        deployment: 'Eskorte von Großkampfschiffen und Schutz schwerer Transportschiffe.',
-        firstAppearance: 'Legendenbegeleiter',
-        status: 'Legends',
-        knownShips: 'Imperial II-class, Bellator-class, Mandator-class',
-        description: 'Ein Eskortekreuzer, der sowohl Kampfflugzeuge tragen als auch schwer gepanzerte Eskorte für Flaggschiffe leisten kann.',
-        technicalOverview: 'Er kombiniert einen starken Schildschirm mit robusten Hangarplattformen und dient als flexibler Schutzengel für imperialen Großschiffen.',
-        tacticalRole: 'Begleitung von Kryptoschiffen, Schutz vor Jägerangriffen und flexible Luftunterstützung.',
-        strengths: 'Ausgewogene Feuerkraft, guter Schildschutz, hohe Vielseitigkeit.',
-        weaknesses: 'Achtung bei direkter Konfrontation mit Super-Dreadnoughts, hohe Betriebskosten.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#7fcfff" stroke-width="3"><path d="M20 60 Q150 22 300 60 Q150 98 20 60"/><path d="M300 60 L320 50 L320 70 Z"/><path d="M20 60 L0 30 L0 90 Z"/><path d="M300 60 L290 22"/><path d="M300 60 L290 98"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#a9e7ff" stroke-width="3"><path d="M180 32 L345 72 L345 88 L180 128 L15 88 L15 72 Z"/><path d="M180 32 L180 128"/><path d="M15 72 L5 38"/><path d="M15 88 L5 122"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d8f8ff" stroke-width="3"><path d="M85 28 L145 96 L145 154 L85 188 L25 154 L25 96 Z"/><path d="M15 90 L25 100"/><path d="M155 90 L145 100"/></g></svg>'
-        },
-        lengthValue: 1300,
-        power: 420,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Zweiundvierzig Batterien für defensive Feuerkraft.' },
-          { label: 'Ionenkanonen', detail: 'Vierunddreißig Systeme zur elektronischen Unterdrückung.' }
-        ]
-      },
-      {
-        id: 'imperial-investigator',
-        name: 'Imperial Investigation Cruiser',
-        category: 'Support Ships',
-        shipClass: 'Recon Cruiser',
-        manufacturer: 'Sienar Fleet Systems',
-        length: '280 m',
-        width: '182 m',
-        height: '78 m',
-        crew: '950',
-        troopCapacity: '120',
-        fighterCapacity: '18',
-        hyperdrive: 'Ja, Klasse 1.5',
-        shields: 'Schildreflektoren',
-        primaryWeapons: '20 x Laserkanonen',
-        secondaryWeapons: '10 x Drohnenwerfer',
-        deployment: 'Aufklärung, elektronische Überwachung und gezielte Jagd auf Einheiten.',
-        firstAppearance: 'Legenden-Reconnaissance',
-        status: 'Legends',
-        knownShips: 'Arquitens-class, Gozanti-class, Sentinel-class Shuttle',
-        description: 'Ein Aufklärer-Kreuzer, der feindliche Bewegungen analysiert und Informationen für imperiale Schläge sammelt.',
-        technicalOverview: 'Ausgestattet mit leistungsfähigen Sensoren und spezialisierten Drohnen, um feindliche Räume zu kartieren und Schwachstellen zu finden.',
-        tacticalRole: 'Informationsgewinnung und Vorbereitung von Angriffen auf strategische Ziele.',
-        strengths: 'Starker Aufklärungswert, gute Selbstverteidigung, flexibles Hangarangebot.',
-        weaknesses: 'Nicht für große Schlachten gebaut, abhängig von intel-gestützten Einsätzen.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#91ccff" stroke-width="3"><path d="M45 60 Q150 27 255 60 Q150 93 45 60"/><path d="M255 60 L290 48 L294 48 L294 72 L290 72 Z"/><path d="M45 60 L20 31 L20 89 Z"/><path d="M255 60 L275 24"/><path d="M255 60 L275 96"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c2efff" stroke-width="3"><path d="M180 30 L320 70 L320 90 L180 130 L40 90 L40 70 Z"/><path d="M180 30 L180 130"/><path d="M40 70 L10 40"/><path d="M40 90 L10 120"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d7f6ff" stroke-width="3"><path d="M85 26 L118 88 L118 148 L85 182 L52 148 L52 88 Z"/><path d="M42 84 L52 96"/><path d="M132 84 L118 96"/></g></svg>'
-        },
-        lengthValue: 280,
-        power: 188,
-        weapons: [
-          { label: 'Laserkanonen', detail: 'Zwanzig automatische Kanonen für defensive Maßnahmen.' },
-          { label: 'Drohnenwerfer', detail: 'Zehn Ausleger zum Einsatz von Aufklärungs- und Stördrohnen.' }
-        ]
-      },
-      {
-        id: 'vindicator-class',
-        name: 'Vindicator-class Strike Cruiser',
-        category: 'Carriers',
-        shipClass: 'Vindicator-class Strike Cruiser',
-        manufacturer: 'Kuat Drive Yards',
-        length: '725 m',
-        width: '400 m',
-        height: '150 m',
-        crew: '24.000',
-        troopCapacity: '3.300',
-        fighterCapacity: '90',
-        hyperdrive: 'Ja, Klasse 1',
-        shields: 'Fortgeschrittene Schildmatrix',
-        primaryWeapons: '28 x Schwerlaserbatterien',
-        secondaryWeapons: '36 x Ionenkanonen',
-        deployment: 'Schnelle Flugzeugträgerunterstützung und mobile Staffelprojekte.',
-        firstAppearance: 'Legends-Carrier',
-        status: 'Legends',
-        knownShips: 'Gozanti-class, Assertor-class, Carrack-class',
-        description: 'Ein trägerartiger Kreuzer, der als eigenständige Luftunterstützungseinheit für imperiale Flugzeugstaffeln dient.',
-        technicalOverview: 'Große Hangars, schnelle Katapulte und ein hoher Energiehaushalt erlauben den raschen Start und die Erneuerung von Jägern im Gefecht.',
-        tacticalRole: 'Unterstützung von Raumfahrzeugen mit Jägern, schnelle Neubelegung und Deckung von Angriffsopfern.',
-        strengths: 'Hohe Jägerkapazität, gute defensive Schilde, schnelle Ausrollzeiten.',
-        weaknesses: 'Nicht so voll gepanzert wie Dreadnoughts, anfällig gegen Artillerieduelle.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#7fcfff" stroke-width="3"><path d="M20 60 Q160 22 300 60 Q160 98 20 60"/><path d="M300 60 L320 50 L320 70 Z"/><path d="M20 60 L0 30 L0 90 Z"/><path d="M300 60 L290 22"/><path d="M300 60 L290 98"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#b5f0ff" stroke-width="3"><path d="M180 32 L345 72 L345 88 L180 128 L15 88 L15 72 Z"/><path d="M180 32 L180 128"/><path d="M15 72 L5 38"/><path d="M15 88 L5 122"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d8f8ff" stroke-width="3"><path d="M85 28 L145 96 L145 154 L85 188 L25 154 L25 96 Z"/><path d="M15 90 L25 100"/><path d="M155 90 L145 100"/></g></svg>'
-        },
-        lengthValue: 725,
-        power: 290,
-        weapons: [
-          { label: 'Schwerlaserbatterien', detail: 'Achtundzwanzig Hauptbatterien für Flottenabwehr.' },
-          { label: 'Ionenkanonen', detail: 'Sechsunddreißig Systeme zur Flugzeugabwehr.' }
-        ]
-      },
-      {
-        id: 'support-frigate',
-        name: 'Imperial Support Frigate',
-        category: 'Support Ships',
-        shipClass: 'Support Frigate',
-        manufacturer: 'Corellian Engineering Corporation',
-        length: '280 m',
-        width: '165 m',
-        height: '74 m',
-        crew: '690',
-        troopCapacity: '280',
-        fighterCapacity: '22',
-        hyperdrive: 'Ja, Klasse 1.5',
-        shields: 'Schildgeneratoren',
-        primaryWeapons: '14 x Laserbatterien',
-        secondaryWeapons: '10 x Ionenkanonen',
-        deployment: 'Medizinische Hilfe, Versorgung und schnelle Reparatur von Flottenteilen.',
-        firstAppearance: 'Imperiale Supportgruppe',
-        status: 'Canon',
-        knownShips: 'Gozanti-class, Arquitens-class, Raider-class Transporter',
-        description: 'Eine schnelle Support-Einheit, die bei hektischen Gefechtssituationen Versorgung, Reparatur und medizinische Betreuung sichert.',
-        technicalOverview: 'Die Fregatte ist darauf ausgelegt, mehrere Rollen zu erfüllen und verfügt über besondere Lagerfächer für Ersatzteile und medizinische Ausrüstung.',
-        tacticalRole: 'Unterstützung der Flottenfront mit benötigter Logistik und anstehenden Reparaturen.',
-        strengths: 'Anpassungsfähig, schnelle Versorgung, gute defensive Möglichkeiten.',
-        weaknesses: 'Kein Kampfträger, benötigt Schutz durch stärker bewaffnete Schiffe.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#88cfff" stroke-width="3"><path d="M35 60 Q160 24 285 60 Q160 96 35 60"/><path d="M285 60 L300 52 L300 68 Z"/><path d="M35 60 L10 30 L10 90 Z"/><path d="M285 60 L270 24"/><path d="M285 60 L270 96"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#b9f0ff" stroke-width="3"><path d="M180 30 L330 70 L330 90 L180 130 L30 90 L30 70 Z"/><path d="M180 30 L180 130"/><path d="M30 70 L10 40"/><path d="M30 90 L10 120"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d7f8ff" stroke-width="3"><path d="M85 24 L118 86 L118 146 L85 182 L52 146 L52 86 Z"/><path d="M42 82 L52 92"/><path d="M132 82 L118 92"/></g></svg>'
-        },
-        lengthValue: 280,
-        power: 170,
-        weapons: [
-          { label: 'Laserbatterien', detail: 'Vierzehn defensive Batterien gegen kleine Angreifer.' },
-          { label: 'Ionenkanonen', detail: 'Zehn Systeme zur elektronischen Abschirmung.' }
-        ]
-      }
-    ];
-
-      ,
-      {
-        id: 'marauder',
-        name: 'Marauder',
-        category: 'Shuttles',
-        shipClass: 'Omicron-class Angriffsshuttle',
-        manufacturer: 'Unbekannt',
-        length: '—',
-        width: '—',
-        height: '—',
-        crew: '1-4',
-        troopCapacity: '0',
-        fighterCapacity: '0',
-        hyperdrive: 'Variante',
-        shields: 'Variante',
-        primaryWeapons: 'Keine bekannten Hauptwaffen',
-        secondaryWeapons: 'Leichte Bordgeschütze',
-        deployment: 'Transport und schnelle Insertion für Kloneinheit 99',
-        firstAppearance: 'Kloneinheit 99 (Jedipedia)',
-        status: 'Canon',
-        knownShips: '',
-        description: 'Ein kompaktes Angriffsshuttle der Omicron-Klasse, verwendet von Kloneinheit 99 für rasche, unauffällige Verlagerungen und Einsätze.',
-        technicalOverview: 'Robustes, kompakt gebautes Shuttle mit Fokus auf Ein- und Aussetzen von Spezialeinheiten. Begrenzte Langstreckenfähigkeiten.',
-        tacticalRole: 'Schnelle Insertion/Exfiltration von Spezialtruppen.',
-        strengths: 'Kompakte Bauform, schnelle Einsatzbereitschaft.',
-        weaknesses: 'Begrenzte Nutzlast und Feuerkraft.',
-        svgViews: {
-          side: '<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#a4d5ff" stroke-width="3"><path d="M80 60 Q140 30 220 60 Q140 90 80 60"/></g></svg>',
-          top: '<svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#c1efff" stroke-width="3"><path d="M180 30 L305 75 L305 85 L180 130 L55 85 L55 75 Z"/></g></svg>',
-          front: '<svg viewBox="0 0 170 210" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#d8f8ff" stroke-width="3"><path d="M85 28 L120 92 L120 152 L85 188 L50 152 L50 92 Z"/></g></svg>'
-        },
-        lengthValue: 0,
-        power: 20,
-        weapons: [
-          { label: 'Bordgeschütze', detail: 'Leichte Verteidigungswaffen zur Selbstverteidigung.' }
-        ]
-      }
-
-    ];
-
-    const categories = [
-      'Starfighters',
-      'Bombers',
-      'Interceptors',
-      'Shuttles',
-      'Gunships',
-      'Corvettes',
-      'Frigates',
-      'Cruisers',
-      'Star Destroyers',
-      'Super Star Destroyers',
-      'Dreadnoughts',
-      'Carriers',
-      'Support Ships',
-      'Space Stations',
-      'Experimental Ships',
-      'Legends Ships',
-      'Canon Ships'
+      { id: 'tie-fighter', name: 'TIE Fighter', category: 'Starfighters', shipClass: 'Twin Ion Engine Fighter', manufacturer: 'Sienar Fleet Systems', length: '6,4 m', crew: '1', hyperdrive: 'Nein', shields: 'Keine', primaryWeapons: '2 x S-FS I Laserkanonen', deployment: 'Jagdstaffeln für schnelle Patrouillen', firstAppearance: 'Kanonische imperialer Jagdstaffel', status: 'Canon', description: 'Der TIE Fighter ist ein puristischer Jagdjäger des Imperiums, entworfen für maximale Agilität und hohen Produktionsrhythmus.', technicalOverview: 'Geringe Panzerung, kein Hyperantrieb und doppelter Ionenantrieb.', tacticalRole: 'Ausnutzen von Überzahl und Tempo in Schwarmtaktiken.', strengths: 'Sehr wendig, hohe Verfügbarkeit, schnelle Startbereitschaft.', weaknesses: 'Keine Schilde, empfindlich gegen Treffer, kein Langstreckenpotential.', lengthValue: 6.4, troopCapacity: '0', fighterCapacity: '1', power: 38 },
+      { id: 'tie-advanced-x1', name: 'TIE Advanced x1', category: 'Starfighters', shipClass: 'Experimentalsterngleiter', manufacturer: 'Sienar Fleet Systems', length: '6,7 m', crew: '1', hyperdrive: 'Nein', shields: 'Schildgenerator', primaryWeapons: '2 x verbesserte Laserkanonen', deployment: 'Eliteaufträge mit hoher Priorität', firstAppearance: 'Kanonische Jagdplatte', status: 'Canon', description: 'Ein experimenteller Einzeljäger mit schwerer Bewaffnung und aktivem Schildsystem.', technicalOverview: 'Verstärkte Rumpfstruktur mit modernen Sensoreinheiten und begrenztem Schildfeld.', tacticalRole: 'Abfangen feindlicher Führungseinheiten', strengths: 'Schildschutz, Torpedobewaffnung, sehr hohe Wendigkeit.', weaknesses: 'Einzelstück, hohe Wartungsanforderungen.', lengthValue: 6.7, troopCapacity: '0', fighterCapacity: '1', power: 62 },
+      { id: 'tie-defender', name: 'TIE Defender', category: 'Starfighters', shipClass: 'TIE Defender Fighter', manufacturer: 'Sienar Fleet Systems', length: '8,2 m', crew: '1', hyperdrive: 'Ja, Klasse 3', shields: 'Schildgenerator', primaryWeapons: '3 x Doppel-Laserkanonen', deployment: 'Elitejäger für Missionen', firstAppearance: 'Legends-Elite-Jäger', status: 'Legends', description: 'Ein hochentwickelter Jagdkampfflugzeug mit Hyperantrieb und Schilden.', technicalOverview: 'Mit drei Doppel-Laserkanonen und vollständigem Schildsystem.', tacticalRole: 'Langstreckeneinsätze und Infiltration', strengths: 'Hyperraumfähig, schildgeschützt, hohe Feuerkraft.', weaknesses: 'Hohe Produktionskosten, komplexe Wartung.', lengthValue: 8.2, troopCapacity: '0', fighterCapacity: '1', power: 75 },
+      { id: 'tie-bomber', name: 'TIE Bomber', category: 'Bombers', shipClass: 'TIE Bombardier', manufacturer: 'Sienar Fleet Systems', length: '12,5 m', crew: '2', hyperdrive: 'Nein', shields: 'Keine', primaryWeapons: '4 x Sprengbehälter', deployment: 'Schwere Trupps für präzise Angriffe', firstAppearance: 'Kanonischer Bomber', status: 'Canon', description: 'Ein spezialisierter Bomber mit zwei unterschiedlichen Behältern.', technicalOverview: 'Konzipiert für schwere Nutzlasten und lange Anflugprofile.', tacticalRole: 'Unterstützung der Flottenlinie', strengths: 'Hohe Sprengkraft, robuste Waffenplattform.', weaknesses: 'Langsame Manövrierfähigkeit, verwundbar.', lengthValue: 12.5, troopCapacity: '0', fighterCapacity: '0', power: 65 },
+      { id: 'tie-interceptor', name: 'TIE Interceptor', category: 'Interceptors', shipClass: 'TIE Abfangjäger', manufacturer: 'Sienar Fleet Systems', length: '8,2 m', crew: '1', hyperdrive: 'Nein', shields: 'Keine', primaryWeapons: '4 x Laserkanonen', deployment: 'Abfangjäger für schnelle Verteidigungsaktionen', firstAppearance: 'Kanonischer Abfangjäger', status: 'Canon', description: 'Eine schnelle Abfangplattform für feindliche Jäger.', technicalOverview: 'Leichtes Chassis mit großen Flügeln für erhöhte Manövrierfähigkeit.', tacticalRole: 'Schneller Störer gegen feindliche Jäger.', strengths: 'Extrem schnelle Wendefähigkeit, starke Rüstung.', weaknesses: 'Keine Schilde, niedrige Haltbarkeit.', lengthValue: 8.2, troopCapacity: '0', fighterCapacity: '1', power: 52 },
+      { id: 'lambda-shuttle', name: 'Lambda-class Shuttle', category: 'Shuttles', shipClass: 'Lambda-class T-4a Shuttle', manufacturer: 'Cygnus Spaceworks', length: '20,0 m', crew: '6', hyperdrive: 'Ja, Klasse 2', shields: 'Schildprojektoren', primaryWeapons: '2 x Laserkanonen', deployment: 'Offizierstransport, Spezialmissionen', firstAppearance: 'Imperiale Verkehrsflotte', status: 'Canon', description: 'Ein vielseitiges Shuttle für den Transport hoher Offiziersränge.', technicalOverview: 'Kombiniert Mobilität und Schutz mit stabilem Hyperantrieb.', tacticalRole: 'Sicherer Transport von Führungskräften', strengths: 'Flexibel, hyperraumfähig, gut geschützt.', weaknesses: 'Begrenzte Feuerkraft, langsamer als Jäger.', lengthValue: 20, troopCapacity: '20', fighterCapacity: '0', power: 40 },
+      { id: 'sentinel-shuttle', name: 'Sentinel-class Shuttle', category: 'Shuttles', shipClass: 'Sentinel-class Landing Craft', manufacturer: 'Rothana Heavy Engineering', length: '18,8 m', crew: '4', hyperdrive: 'Ja, Klasse 3', shields: 'Schildprojektoren', primaryWeapons: '2 x Modulare Laserkanonen', deployment: 'Marineinfanterieeinsätze', firstAppearance: 'Imperiale Landungseinheiten', status: 'Legends', description: 'Ein schwer gepanzertes Landungsshuttle für Invasionskräfte.', technicalOverview: 'Robuste Aufhängungssysteme mit verstärktem Rumpf.', tacticalRole: 'Sichere Einbringung von Truppen', strengths: 'Robustheit, Truppenraum, stabile Landefähigkeit.', weaknesses: 'Langsamer Hyperantrieb, begrenzte Agilität.', lengthValue: 18.8, troopCapacity: '24', fighterCapacity: '0', power: 35 },
+      { id: 'arquitens-cruiser', name: 'Arquitens-class Cruiser', category: 'Frigates', shipClass: 'Arquitens Light Cruiser', manufacturer: 'Rothana Heavy Engineering', length: '325 m', crew: '145', hyperdrive: 'Ja, Klasse 1', shields: 'Standard-Schildgeneratoren', primaryWeapons: '4 x Schwerlaserbatterien', deployment: 'Eskorte und schnelle Eingreiftruppen', firstAppearance: 'Kanonische Flottenbegleitung', status: 'Canon', description: 'Ein schlanker Kreuzer mit ausgewogener Feuerkraft und Geschwindigkeit.', technicalOverview: 'Flexible Waffenpylonen mit robustem Schildnetz.', tacticalRole: 'Begleitung großer Kampfverbände', strengths: 'Vielseitig, schnelle Reaktionszeit.', weaknesses: 'Nicht so massiv wie Star Destroyer.', lengthValue: 325, troopCapacity: '600', fighterCapacity: '18', power: 210 },
+      { id: 'imperial-i', name: 'Imperial I-class Star Destroyer', category: 'Star Destroyers', shipClass: 'Imperial-class Star Destroyer', manufacturer: 'Kuat Drive Yards', length: '1.600 m', crew: '37.000', hyperdrive: 'Ja, Klasse 1', shields: 'Fortgeschrittene Schildgeneratoren', primaryWeapons: '60 x Schwerlaserbatterien', deployment: 'Verbandsführung, Unterdrückung von Aufständen', firstAppearance: 'Kanonischer Starkreuzer', status: 'Canon', description: 'Das Arbeitstier der imperialen Kriegsflotte mit ausgewogener Feuerkraft.', technicalOverview: 'Mit mächtiger A-Schildmatrix und umfassenden Hangarkapazitäten.', tacticalRole: 'Hauptkampfschiff für Flottenverhände', strengths: 'Robust, vielseitig, massive Macht.', weaknesses: 'Schwerfällig, große Zielscheibe.', lengthValue: 1600, troopCapacity: '9.700', fighterCapacity: '72', power: 520 },
+      { id: 'imperial-ii', name: 'Imperial II-class Star Destroyer', category: 'Star Destroyers', shipClass: 'Imperial II-class Star Destroyer', manufacturer: 'Kuat Drive Yards', length: '1.620 m', crew: '40.000', hyperdrive: 'Ja, Klasse 1', shields: 'Fortgeschrittene Schildgeneratoren', primaryWeapons: '68 x Schwerlaserbatterien', deployment: 'Verstärkte Operativeinsätze', firstAppearance: 'Kanonischer Nachfolger', status: 'Canon', description: 'Eine verbesserte Variante mit stärkerer Feuerkraft.', technicalOverview: 'Modernisierte Systeme mit automatische Verteidigungsdrohnen.', tacticalRole: 'Verstärkte Linienformation', strengths: 'Mehr Waffen, stärkere Verteidigung.', weaknesses: 'Noch schwerfälliger, hoher Wartungsaufwand.', lengthValue: 1620, troopCapacity: '10.500', fighterCapacity: '75', power: 560 },
+      { id: 'executor-class', name: 'Executor-class Super Star Destroyer', category: 'Super Star Destroyers', shipClass: 'Executor-class Dreadnought', manufacturer: 'Kuat Drive Yards', length: '19.000 m', crew: '279.144', hyperdrive: 'Ja, Klasse 1', shields: 'Maximale Schildmatrix', primaryWeapons: '100 x Schwerlaserbatterien', deployment: 'Flottenkommando, planetare Belagerung', firstAppearance: 'Legends-Supersternzerstörer', status: 'Legends', description: 'Ein monumentales Flaggschiff als bewegliche Festung.', technicalOverview: 'Extremprototyp mit riesigen Schildgeneratoren.', tacticalRole: 'Zentraler Kommando- und Kontrollpunkt', strengths: 'Unvorstellbare Feuerkraft, massive Verteidigung.', weaknesses: 'Sehr langsam, hoher Energiebedarf.', lengthValue: 19000, troopCapacity: '380.000', fighterCapacity: '144', power: 1000 },
+      { id: 'victory-class', name: 'Victory-class Star Destroyer', category: 'Star Destroyers', shipClass: 'Victory-class Star Destroyer', manufacturer: 'Kuat Drive Yards', length: '900 m', crew: '27.000', hyperdrive: 'Ja, Klasse 1', shields: 'Standard-Schildgeneratoren', primaryWeapons: '32 x Schwerlaserbatterien', deployment: 'Patrouillen, Eskorte und Flottenlogistik', firstAppearance: 'Kanonischer Unterstützer', status: 'Canon', description: 'Ein kompakteres Schlachtschiff mit Fokus auf Effizienz.', technicalOverview: 'Moderat starke Panzerung mit gutem Hangarvolumen.', tacticalRole: 'Konfliktdeeskalation und Patrouilleneinsätze', strengths: 'Effizient, breit eingesetzbar.', weaknesses: 'Begrenzte Schlagkraft gegenüber Super-Sternenzerstörern.', lengthValue: 900, troopCapacity: '5.000', fighterCapacity: '50', power: 260 },
+      { id: 'interdictor-class', name: 'Interdictor-class Cruiser', category: 'Cruisers', shipClass: 'Interdictor-class Star Destroyer', manufacturer: 'Kuat Drive Yards', length: '888 m', crew: '25.000', hyperdrive: 'Ja, Klasse 2', shields: 'Standard-Schildgeneratoren', primaryWeapons: '20 x Schwerlaserbatterien', deployment: 'Raumblockaden, Hyperraum-Fallen', firstAppearance: 'Legends Blockadeschiff', status: 'Legends', description: 'Ein Spezial-Kreuzer mit fortgeschrittenen Gravitationssendern.', technicalOverview: 'Ausgerüstet mit Gravitations-Pulsoren gegen Hyperraum.', tacticalRole: 'Raumblockade und Schiffsfalle', strengths: 'Hyperraum-Kontrolle, gute Verteidigung.', weaknesses: 'Geringere Gesamtfeuerkraft, spezialisiert.', lengthValue: 888, troopCapacity: '3.500', fighterCapacity: '40', power: 320 },
+      { id: 'carrack-dreadnought', name: 'Carrack-class Dreadnought', category: 'Dreadnoughts', shipClass: 'Carrack-class Heavy Cruiser', manufacturer: 'Kuat Drive Yards', length: '960 m', crew: '2.725', hyperdrive: 'Ja, Klasse 1', shields: 'Fortgeschrittene Schildbatterien', primaryWeapons: '36 x Schwerlaserbatterien', deployment: 'Große Kampfverbände, Blockadeoperationen', firstAppearance: 'Legenden-dreadnought', status: 'Legends', description: 'Ein schwer gepanzertes Dreadnought zur Dominanz im Raumgefecht.', technicalOverview: 'Starke Panzerung mit massivem Schildnetz.', tacticalRole: 'Führer des Hauptangriffs', strengths: 'Immense Feuerkraft, starke Verteidigung.', weaknesses: 'Langsam, energieintensiv.', lengthValue: 960, troopCapacity: '1.500', fighterCapacity: '75', power: 420 },
+      { id: 'bellator-class', name: 'Bellator-class Dreadnought', category: 'Dreadnoughts', shipClass: 'Bellator-class Star Destroyer', manufacturer: 'Slayn & Korpil', length: '5.020 m', crew: '82.000', hyperdrive: 'Ja, Klasse 1', shields: 'Starke Schildmatrix', primaryWeapons: '74 x Schwerlaserbatterien', deployment: 'Belagerungsoperationen, Flottenvorstöße', firstAppearance: 'Legenden-Dreadnought', status: 'Legends', description: 'Eine furchterregende monochrome Kampfmaschine.', technicalOverview: 'Breite Waffenaufstellung mit zusätzlichen Schilden.', tacticalRole: 'Führung schwerer Stoßtruppen', strengths: 'Beeindruckende Feuerkraft, hoher Schutz.', weaknesses: 'Massiv, langsam, anfällig bei Schildfeldverlust.', lengthValue: 5020, troopCapacity: '52.000', fighterCapacity: '126', power: 670 },
+      { id: 'eclipse-class', name: 'Eclipse-class Super Star Destroyer', category: 'Super Star Destroyers', shipClass: 'Eclipse-class Dreadnought', manufacturer: 'Kuat Drive Yards', length: '17.500 m', crew: '400.000', hyperdrive: 'Ja, Klasse 2', shields: 'Maximale Schildmatrix', primaryWeapons: '120 x Schwerlaserbatterien', deployment: 'Superwaffen-Plattform', firstAppearance: 'Legends-Superwaffe', status: 'Legends', description: 'Ein imposanter Dreadnought mit Superwaffen-Kapazität.', technicalOverview: 'Mit Kybernetischen Waffen und Schildmatrix.', tacticalRole: 'Strategische Einzelwaffe', strengths: 'Unglaubliche Feuerkraft, unversiegbar.', weaknesses: 'Gigantisch, anfällig gegen Koordinierte Angriffe.', lengthValue: 17500, troopCapacity: '250.000', fighterCapacity: '200', power: 1200 },
+      { id: 'mandator-class', name: 'Mandator-class Capital Ship', category: 'Experimental Ships', shipClass: 'Mandator III-class Capital Ship', manufacturer: 'Kuat Drive Yards', length: '1.308 m', crew: '48.000', hyperdrive: 'Ja, Klasse 1', shields: 'Hochleistungs-Schildgeneratoren', primaryWeapons: '48 x Schwerlaserbatterien', deployment: 'Technologieerprobung', firstAppearance: 'Legenden-experimentell', status: 'Legends', description: 'Experimentelles Testbett für neue Kampftechnologien.', technicalOverview: 'Neue Schildverteilung mit modular geteiltem Hangarsystem.', tacticalRole: 'Vorlaufende Technologieplattform', strengths: 'Vielseitig, technologisch fortschrittlich.', weaknesses: 'Hoher Wartungsbedarf, riskante Systeme.', lengthValue: 1308, troopCapacity: '24.000', fighterCapacity: '120', power: 410 },
+      { id: 'tector-dreadnought', name: 'Tector-class Dreadnought', category: 'Dreadnoughts', shipClass: 'Tector-class Star Destroyer', manufacturer: 'Kuat Drive Yards', length: '2.600 m', crew: '60.000', hyperdrive: 'Ja, Klasse 1', shields: 'Fortgeschrittene Schildmatrix', primaryWeapons: '80 x Schwerlaserbatterien', deployment: 'Frontlinie Kampfeinsätze', firstAppearance: 'Legends-Dreadnought', status: 'Legends', description: 'Ein massiver Dreadnought für Frontlinieneinsätze.', technicalOverview: 'Verbesserte Waffensysteme mit dickerer Panzerung.', tacticalRole: 'Vernichtung feindlicher Flotten', strengths: 'Gigantische Feuerkraft, robuste Konstruktion.', weaknesses: 'Extrem langsam, Energiebedarf enorm.', lengthValue: 2600, troopCapacity: '100.000', fighterCapacity: '180', power: 800 },
+      { id: 'scimitar-bomber', name: 'Scimitar Assault Bomber', category: 'Bombers', shipClass: 'Scimitar Assault Bomber', manufacturer: 'Sienar Fleet Systems', length: '14,2 m', crew: '2', hyperdrive: 'Nein', shields: 'Begrenzte Schilde', primaryWeapons: '6 x Sprengbehälter', deployment: 'Präzisionsangriffe', firstAppearance: 'Legends-Spezialbomber', status: 'Legends', description: 'Ein schneller Angriffsbomber mit verbesserter Wendigkeit.', technicalOverview: 'Verstärkte Antriebe mit Schildfeld und optimierten Bombenschächten.', tacticalRole: 'Schnelle Bombereinsätze', strengths: 'Schnell, wendiger, hohe Bombenlast.', weaknesses: 'Begrenzte Schilde, hohe Sensoranfälligkeit.', lengthValue: 14.2, troopCapacity: '0', fighterCapacity: '0', power: 70 },
+      { id: 'gladiator-cruiser', name: 'Gladiator-class Cruiser', category: 'Cruisers', shipClass: 'Gladiator-class Star Destroyer', manufacturer: 'Kuat Drive Yards', length: '650 m', crew: '18.000', hyperdrive: 'Ja, Klasse 1.5', shields: 'Standard-Schildgeneratoren', primaryWeapons: '24 x Schwerlaserbatterien', deployment: 'Schnelle Attackenschiffe', firstAppearance: 'Legends-Schnellangreifer', status: 'Legends', description: 'Ein schneller Kreuzer optimiert für Angriff.', technicalOverview: 'Schlankes Design mit konzentrierten Waffenpaketen.', tacticalRole: 'Schnelle offensive Operationen', strengths: 'Schnell, agil, hohe Feuerkraftdichte.', weaknesses: 'Leichter gepanzert, begrenzte Kapazitäten.', lengthValue: 650, troopCapacity: '2.000', fighterCapacity: '30', power: 280 },
+      { id: 'gozanti-class', name: 'Gozanti-class Cruiser', category: 'Support Ships', shipClass: 'Gozanti-class Freighter', manufacturer: 'Corellian Engineering Corporation', length: '60 m', crew: '8', hyperdrive: 'Ja, Klasse 2', shields: 'Grundschutzschilde', primaryWeapons: '4 x Laserkanonen', deployment: 'Frachtversorgung und Handelskonvoi', firstAppearance: 'Canon-Frachtschiff', status: 'Canon', description: 'Ein Mehruse-Frachtschiff für Versorgung und Transport.', technicalOverview: 'Großes Laderaum-Design mit moderaten Verteidigungswaffen.', tacticalRole: 'Logistische Unterstützung von Flottenoperationen', strengths: 'Großes Ladevolumen, hyperraumfähig.', weaknesses: 'Langsam, leicht gepanzert, geringe Feuerkraft.', lengthValue: 60, troopCapacity: '0', fighterCapacity: '0', power: 45 },
+      { id: 'raider-bomber', name: 'Raider-class Bomber', category: 'Bombers', shipClass: 'Heavy Raider Bomber', manufacturer: 'Kuat Systems Engineering', length: '34,0 m', crew: '3', hyperdrive: 'Ja, Klasse 1.5', shields: 'Schildprojektoren', primaryWeapons: '2 x Schwerlaserbatterien', deployment: 'Langstreckenangriffe', firstAppearance: 'Legendenbomber', status: 'Legends', description: 'Ein schwerer Bomber für Langstrecken-Operationen.', technicalOverview: 'Robuste Hülle mit getrennte Bombenschächte.', tacticalRole: 'Störung gegnerischer Nachschublinien', strengths: 'Schwere Ladung, Reichweite, starker Schutz.', weaknesses: 'Langsam, leichtes Ziel für Abfangjäger.', lengthValue: 34, troopCapacity: '6', fighterCapacity: '0', power: 95 }
     ];
 
     const state = {
       search: '',
-      category: 'all',
-      status: 'all',
-      size: 'all',
-      manufacturer: 'all',
-      sort: 'alpha',
-      activeShipId: null,
-      currentView: 'side'
+      category: '',
+      status: '',
+      sort: 'name',
+      activeShipId: null
     };
 
     const elements = {
       searchInput: document.getElementById('searchInput'),
       categoryFilter: document.getElementById('categoryFilter'),
       statusFilter: document.getElementById('statusFilter'),
-      sizeFilter: document.getElementById('sizeFilter'),
-      manufacturerFilter: document.getElementById('manufacturerFilter'),
       sortSelect: document.getElementById('sortSelect'),
-      accordionContainer: document.getElementById('accordionContainer'),
+      categoryList: document.getElementById('categoryList'),
       detailPanel: document.getElementById('detailPanel'),
-      techDataGrid: document.getElementById('techDataGrid'),
+      welcomePanel: document.getElementById('welcomePanel'),
+      totalShipsCount: document.getElementById('totalShipsCount'),
+      canonShipsCount: document.getElementById('canonShipsCount'),
+      legendsShipsCount: document.getElementById('legendsShipsCount'),
+      detailName: document.getElementById('detailName'),
+      detailSubtitle: document.getElementById('detailSubtitle'),
+      detailStatusLabel: document.getElementById('detailStatusLabel'),
+      detailStatusText: document.getElementById('detailStatusText'),
+      detailCategory: document.getElementById('detailCategory'),
+      detailManufacturer: document.getElementById('detailManufacturer'),
+      detailClass: document.getElementById('detailClass'),
+      detailLength: document.getElementById('detailLength'),
+      detailCrew: document.getElementById('detailCrew'),
+      detailHyperdrive: document.getElementById('detailHyperdrive'),
+      detailShields: document.getElementById('detailShields'),
+      detailTroops: document.getElementById('detailTroops'),
+      detailFighters: document.getElementById('detailFighters'),
       descriptionCard: document.getElementById('descriptionCard'),
       tacticalRole: document.getElementById('tacticalRole'),
       strengths: document.getElementById('strengths'),
       weaknesses: document.getElementById('weaknesses'),
-      weaponOverview: document.getElementById('weaponOverview'),
-      shipSprite: document.getElementById('shipSprite'),
-      shipViewButtons: document.getElementById('shipViewButtons'),
-      lengthChart: document.getElementById('lengthChart'),
-      comparisonPreview: document.getElementById('comparisonPreview'),
-      detailStatusLabel: document.getElementById('detailStatusLabel'),
-      detailName: document.getElementById('detailName'),
-      detailSubtitle: document.getElementById('detailSubtitle'),
-      detailCategory: document.getElementById('detailCategory'),
-      detailManufacturer: document.getElementById('detailManufacturer'),
-      detailClass: document.getElementById('detailClass'),
-      statusTiles: document.getElementById('statusTiles'),
-      reportText: document.getElementById('reportText'),
-      backButton: document.getElementById('backButton'),
-      totalShips: document.getElementById('totalShips'),
-      totalCanon: document.getElementById('totalCanon'),
-      totalLegends: document.getElementById('totalLegends'),
-      totalCategories: document.getElementById('totalCategories'),
-      starfield: document.getElementById('starfield')
+      weaponsList: document.getElementById('weaponsList'),
+      lengthChart: document.getElementById('lengthChart')
     };
 
-    /* Hilfsfunktionen */
-    function normalizeText(value) {
-      return value.toString().toLowerCase();
+    function normalizeText(text) {
+      return text.toLowerCase().trim();
     }
 
-    function getNumericLength(ship) {
-      return typeof ship.lengthValue === 'number' ? ship.lengthValue : 0;
-    }
-
-    function getSizeCategory(ship) {
-      const len = getNumericLength(ship);
-      if (len < 15) return 'small';
-      if (len <= 120) return 'medium';
-      return 'large';
-    }
-
-    function createStarfield() {
-      const starCount = 120;
-      const fragment = document.createDocumentFragment();
-      for (let i = 0; i < starCount; i++) {
-        const star = document.createElement('span');
-        const size = Math.random() * 2 + 1;
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        star.style.top = `${Math.random() * 100}%`;
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.animationDuration = `${4 + Math.random() * 10}s`;
-        star.style.opacity = `${0.3 + Math.random() * 0.7}`;
-        fragment.appendChild(star);
-      }
-      elements.starfield.appendChild(fragment);
-    }
-
-    function renderFilters() {
-      const categoriesSorted = ['all', ...categories];
-      elements.categoryFilter.innerHTML = categoriesSorted
-        .map(value => {
-          const label = value === 'all' ? 'Alle Kategorien' : value;
-          return `<option value="${value}">${label}</option>`;
-        })
-        .join('');
-
-      const manufacturers = [...new Set(shipDatabase.map(ship => ship.manufacturer))].sort();
-      elements.manufacturerFilter.innerHTML = '<option value="all">Alle Hersteller</option>' +
-        manufacturers.map(name => `<option value="${name}">${name}</option>`).join('');
-    }
-
-    function filterShips() {
-      return shipDatabase.filter(ship => {
-        const matchesSearch = state.search
-          ? normalizeText(`${ship.name} ${ship.shipClass} ${ship.manufacturer} ${ship.description}`).includes(state.search)
-          : true;
-        const matchesCategory = state.category === 'all' || state.category === ship.category ||
-          (state.category === 'Legends Ships' && ship.status === 'Legends') ||
-          (state.category === 'Canon Ships' && ship.status === 'Canon');
-        const matchesStatus = state.status === 'all' || ship.status === state.status;
-        const matchesSize = state.size === 'all' || getSizeCategory(ship) === state.size;
-        const matchesManufacturer = state.manufacturer === 'all' || ship.manufacturer === state.manufacturer;
-        return matchesSearch && matchesCategory && matchesStatus && matchesSize && matchesManufacturer;
+    function getFilteredShips() {
+      let filtered = shipDatabase.filter(ship => {
+        const matchesSearch = !state.search || normalizeText(ship.name).includes(state.search) || normalizeText(ship.shipClass).includes(state.search);
+        const matchesCategory = !state.category || ship.category === state.category;
+        const matchesStatus = !state.status || ship.status === state.status;
+        return matchesSearch && matchesCategory && matchesStatus;
       });
-    }
 
-    function sortShips(ships) {
-      return ships.slice().sort((a, b) => {
-        if (state.sort === 'alpha') {
-          return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
-        }
-        if (state.sort === 'length') {
-          return getNumericLength(a) - getNumericLength(b);
-        }
-        if (state.sort === 'crew') {
-          return parseInt(a.crew.toString().replace(/[^0-9]/g, ''), 10) - parseInt(b.crew.toString().replace(/[^0-9]/g, ''), 10);
-        }
-        if (state.sort === 'power') {
-          return a.power - b.power;
-        }
-        return 0;
+      filtered.sort((a, b) => {
+        if (state.sort === 'length') return b.lengthValue - a.lengthValue;
+        if (state.sort === 'crew') return parseInt(b.crew) - parseInt(a.crew);
+        if (state.sort === 'category') return a.category.localeCompare(b.category);
+        return a.name.localeCompare(b.name);
       });
+
+      return filtered;
     }
 
-    function buildShipCard(ship) {
-      const card = document.createElement('button');
-      card.className = 'ship-card';
-      card.type = 'button';
-      card.dataset.shipId = ship.id;
-      card.innerHTML = `
-        <div class="meta">
-          <p class="ship-name">${ship.name}</p>
-          <p class="ship-class">${ship.shipClass}</p>
-          <div class="ship-tags">
-            <span class="ship-tag">${ship.status}</span>
-            <span class="ship-tag">${ship.category}</span>
-          </div>
-          <div class="ship-statline">
-            <span>Länge ${ship.length}</span>
-            <span>Besatzung ${ship.crew}</span>
-            <span>Hersteller ${ship.manufacturer}</span>
-          </div>
-        </div>
-        <div class="ship-quickline">
-          <span class="ship-tag">${ship.primaryWeapons}</span>
-          <span class="ship-tag">${ship.shields}</span>
-        </div>
-      `;
-      card.addEventListener('click', () => showDetail(ship.id));
-      return card;
-    }
+    function renderCategoryAccordion() {
+      const categories = [...new Set(shipDatabase.map(s => s.category))].sort();
+      elements.categoryList.innerHTML = '';
 
-    function renderAccordion() {
-      const filtered = sortShips(filterShips());
-      const grouped = categories.reduce((acc, category) => {
-        acc[category] = [];
-        return acc;
-      }, {});
-      filtered.forEach(ship => {
-        if (grouped[ship.category]) {
-          grouped[ship.category].push(ship);
-        }
-      });
-      const wrapper = document.createDocumentFragment();
-
-      categories.forEach(category => {
-        const shipsInCategory = category === 'Legends Ships'
-          ? filtered.filter(ship => ship.status === 'Legends')
-          : category === 'Canon Ships'
-            ? filtered.filter(ship => ship.status === 'Canon')
-            : grouped[category] || [];
-
+      categories.forEach(cat => {
+        const ships = shipDatabase.filter(s => s.category === cat);
         const details = document.createElement('details');
+        
         const summary = document.createElement('summary');
-        summary.innerHTML = `<span>${category}</span><span class="category-count">${shipsInCategory.length}</span>`;
+        summary.innerHTML = `${cat} <span class="category-count">(${ships.length})</span>`;
         details.appendChild(summary);
 
         const shipList = document.createElement('div');
         shipList.className = 'ship-list';
-        if (shipsInCategory.length === 0) {
-          const emptyState = document.createElement('div');
-          emptyState.className = 'ship-card';
-          emptyState.innerHTML = '<p class="ship-name">Keine Treffer</p><p class="ship-class">Passe Filter oder Suche an, um hier Einträge zu sehen.</p>';
-          shipList.appendChild(emptyState);
-        } else {
-          shipsInCategory.forEach(ship => shipList.appendChild(buildShipCard(ship)));
-        }
+        ships.sort((a, b) => a.name.localeCompare(b.name)).forEach(ship => {
+          const shipCard = document.createElement('div');
+          shipCard.className = 'ship-card';
+          shipCard.onclick = () => showDetail(ship.id);
+          shipCard.innerHTML = `<div class="ship-name">${ship.name}</div><div class="ship-class">${ship.shipClass}</div>`;
+          shipList.appendChild(shipCard);
+        });
         details.appendChild(shipList);
-        wrapper.appendChild(details);
+        elements.categoryList.appendChild(details);
       });
-
-      elements.accordionContainer.innerHTML = '';
-      elements.accordionContainer.appendChild(wrapper);
     }
 
     function updateDashboard() {
-      const total = shipDatabase.length;
-      const canon = shipDatabase.filter(ship => ship.status === 'Canon').length;
-      const legends = shipDatabase.filter(ship => ship.status === 'Legends').length;
-      elements.totalShips.textContent = total;
-      elements.totalCanon.textContent = canon;
-      elements.totalLegends.textContent = legends;
-      elements.totalCategories.textContent = categories.length;
-    }
-
-    function buildTechnicalGrid(ship) {
-      const grid = document.createDocumentFragment();
-      const entries = [
-        { label: 'Klasse', value: ship.shipClass },
-        { label: 'Hersteller', value: ship.manufacturer },
-        { label: 'Kategorie', value: ship.category },
-        { label: 'Status', value: ship.status },
-        { label: 'Länge', value: ship.length },
-        { label: 'Breite', value: ship.width },
-        { label: 'Höhe', value: ship.height },
-        { label: 'Besatzung', value: ship.crew },
-        { label: 'Truppenkapazität', value: ship.troopCapacity },
-        { label: 'Jägerkapazität', value: ship.fighterCapacity },
-        { label: 'Hyperantrieb', value: ship.hyperdrive },
-        { label: 'Schildsystem', value: ship.shields },
-        { label: 'Einsatzgebiet', value: ship.deployment },
-        { label: 'Erste Erscheinung', value: ship.firstAppearance },
-        { label: 'Bekannte Schiffe', value: ship.knownShips }
-      ];
-      entries.forEach(item => {
-        const node = document.createElement('div');
-        node.className = 'data-item';
-        node.innerHTML = `<span class="label">${item.label}</span><span class="value">${item.value}</span>`;
-        grid.appendChild(node);
-      });
-      elements.techDataGrid.innerHTML = '';
-      elements.techDataGrid.appendChild(grid);
-    }
-
-    function buildWeaponCards(ship) {
-      const fragment = document.createDocumentFragment();
-      ship.weapons.forEach(weapon => {
-        const entry = document.createElement('div');
-        entry.className = 'weapon-item';
-        entry.innerHTML = `<strong>${weapon.label}</strong><span>${weapon.detail}</span>`;
-        fragment.appendChild(entry);
-      });
-      elements.weaponOverview.innerHTML = '';
-      elements.weaponOverview.appendChild(fragment);
-    }
-
-    function buildStatusTiles(ship) {
-      const tiles = [
-        { label: 'Kampfgewicht', value: ship.power ? `${ship.power}` : 'N/A' },
-        { label: 'Größe', value: getSizeCategory(ship) },
-        { label: 'Schilde', value: ship.shields },
-        { label: 'Hyperantrieb', value: ship.hyperdrive }
-      ];
-      const fragment = document.createDocumentFragment();
-      tiles.forEach(tile => {
-        const node = document.createElement('div');
-        node.className = 'status-tile';
-        node.innerHTML = `<span>${tile.label}</span><strong>${tile.value}</strong>`;
-        fragment.appendChild(node);
-      });
-      elements.statusTiles.innerHTML = '';
-      elements.statusTiles.appendChild(fragment);
-    }
-
-    function displayComparisonChart(ship) {
-      const refValues = [
-        { name: 'Mensch', length: 1.8 },
-        { name: 'TIE Fighter', length: 6.4 },
-        { name: 'Millennium Falcon', length: 34 },
-        { name: 'Star Destroyer', length: 160 }
-      ];
-      const maxLen = Math.max(ship.lengthValue, ...refValues.map(ref => ref.length));
-      const fragment = document.createDocumentFragment();
-      refValues.concat([{ name: ship.name, length: ship.lengthValue }]).forEach(ref => {
-        const bar = document.createElement('div');
-        bar.className = 'chart-bar';
-        const heightPercent = (ref.length / maxLen) * 100;
-        bar.style.height = `${Math.max(heightPercent, 12)}%`;
-        bar.dataset.label = ref.name;
-        bar.innerHTML = `<span>${ref.length} m</span>`;
-        fragment.appendChild(bar);
-      });
-      elements.lengthChart.innerHTML = '';
-      elements.lengthChart.appendChild(fragment);
-    }
-
-    function buildComparisonPreview(ship) {
-      const items = [
-        { label: 'Mensch', size: 1.8 },
-        { label: 'TIE Fighter', size: 6.4 },
-        { label: 'Millennium Falcon', size: 34 },
-        { label: 'Imperial Star Destroyer', size: 160 },
-        { label: ship.name, size: ship.lengthValue }
-      ];
-      const max = Math.max(...items.map(item => item.size));
-      const fragment = document.createDocumentFragment();
-      items.forEach(item => {
-        const factor = (item.size / max) * 100;
-        const scale = document.createElement('div');
-        scale.className = 'scale-item';
-        scale.style.flex = '1';
-        scale.style.height = `${Math.max(factor, 15)}px`;
-        scale.innerHTML = `<strong>${item.label}</strong><span>${item.size} m</span>`;
-        fragment.appendChild(scale);
-      });
-      elements.comparisonPreview.innerHTML = '';
-      elements.comparisonPreview.appendChild(fragment);
-    }
-
-    function buildShipViewButtons(ship) {
-      const views = ['side', 'top', 'front'];
-      elements.shipViewButtons.innerHTML = '';
-      views.forEach(view => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.textContent = view.charAt(0).toUpperCase() + view.slice(1);
-        button.className = state.currentView === view ? 'active' : '';
-        button.addEventListener('click', () => {
-          state.currentView = view;
-          updateShipSprite(ship);
-          buildShipViewButtons(ship);
-        });
-        elements.shipViewButtons.appendChild(button);
-      });
-    }
-
-    function updateShipSprite(ship) {
-      const svgMarkup = ship.svgViews[state.currentView] || ship.svgViews.side;
-      elements.shipSprite.innerHTML = svgMarkup;
+      elements.totalShipsCount.textContent = shipDatabase.length;
+      elements.canonShipsCount.textContent = shipDatabase.filter(s => s.status === 'Canon').length;
+      elements.legendsShipsCount.textContent = shipDatabase.filter(s => s.status === 'Legends').length;
     }
 
     function showDetail(shipId) {
-      const ship = shipDatabase.find(item => item.id === shipId);
+      const ship = shipDatabase.find(s => s.id === shipId);
       if (!ship) return;
+
       state.activeShipId = shipId;
+      elements.welcomePanel.classList.add('hidden');
       elements.detailPanel.classList.remove('hidden');
+
       elements.detailStatusLabel.textContent = ship.status;
       elements.detailStatusLabel.className = `status-pill ${ship.status.toLowerCase()}`;
+      elements.detailStatusText.textContent = ship.status;
       elements.detailName.textContent = ship.name;
       elements.detailSubtitle.textContent = `${ship.shipClass} • ${ship.category}`;
       elements.detailCategory.textContent = ship.category;
       elements.detailManufacturer.textContent = ship.manufacturer;
       elements.detailClass.textContent = ship.shipClass;
-      elements.descriptionCard.innerHTML = `<p><strong>Beschreibung:</strong> ${ship.description}</p><p><strong>Technische Analyse:</strong> ${ship.technicalOverview}</p>`;
+      elements.detailLength.textContent = ship.length;
+      elements.detailCrew.textContent = ship.crew;
+      elements.detailHyperdrive.textContent = ship.hyperdrive;
+      elements.detailShields.textContent = ship.shields;
+      elements.detailTroops.textContent = ship.troopCapacity;
+      elements.detailFighters.textContent = ship.fighterCapacity;
+
+      elements.descriptionCard.innerHTML = `
+        <p><strong>Übersicht:</strong> ${ship.description}</p>
+        <p><strong>Technische Analyse:</strong> ${ship.technicalOverview}</p>
+      `;
+      
       elements.tacticalRole.textContent = ship.tacticalRole;
       elements.strengths.textContent = ship.strengths;
       elements.weaknesses.textContent = ship.weaknesses;
-      buildTechnicalGrid(ship);
-      buildWeaponCards(ship);
-      buildStatusTiles(ship);
-      displayComparisonChart(ship);
-      buildComparisonPreview(ship);
-      state.currentView = 'side';
-      buildShipViewButtons(ship);
-      updateShipSprite(ship);
-      elements.reportText.textContent = `Der Datensatz ${ship.name} wurde als Priorität klassifiziert. Der aktuelle Zustand zeigt eine standardmäßige Einsatzbereitschaft für ${ship.tacticalRole.toLowerCase()}. Stärken: ${ship.strengths}. Schwächen: ${ship.weaknesses}.`;
+
+      elements.weaponsList.innerHTML = `
+        <div class="weapon-item">
+          <strong>${ship.primaryWeapons}</strong>
+          <span>Hauptbewaffnung</span>
+        </div>
+      `;
+
+      // Größenvergleich
+      const refShips = [
+        { name: 'Mensch', length: 1.8 },
+        { name: 'TIE Fighter', length: 6.4 },
+        { name: ship.name, length: ship.lengthValue }
+      ];
+      const maxLen = Math.max(...refShips.map(s => s.length));
+      elements.lengthChart.innerHTML = refShips.map(ref => {
+        const percent = (ref.length / maxLen) * 100;
+        return `<div class="chart-bar" style="height: ${Math.max(percent, 10)}%;"><span>${ref.name}</span></div>`;
+      }).join('');
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function hideDetail() {
       elements.detailPanel.classList.add('hidden');
+      elements.welcomePanel.classList.remove('hidden');
       state.activeShipId = null;
     }
 
+    function scrollToCategory(category) {
+      const details = Array.from(document.querySelectorAll('details'));
+      const target = details.find(d => d.querySelector('summary')?.textContent.includes(category));
+      if (target) {
+        target.open = true;
+        target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
     function attachEventListeners() {
-      elements.searchInput.addEventListener('input', event => {
-        state.search = normalizeText(event.target.value);
-        renderAccordion();
+      elements.searchInput.addEventListener('input', e => {
+        state.search = normalizeText(e.target.value);
+        renderCategoryAccordion();
       });
-      elements.categoryFilter.addEventListener('change', event => {
-        state.category = event.target.value;
-        renderAccordion();
+
+      elements.categoryFilter.addEventListener('change', e => {
+        state.category = e.target.value;
+        renderCategoryAccordion();
       });
-      elements.statusFilter.addEventListener('change', event => {
-        state.status = event.target.value;
-        renderAccordion();
+
+      elements.statusFilter.addEventListener('change', e => {
+        state.status = e.target.value;
+        renderCategoryAccordion();
       });
-      elements.sizeFilter.addEventListener('change', event => {
-        state.size = event.target.value;
-        renderAccordion();
+
+      elements.sortSelect.addEventListener('change', e => {
+        state.sort = e.target.value;
+        renderCategoryAccordion();
       });
-      elements.manufacturerFilter.addEventListener('change', event => {
-        state.manufacturer = event.target.value;
-        renderAccordion();
-      });
-      elements.sortSelect.addEventListener('change', event => {
-        state.sort = event.target.value;
-        renderAccordion();
-      });
-      elements.backButton.addEventListener('click', hideDetail);
-      document.addEventListener('keydown', event => {
-        if (event.key === 'Escape' && !elements.detailPanel.classList.contains('hidden')) {
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && !elements.detailPanel.classList.contains('hidden')) {
           hideDetail();
         }
       });
@@ -2836,12 +1043,12 @@
 
     function initialize() {
       createStarfield();
-      renderFilters();
-      renderAccordion();
+      renderCategoryAccordion();
       updateDashboard();
       attachEventListeners();
     }
 
+    window.addEventListener('DOMContentLoaded', initialize);
     initialize();
   </script>
 </body>
