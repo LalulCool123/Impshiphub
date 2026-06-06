@@ -1,0 +1,32 @@
+[
+  {
+    "name": "X-Wing",
+    "class": "Starfighters",
+    "status": "Canon",
+    "manufacturer": "Incom Corporation",
+    "length": 12.5,
+    "crew": 1,
+    "era": "Rebellion",
+    "description": "Vielseitiger Rebellenjäger."
+  },
+  {
+    "name": "TIE Fighter",
+    "class": "Starfighters",
+    "status": "Canon",
+    "manufacturer": "Sienar Fleet Systems",
+    "length": 6.3,
+    "crew": 1,
+    "era": "Imperium",
+    "description": "Standard Imperialer Jäger."
+  },
+  {
+    "name": "Imperial Star Destroyer",
+    "class": "Destroyers",
+    "status": "Canon",
+    "manufacturer": "Kuat Drive Yards",
+    "length": 1600,
+    "crew": 47000,
+    "era": "Imperium",
+    "description": "Schweres Großkampfschiff des Imperiums."
+  }
+]
