@@ -1,201 +1,110 @@
-// ===============================
-// STAR WARS SHIP DATABASE APP
-// ===============================
-
 let ships = [];
-let filteredShips = [];
-let currentShip = null;
+let filtered = [];
 
-// DOM
-const listContainer = document.getElementById("shipList");
-const detailPanel = document.getElementById("detailPanel");
+const list = document.getElementById("shipList");
+const detail = document.getElementById("detailPanel");
 
-// Inputs
 const searchInput = document.getElementById("searchInput");
 const categoryFilter = document.getElementById("categoryFilter");
 const statusFilter = document.getElementById("statusFilter");
 const sortSelect = document.getElementById("sortSelect");
-const eraFilter = document.getElementById("eraFilter");
-const manufacturerFilter = document.getElementById("manufacturerFilter");
-const affiliationFilter = document.getElementById("affiliationFilter");
 
-// ===============================
-// INIT
-// ===============================
 async function init() {
-  const res = await fetch("./data/ships.json");
+  const res = await fetch("ships.json");
   ships = await res.json();
 
-  filteredShips = [...ships];
-
-  renderList();
-  updateStats();
+  filtered = [...ships];
+  render();
+  stats();
 }
 
 init();
 
-// ===============================
-// FILTER + SEARCH
-// ===============================
+/* FILTER */
 function applyFilters() {
-  const search = searchInput.value.toLowerCase();
-  const category = categoryFilter.value;
-  const status = statusFilter.value;
-  const era = eraFilter.value;
-  const manufacturer = manufacturerFilter.value;
-  const affiliation = affiliationFilter.value;
+  const s = searchInput.value.toLowerCase();
+  const c = categoryFilter.value;
+  const st = statusFilter.value;
 
-  filteredShips = ships.filter(ship => {
+  filtered = ships.filter(ship => {
     return (
-      (!search || ship.name.toLowerCase().includes(search)) &&
-      (!category || ship.class === category) &&
-      (!status || ship.continuity === status) &&
-      (!era || ship.era === era) &&
-      (!manufacturer || ship.manufacturer === manufacturer) &&
-      (!affiliation || ship.affiliation === affiliation)
+      (!s || ship.name.toLowerCase().includes(s)) &&
+      (!c || ship.class === c) &&
+      (!st || ship.status === st)
     );
   });
 
-  sortShips();
-  renderList();
-  updateStats();
+  sort();
+  render();
+  stats();
 }
 
-// ===============================
-// SORTING
-// ===============================
-function sortShips() {
-  const sort = sortSelect.value;
+/* SORT */
+function sort() {
+  const type = sortSelect.value;
 
-  filteredShips.sort((a, b) => {
-    switch (sort) {
-      case "name":
-        return a.name.localeCompare(b.name);
-      case "length":
-        return (b.length || 0) - (a.length || 0);
-      case "crew":
-        return (b.crew || 0) - (a.crew || 0);
-      case "category":
-        return (a.class || "").localeCompare(b.class || "");
-      default:
-        return 0;
-    }
+  filtered.sort((a, b) => {
+    if (type === "name") return a.name.localeCompare(b.name);
+    if (type === "length") return (b.length || 0) - (a.length || 0);
+    if (type === "crew") return (b.crew || 0) - (a.crew || 0);
   });
 }
 
-// ===============================
-// RENDER LIST
-// ===============================
-function renderList() {
-  listContainer.innerHTML = "";
+/* RENDER LIST */
+function render() {
+  list.innerHTML = "";
 
-  filteredShips.forEach(ship => {
+  filtered.forEach(ship => {
     const div = document.createElement("div");
-    div.className = "ship-card";
-
+    div.className = "card";
     div.innerHTML = `
-      <div class="ship-name">${ship.name}</div>
-      <div class="ship-class">${ship.class} • ${ship.continuity}</div>
+      <b>${ship.name}</b><br/>
+      <small>${ship.class} • ${ship.status}</small>
     `;
 
-    div.onclick = () => showDetails(ship);
-
-    listContainer.appendChild(div);
+    div.onclick = () => openDetail(ship);
+    list.appendChild(div);
   });
 }
 
-// ===============================
-// DETAIL VIEW
-// ===============================
-function showDetails(ship) {
-  currentShip = ship;
+/* DETAIL VIEW */
+function openDetail(ship) {
+  detail.classList.remove("hidden");
 
-  detailPanel.innerHTML = `
-    <div class="detail-header">
-      <button class="back-button" onclick="closeDetails()">← Zurück</button>
-      <h2>${ship.name}</h2>
-      <p>${ship.class}</p>
-      <span class="status-pill ${ship.continuity.toLowerCase()}">
-        ${ship.continuity}
-      </span>
-    </div>
+  detail.innerHTML = `
+    <button onclick="closeDetail()">← Zurück</button>
 
-    <div class="detail-grid">
-      <div class="detail-main">
+    <h2>${ship.name}</h2>
+    <p>${ship.class}</p>
 
-        <div class="section-card">
-          <h3>Technische Daten</h3>
-          <div class="data-grid">
-            <div class="data-item"><span class="label">Länge</span><span class="value">${ship.length || "-"} m</span></div>
-            <div class="data-item"><span class="label">Crew</span><span class="value">${ship.crew || "-"}</span></div>
-            <div class="data-item"><span class="label">Passagiere</span><span class="value">${ship.passengers || "-"}</span></div>
-            <div class="data-item"><span class="label">Hyperantrieb</span><span class="value">${ship.hyperdrive || "-"}</span></div>
-          </div>
-        </div>
+    <hr/>
 
-        <div class="section-card">
-          <h3>Beschreibung</h3>
-          <div class="detail-body">
-            <p>${ship.description || "Keine Beschreibung verfügbar."}</p>
-          </div>
-        </div>
+    <p><b>Hersteller:</b> ${ship.manufacturer || "-"}</p>
+    <p><b>Ära:</b> ${ship.era || "-"}</p>
+    <p><b>Crew:</b> ${ship.crew || "-"}</p>
+    <p><b>Länge:</b> ${ship.length || "-"}</p>
 
-      </div>
-
-      <div class="detail-side">
-
-        <div class="section-card">
-          <h3>Fakten</h3>
-          <div class="data-grid">
-            <div class="data-item"><span class="label">Hersteller</span><span class="value">${ship.manufacturer}</span></div>
-            <div class="data-item"><span class="label">Fraktion</span><span class="value">${ship.affiliation}</span></div>
-            <div class="data-item"><span class="label">Ära</span><span class="value">${ship.era}</span></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
+    <p>${ship.description || ""}</p>
   `;
-
-  detailPanel.classList.remove("hidden");
 }
 
-// ===============================
-// CLOSE DETAIL
-// ===============================
-function closeDetails() {
-  detailPanel.classList.add("hidden");
+function closeDetail() {
+  detail.classList.add("hidden");
 }
 
-// ===============================
-// STATS
-// ===============================
-function updateStats() {
-  document.getElementById("totalShipsCount").textContent = filteredShips.length;
-  document.getElementById("canonShipsCount").textContent =
-    filteredShips.filter(s => s.continuity === "Canon").length;
-  document.getElementById("legendsShipsCount").textContent =
-    filteredShips.filter(s => s.continuity === "Legends").length;
+/* STATS */
+function stats() {
+  document.getElementById("totalShips").textContent = filtered.length;
+  document.getElementById("canonShips").textContent =
+    filtered.filter(s => s.status === "Canon").length;
+  document.getElementById("legendsShips").textContent =
+    filtered.filter(s => s.status === "Legends").length;
 }
 
-// ===============================
-// EVENTS
-// ===============================
+/* EVENTS */
 [
   searchInput,
   categoryFilter,
   statusFilter,
-  sortSelect,
-  eraFilter,
-  manufacturerFilter,
-  affiliationFilter
+  sortSelect
 ].forEach(el => el.addEventListener("input", applyFilters));
-
-// ===============================
-// MOBILE NAV HELPERS
-// ===============================
-function scrollToCategory(category) {
-  categoryFilter.value = category;
-  applyFilters();
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
