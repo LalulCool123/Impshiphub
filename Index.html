@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Star Wars Ship Hub</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+
+<body>
+
+<header class="topbar">
+  <h1>🚀 Ship Hub</h1>
+</header>
+
+<main class="layout">
+
+  <!-- SIDEBAR (Desktop) -->
+  <aside class="sidebar">
+
+    <input id="searchInput" placeholder="Suche..." />
+
+    <select id="categoryFilter">
+      <option value="">Alle Klassen</option>
+      <option value="Starfighters">Starfighters</option>
+      <option value="Cruisers">Cruisers</option>
+      <option value="Destroyers">Destroyers</option>
+    </select>
+
+    <select id="statusFilter">
+      <option value="">Canon + Legends</option>
+      <option value="Canon">Canon</option>
+      <option value="Legends">Legends</option>
+    </select>
+
+    <select id="sortSelect">
+      <option value="name">Name</option>
+      <option value="length">Größe</option>
+      <option value="crew">Crew</option>
+    </select>
+
+    <div class="stats">
+      <div>Gesamt: <span id="totalShips">0</span></div>
+      <div>Canon: <span id="canonShips">0</span></div>
+      <div>Legends: <span id="legendsShips">0</span></div>
+    </div>
+
+  </aside>
+
+  <!-- LIST -->
+  <section class="list" id="shipList"></section>
+
+  <!-- DETAIL -->
+  <section class="detail hidden" id="detailPanel"></section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
