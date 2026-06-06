@@ -1,32 +1,100 @@
 [
-  {
-    "name": "X-Wing",
-    "class": "Starfighters",
-    "status": "Canon",
-    "manufacturer": "Incom Corporation",
-    "length": 12.5,
-    "crew": 1,
-    "era": "Rebellion",
-    "description": "Vielseitiger Rebellenjäger."
-  },
-  {
-    "name": "TIE Fighter",
-    "class": "Starfighters",
-    "status": "Canon",
-    "manufacturer": "Sienar Fleet Systems",
-    "length": 6.3,
-    "crew": 1,
-    "era": "Imperium",
-    "description": "Standard Imperialer Jäger."
-  },
-  {
-    "name": "Imperial Star Destroyer",
-    "class": "Destroyers",
-    "status": "Canon",
-    "manufacturer": "Kuat Drive Yards",
-    "length": 1600,
-    "crew": 47000,
-    "era": "Imperium",
-    "description": "Schweres Großkampfschiff des Imperiums."
-  }
+  { "name": "X-Wing Starfighter", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "Y-Wing Starfighter", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "A-Wing Starfighter", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "B-Wing Starfighter", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "TIE Fighter", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "TIE Interceptor", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "TIE Bomber", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "TIE Advanced x1", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "TIE Defender", "class": "Starfighters", "continuity": "Legends" },
+  { "name": "TIE Silencer", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "ARC-170 Starfighter", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "V-Wing Starfighter", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "Z-95 Headhunter", "class": "Starfighters", "continuity": "Legends" },
+  { "name": "E-Wing", "class": "Starfighters", "continuity": "Legends" },
+  { "name": "K-Wing Bomber", "class": "Starfighters", "continuity": "Legends" },
+  { "name": "Naboo N-1 Starfighter", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "Delta-7 Aethersprite", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "Eta-2 Actis Interceptor", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "U-Wing", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "Fang Fighter", "class": "Starfighters", "continuity": "Canon" },
+
+  { "name": "LAAT Gunship", "class": "Gunships", "continuity": "Canon" },
+  { "name": "HMP Droid Gunship", "class": "Gunships", "continuity": "Canon" },
+  { "name": "Republic Gunship", "class": "Gunships", "continuity": "Canon" },
+
+  { "name": "CR90 Corvette", "class": "Cruisers", "continuity": "Canon" },
+  { "name": "Hammerhead Corvette", "class": "Cruisers", "continuity": "Canon" },
+  { "name": "Nebulon-B Frigate", "class": "Frigates", "continuity": "Canon" },
+  { "name": "Arquitens-class Light Cruiser", "class": "Cruisers", "continuity": "Canon" },
+  { "name": "Munificent-class Frigate", "class": "Frigates", "continuity": "Canon" },
+
+  { "name": "Imperial I Star Destroyer", "class": "Destroyers", "continuity": "Canon" },
+  { "name": "Imperial II Star Destroyer", "class": "Destroyers", "continuity": "Canon" },
+  { "name": "Victory-class Star Destroyer", "class": "Destroyers", "continuity": "Legends" },
+  { "name": "Venator-class Star Destroyer", "class": "Destroyers", "continuity": "Canon" },
+  { "name": "Resurgent-class Star Destroyer", "class": "Destroyers", "continuity": "Canon" },
+
+  { "name": "Executor Super Star Destroyer", "class": "Super Star Destroyers", "continuity": "Canon" },
+  { "name": "Sovereign-class Super Star Destroyer", "class": "Super Star Destroyers", "continuity": "Legends" },
+
+  { "name": "Mon Calamari Cruiser MC80", "class": "Cruisers", "continuity": "Canon" },
+  { "name": "Mon Calamari MC75", "class": "Cruisers", "continuity": "Canon" },
+  { "name": "Home One-type Cruiser", "class": "Cruisers", "continuity": "Canon" },
+
+  { "name": "First Order Star Destroyer", "class": "Destroyers", "continuity": "Canon" },
+  { "name": "Finalizer-class Star Destroyer", "class": "Destroyers", "continuity": "Canon" },
+
+  { "name": "Separatist Providence-class Dreadnought", "class": "Dreadnoughts", "continuity": "Canon" },
+  { "name": "Subjugator-class Heavy Cruiser", "class": "Dreadnoughts", "continuity": "Canon" },
+  { "name": "Lucrehulk Battleship", "class": "Dreadnoughts", "continuity": "Canon" },
+
+  { "name": "Tantive IV", "class": "Cruisers", "continuity": "Canon" },
+  { "name": "Ghost", "class": "Cruisers", "continuity": "Canon" },
+  { "name": "Phantom Shuttle", "class": "Shuttles", "continuity": "Canon" },
+  { "name": "Lambda-class Shuttle", "class": "Shuttles", "continuity": "Canon" },
+  { "name": "Nu-class Shuttle", "class": "Shuttles", "continuity": "Canon" },
+
+  { "name": "Sith Infiltrator", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "Scimitar", "class": "Starfighters", "continuity": "Canon" },
+
+  { "name": "Droid Tri-Fighter", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "Vulture Droid", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "Hyena Bomber", "class": "Starfighters", "continuity": "Canon" },
+
+  { "name": "N-1 Royal Starship", "class": "Cruisers", "continuity": "Canon" },
+  { "name": "Naboo Royal Cruiser", "class": "Cruisers", "continuity": "Canon" },
+
+  { "name": "Jedi Interceptor Delta-7B", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "Jedi Vector", "class": "Starfighters", "continuity": "Canon" },
+
+  { "name": "RZ-1 A-Wing", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "RZ-2 A-Wing", "class": "Starfighters", "continuity": "Canon" },
+
+  { "name": "TIE Reaper", "class": "Gunships", "continuity": "Canon" },
+  { "name": "TIE Striker", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "TIE Boarding Craft", "class": "Shuttles", "continuity": "Canon" },
+
+  { "name": "Dreadnaught-class Heavy Cruiser", "class": "Dreadnoughts", "continuity": "Legends" },
+  { "name": "Carrack-class Light Cruiser", "class": "Cruisers", "continuity": "Legends" },
+  { "name": "Strike-class Cruiser", "class": "Cruisers", "continuity": "Canon" },
+
+  { "name": "Pelta-class Frigate", "class": "Frigates", "continuity": "Canon" },
+  { "name": "Consular-class Cruiser", "class": "Cruisers", "continuity": "Canon" },
+
+  { "name": "Imperial Light Cruiser", "class": "Cruisers", "continuity": "Canon" },
+  { "name": "Gozanti-class Cruiser", "class": "Cruisers", "continuity": "Canon" },
+
+  { "name": "Sith Starfighter", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "Inquisitor TIE Advanced v1", "class": "Starfighters", "continuity": "Canon" },
+
+  { "name": "T-16 Skyhopper", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "T-70 X-Wing", "class": "Starfighters", "continuity": "Canon" },
+  { "name": "T-85 X-Wing", "class": "Starfighters", "continuity": "Canon" },
+
+  { "name": "J-type Nubian Yacht", "class": "Cruisers", "continuity": "Canon" },
+
+  { "name": "Unknown Regions Cruiser", "class": "Cruisers", "continuity": "Legends" },
+  { "name": "Experimental TIE Prototype", "class": "Starfighters", "continuity": "Legends" }
 ]
